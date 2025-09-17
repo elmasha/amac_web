@@ -1,6 +1,6 @@
 <template>
 <!-- Render HTML here -->
-<div v-html="htmlContent"></div>
+<div dark v-html="htmlContent"></div>
 </template>
 
 <script>
