@@ -15,7 +15,7 @@ export default {
     async mounted() {
         // await this.fetchCategories();
         // Load external HTML file at runtime
-        fetch("/index.html") // Place myfile.html in `public/` folder
+        fetch("/snippets/index.html") // Place myfile.html in `public/` folder
             .then((res) => res.text())
             .then((html) => {
                 this.htmlContent = html;
