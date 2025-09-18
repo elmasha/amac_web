@@ -19,38 +19,30 @@
     </v-app-bar>
     <v-container>
 
-        <v-tabs color="black" >
+        <v-tabs color="black">
             <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
             <v-tab @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false">Vote</v-tab>
             <v-tab @click="Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Leaderboard</v-tab>
             <v-tab @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true">Nominee List</v-tab>
             <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
         </v-tabs>
-        <br>
-        <br>
-        <br>
-
+  
         <v-card v-show="nomineeList" elevation="0">
 
         </v-card>
 
         <v-card v-show="Home" elevation="0">
             <v-row>
+                
+
+                 <v-col cols="12" sm="12" md="12"></v-col>
+                  <v-col cols="12" sm="12" md="12"></v-col>
                 <v-col cols="12" sm="6" md="6">
                     <div class="container">
-                        <v-img :src="voting" class="mt-12" contain height="400px">
+                       
 
-                        </v-img>
-                    </div>
-                </v-col>
-
-                <v-col cols="12" sm="6" md="6">
-                    <div class="container">
-                        <br>
-                        <br>
-                        <br><br>
                         <h1>Welcome to the AMAC Voting Portal</h1>
-                        <br>
+                        
                         <p>Support and celebrate the best in our community — one vote at a time. Use this portal to browse categories, nominate talents, and cast paid votes to determine the winners. Every vote costs KSh 10 and is counted only after successful M-Pesa confirmation.</p>
 
                         <div class="d-flex">
@@ -63,50 +55,83 @@
 
                     </div>
                 </v-col>
+
+                 <v-col cols="12" sm="6" md="6">
+                    <div class="">
+                        <v-img :src="voting" class="mt-12" contain height="200px">
+
+                        </v-img>
+                    </div>
+                </v-col>
+               
             </v-row>
 
         </v-card>
 
-        <v-card v-show="Leaderboard">
-            <div class="p-8 bg-gray-50 min-h-screen   container ">
-                <div class="grid grid-cols-12 gap-6">
-                    <!-- Left: Questions / Categories -->
-                    <div class="col-span-4 space-y-4">
-                        <div v-for="q in questions" :key="q.id" class="p-4 bg-white rounded-xl shadow-sm">
-                            <p class="text-sm text-gray-500">Vote average: {{ q.avg }}</p>
-                            <p class="text-xs text-gray-400 mt-2">
-                                {{ q.votes }} votes
-                            </p>
-                        </div>
+        <v-card v-show="Leaderboard" elevation="0">
+
+            <div class="container">
+                <div class="row">
+                    <div v-for="(vote, id) in voteSum" :key="id" class="col-md-3">
+                         <div class="container"></div>
+
+                         <v-card elevation="0"
+    class="mx-auto"
+    max-width="400"
+  >
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title class="text-h5">
+          {{ vote.nominee_name }}
+        </v-list-item-title>
+        <v-list-item-subtitle>{{ vote.category_name }}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-card-text>
+      <v-row align="center">
+        <v-col
+          class="text-h5"
+          cols="6"
+        >
+          {{ vote.percentage }} % votes
+        </v-col>
+        <v-col cols="6">
+          <!-- <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/sun.png"
+            alt="Sunny image"
+            width="92"
+          ></v-img> -->
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+  
+     <v-progress-linear
+      color="black"
+      buffer-value="0"
+      :value="vote.percentage"
+      stream
+    ></v-progress-linear>
+
+    
+
+    <v-divider></v-divider>
+
+    <!-- <v-card-actions>
+      <v-btn text>
+        Full Report
+      </v-btn>
+    </v-card-actions> -->
+  </v-card>
+                          
                     </div>
 
-                    <!-- Middle: Chart -->
-                    <div class="col-span-4">
-                        <div class="p-6 bg-white rounded-xl shadow-sm">
-                            <h3 class="font-semibold mb-4">Votes</h3>
-                            <!-- <bar-chart :chart-data="chartData" :options="chartOptions" /> -->
-                        </div>
-                    </div>
-
-                    <!-- Right: Stats -->
-                    <div class="col-span-4 space-y-4">
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="p-4 bg-white rounded-xl shadow text-center">
-                                <p class="text-sm text-gray-500">Average rating</p>
-                                <p class="text-2xl font-bold text-blue-600">{{ stats.avg }}</p>
-                            </div>
-                            <div class="p-4 bg-white rounded-xl shadow text-center">
-                                <p class="text-sm text-gray-500">Total votes</p>
-                                <p class="text-2xl font-bold text-purple-600">{{ stats.total }}</p>
-                            </div>
-                            <div class="p-4 bg-white rounded-xl shadow text-center">
-                                <p class="text-sm text-gray-500">Total skipped</p>
-                                <p class="text-2xl font-bold text-red-600">{{ stats.skipped }}</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+
             </div>
+
+          
         </v-card>
 
         <!-- Render HTML here -->
@@ -115,8 +140,8 @@
             <v-row>
                 <v-col cols="12" sm="6" md="6">
                     <div class="container">
-<br>
-<br><br><br>
+                        <br>
+                        <br><br><br>
                         <h2 class="mb-4">Vote for Your Nominee</h2>
 
                         <!-- Category Selector -->
@@ -160,35 +185,34 @@
             </v-alert>
         </v-card>
 
-
-               <!-- Render HTML here -->
+        <!-- Render HTML here -->
         <v-card v-show="vote" class="pa-4" outlined>
 
             <v-row>
                 <v-col cols="12" sm="6" md="6">
                     <div class="container">
-                      
-  <v-card  elevation="0">
-     <v-stepper v-model="step" elevation="0">
-      <!-- Step 1 -->
-      <v-stepper-header>
-        <v-stepper-step :complete="step > 1" step="1">Choose Category</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="step > 2" step="2">Nominate</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="step > 3" step="3">Vote</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="step > 4" step="4">Payment</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step step="5">Confirmation</v-stepper-step>
-      </v-stepper-header>
 
-      <!-- Step 1 content -->
-      <v-stepper-items>
-      
-      </v-stepper-items>
-    </v-stepper>
-    </v-card>
+                        <v-card elevation="0">
+                            <v-stepper v-model="step" elevation="0">
+                                <!-- Step 1 -->
+                                <v-stepper-header>
+                                    <v-stepper-step :complete="step > 1" step="1">Choose Category</v-stepper-step>
+                                    <v-divider></v-divider>
+                                    <v-stepper-step :complete="step > 2" step="2">Nominate</v-stepper-step>
+                                    <v-divider></v-divider>
+                                    <v-stepper-step :complete="step > 3" step="3">Vote</v-stepper-step>
+                                    <v-divider></v-divider>
+                                    <v-stepper-step :complete="step > 4" step="4">Payment</v-stepper-step>
+                                    <v-divider></v-divider>
+                                    <v-stepper-step step="5">Confirmation</v-stepper-step>
+                                </v-stepper-header>
+
+                                <!-- Step 1 content -->
+                                <v-stepper-items>
+
+                                </v-stepper-items>
+                            </v-stepper>
+                        </v-card>
                         <h2 class="mb-4">Vote for Your Nominee</h2>
 
                         <!-- Category Selector -->
@@ -231,7 +255,6 @@
                 {{ message }}
             </v-alert>
         </v-card>
-
 
         <!-- Mpesa Payment Dialog -->
         <v-dialog v-model="nomineeDialog" max-width="400px">
@@ -293,10 +316,10 @@ export default {
     },
     data() {
         return {
-           step: 1,
+            step: 1,
             nomineeDialog: false,
-            nomineeList:false,
-            vote:false,
+            nomineeList: false,
+            vote: false,
             Home: true,
             Leaderboard: false,
             Live_Results: false,
@@ -365,6 +388,7 @@ export default {
             },
             categories: [],
             nominees: [],
+            voteSum: [],
             selectedCategory: null,
             selectedNominee: null,
             message: null,
@@ -379,6 +403,7 @@ export default {
     },
     async mounted() {
         await this.fetchCategories();
+        await this.fetchVotesSummry();
         // Load external HTML file at runtime
         fetch("/index.html") // Place myfile.html in `public/` folder
             .then((res) => res.text())
@@ -418,10 +443,25 @@ export default {
                 console.error("Error loading categories:", error);
             }
         },
+        async fetchVotesSummry() {
+            try {
+
+                const {
+                    data
+                } = await axios.get(
+                    `https://balanced-ambition-production.up.railway.app/api/votes/summary`
+                );
+
+                this.voteSum = data;
+                console.log("vote sum:", this.voteSum);
+            } catch (error) {
+                console.error("Error loading nominees:", error);
+            }
+        },
         async fetchNominees() {
             if (!this.selectedCategory) return;
             try {
-              this.step = 2;
+                this.step = 2;
                 const {
                     data
                 } = await axios.get(
