@@ -1,10 +1,10 @@
 <template>
   <div v-if="timeLeft.total > 0" class="container my-4">
-   <h2 style="font-size: larger;">
-     <span>{{ timeLeft.days }}d :</span>
-    <span>{{ timeLeft.hours }}h :</span>
-    <span>{{ timeLeft.minutes }}m :</span>
-    <span>{{ timeLeft.seconds }}s</span>
+   <h2 style="font-size: 2.3rem;">
+     <span style="font-size: 2.3rem;">{{ timeLeft.days }}d :</span>
+    <span style="font-size: 2.3rem;">{{ timeLeft.hours }}h :</span>
+    <span style="font-size: 2.3rem;">{{ timeLeft.minutes }}m :</span>
+    <span style="font-size: 2.3rem;">{{ timeLeft.seconds }}s</span>
    </h2>
   </div>
   <div v-else>

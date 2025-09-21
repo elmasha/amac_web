@@ -42,13 +42,14 @@
                         <h1>Welcome to the AMAC Voting Portal</h1>
 
                         <p>Support and celebrate the best in our community — one vote at a time. Use this portal to browse categories, nominate talents, and cast paid votes to determine the winners. Every vote costs KSh 10 and is counted only after successful M-Pesa confirmation.</p>
-    <Countdown targetDate="2025-09-30" />
+                        
+                        <Countdown targetDate="2025-09-30" />
 
                         <div class="d-flex">
                             <v-btn outlined color="black" @click="nomineeDialog = true">Nominate now</v-btn>
 
                             <p style="margin: 12px;"></p>
-                            <v-btn style="color: aliceblue;" color="black" @click="Home = false, Leaderboard = false, Live_Results = true">Vote now</v-btn>
+                            <v-btn v-show="false" style="color: aliceblue;" color="black" @click="Home = false, Leaderboard = false, Live_Results = true">Vote now</v-btn>
 
                         </div>
 
