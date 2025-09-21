@@ -42,7 +42,7 @@
                         <h1>Welcome to the AMAC Voting Portal</h1>
 
                         <p>Support and celebrate the best in our community — one vote at a time. Use this portal to browse categories, nominate talents, and cast paid votes to determine the winners. Every vote costs KSh 10 and is counted only after successful M-Pesa confirmation.</p>
-                        
+
                         <Countdown targetDate="2025-09-30" />
 
                         <div class="d-flex">
@@ -237,10 +237,7 @@
                 </v-col>
             </v-row>
 
-            <!-- Message -->
-            <v-alert v-if="message" class="mt-4" type="success" dense outlined>
-                {{ message }}
-            </v-alert>
+      
         </v-card>
 
         <!-- Mpesa Payment Dialog -->
@@ -272,25 +269,53 @@
 
         <v-dialog v-model="paymentDialog" max-width="400px">
             <v-card>
-                <v-card-title class="headline">Mpesa Payment</v-card-title>
+                <v-card-title class="headline">Vote Confirmation</v-card-title>
                 <v-card-text>
-                    <v-text-field v-model="phoneNumber" label="Phone Number (2547... format)" outlined dense></v-text-field>
-                    <v-text-field diable v-model="voteCount" label="Enter votes" type="number" outlined dense @change="getAmount"></v-text-field>
-                    <h4>{{ amount }}</h4>
+                    <label for="phoneNumber">Provide you mpesa number</label>
+                    <v-text-field v-model="phoneNumber" :prefix="phonePrefix" placeholder="(7.. format)" dense></v-text-field>
+                    <label for="voteCount">Number of votes you wish to cast</label>
+                    <v-text-field diable v-model="voteCount" placeholder="" type="number" dense @change="getAmount"></v-text-field>
+                    <span>1 Vote is eqaul to 10sh (1 vote = 10 ksh)</span>
+                    <br>
+                    <br>
+                    <div class="d-flex">
+                        <p style="font-size: 0.9rem;">Total amount to be paid. <h6>{{ numeral(amount).format("0,0.00") }} ksh</h6>
+                        </p>
+                    </div>
+
+                    <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                        <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+phoneNumber }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount).format("0,0.00") }}</b> ksh</p>
+                    </div>
+                                    <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+      <!-- Message -->
+            <v-alert v-if="message" class="mt-4" type="success" dense outlined>
+                {{ message }}
+            </v-alert>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn text @click="paymentDialog = false">Cancel</v-btn>
-                    <v-btn color="primary" @click="processPayment">Pay to vote</v-btn>
+                    <v-btn color="black" @click="processPayment" style="color: white;">Vote</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </v-container>
+
+    <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
+        {{ snackbarText_s }}
+    </v-snackbar>
+    <v-snackbar color="success" :timeout="2000" v-model="snackbar" outlined center>
+        {{ snackbarText }}
+    </v-snackbar>
+    <v-snackbar color="error" :timeout="4000" v-model="snackbarError" outlined center>
+        {{ snackbarTextError }}
+    </v-snackbar>
 </div>
 </template>
 
 <script>
 import axios from "axios";
+import numeral from "numeral";
 import Countdown from '@/components/Countdown.vue';
 import {
     Bar
@@ -311,10 +336,42 @@ export default {
     watch: {
         chartData(newData) {
             this.renderChart(newData, this.options);
-        }
+        },
+        timerEnabled(value) {
+            if (value) {
+                setTimeout(() => {
+                    this.timerCount--;
+                }, 1000);
+            }
+        },
+        timerCount: {
+            handler(value) {
+                if (value > 0 && this.timerEnabled) {
+                    setTimeout(() => {
+                        this.timerCount--;
+                    }, 1000);
+                } else if (value == 0) {
+                    this.StkQuery();
+                    this.timerCount = 25;
+                }
+            },
+            immediate: true, // This ensures the watcher is triggered upon creation
+        },
     },
     data() {
         return {
+            numeral,
+            progress_bar: false,
+            timerEnabled: false,
+            show6: false,
+            timerCount: 25,
+            CheckoutRequestID: null,
+            snackbar_s: false,
+            snackbarText_s: "",
+            snackbar: false,
+            snackbarError: false,
+            snackbarText: "",
+            snackbarTextError: "",
             location: null,
             church: null,
             step: 1,
@@ -398,7 +455,8 @@ export default {
             htmlContent: "",
             // Mpesa dialog states
             paymentDialog: false,
-            phoneNumber: "254796124865",
+            phoneNumber: "",
+            phonePrefix: "254",
             amount: null, // default vote price
             voteCount: null,
         };
@@ -417,6 +475,38 @@ export default {
             });
     },
     methods: {
+        StkQuery() {
+            let that = this;
+            that.snackbar_s = true;
+            that.snackbarText_s = "Checking payment status...";
+            axios
+                .post("https://balanced-ambition-production.up.railway.app/payment/stk_push_subscription/query", {
+                    checkoutRequestId: that.CheckoutRequestID,
+                })
+                .then(function (response) {
+                    console.log("StkPush Query", response.data);
+                    that.show6 = false;
+
+                    if (response.status == 200) {
+                        that.progress_bar = false;
+                        that.paymentForm = true;
+                        that.snackbar = true;
+                        that.snackbarText = response.data.ResultDesc;
+                        that.timerCount = 25;
+                        that.timerEnabled = false;
+
+                    }
+                })
+                .catch(function (error) {
+                    that.paymentForm = true;
+                    that.snackbarError = true;
+                    that.snackbarTextError = error;
+                    that.timerCount = 25;
+                    that.timerEnabled = false;
+                    that.show6 = false;
+                    that.progress_bar = false;
+                });
+        },
         async getAmount() {
             let total = this.voteCount * 10;
             this.amount = total;
@@ -485,31 +575,47 @@ export default {
             this.paymentDialog = true;
         },
         async processPayment() {
-            try {
-                // Step 1: Trigger Mpesa STK push
-                const {
-                    data
-                } = await axios.post(
-                    "https://balanced-ambition-production.up.railway.app/payment/mpesa_stk_push", {
-                        phone: this.phoneNumber,
-                        amount: this.amount,
+            let that = this;
+            if (that.phoneNumber == null) {
+                that.snackbarTextError = "Provide phone..";
+                that.snackbarError = true;
+            } else {
+                axios
+                    .post("https://balanced-ambition-production.up.railway.app/payment/mpesa_stk_push", {
+                        phone: that.phonePrefix + that.phoneNumber,
+                        amount: that.amount,
                         user_id: 2,
-                        vote_count: this.voteCount,
-                        candidate_id: this.selectedNominee,
-                        category_id: this.selectedCategory,
-                    }
-                );
-
-                // Step 2: Close dialog & show success message
-                this.paymentDialog = false;
-                this.message = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
-
-                // Step 3: (Optional) Poll backend for confirmation
-            } catch (error) {
-                console.error("Error processing payment:", error);
-                this.message = "❌ Failed to initiate payment.";
+                        vote_count: that.voteCount,
+                        candidate_id: that.selectedNominee,
+                        category_id: that.selectedCategory,
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.status == 200) {
+                            that.snackbar = true;
+                            that.message = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
+                            that.progress_bar = true;
+                            that.snackbarText = response.data;
+                            that.CheckoutRequestID = response.data.CheckoutRequestID;
+                            that.timerEnabled = true;
+                        } else if (response.status == 400) {
+                            that.snackbarError = true;
+                            that.snackbarTextError = response.data;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        that.snackbarTextError = error;
+                        that.snackbarError = true;
+                        that.progress_bar = false;
+                    });
             }
+            Error;
         },
+        selectNominee(categoryId, nomineeId) {
+            this.selectedCategory = categoryId;
+            this.selectedNominee = nomineeId;
+        }
     },
 };
 </script>
