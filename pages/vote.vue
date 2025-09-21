@@ -22,28 +22,27 @@
         <v-tabs color="black">
             <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
             <v-tab @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false">Vote</v-tab>
-            <v-tab @click="Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Leaderboard</v-tab>
+            <v-tab @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Leaderboard</v-tab>
             <v-tab @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true">Nominee List</v-tab>
             <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
         </v-tabs>
-  
+
         <v-card v-show="nomineeList" elevation="0">
 
         </v-card>
 
         <v-card v-show="Home" elevation="0">
             <v-row>
-                
 
-                 <v-col cols="12" sm="12" md="12"></v-col>
-                  <v-col cols="12" sm="12" md="12"></v-col>
+                <v-col cols="12" sm="12" md="12"></v-col>
+                <v-col cols="12" sm="12" md="12"></v-col>
                 <v-col cols="12" sm="6" md="6">
                     <div class="container">
-                       
 
                         <h1>Welcome to the AMAC Voting Portal</h1>
-                        
+
                         <p>Support and celebrate the best in our community — one vote at a time. Use this portal to browse categories, nominate talents, and cast paid votes to determine the winners. Every vote costs KSh 10 and is counted only after successful M-Pesa confirmation.</p>
+    <Countdown targetDate="2025-09-30" />
 
                         <div class="d-flex">
                             <v-btn outlined color="black" @click="nomineeDialog = true">Nominate now</v-btn>
@@ -56,14 +55,14 @@
                     </div>
                 </v-col>
 
-                 <v-col cols="12" sm="6" md="6">
+                <v-col cols="12" sm="6" md="6">
                     <div class="">
                         <v-img :src="voting" class="mt-12" contain height="200px">
 
                         </v-img>
                     </div>
                 </v-col>
-               
+
             </v-row>
 
         </v-card>
@@ -73,65 +72,52 @@
             <div class="container">
                 <div class="row">
                     <div v-for="(vote, id) in voteSum" :key="id" class="col-md-3">
-                         <div class="container"></div>
+                        <div class="container"></div>
 
-                         <v-card elevation="0"
-    class="mx-auto"
-    max-width="400"
-  >
-    <v-list-item two-line>
-      <v-list-item-content>
-        <v-list-item-title class="text-h5">
-          {{ vote.nominee_name }}
-        </v-list-item-title>
-        <v-list-item-subtitle>{{ vote.category_name }}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
+                        <v-card elevation="0" class="mx-auto" max-width="400">
+                            <v-list-item two-line>
+                                <v-list-item-content>
+                                    <v-list-item-title class="text-h5">
+                                        {{ vote.nominee_name }}
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle>{{ vote.category_name }}</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{ vote.location }}</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{ vote.church }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
 
-    <v-card-text>
-      <v-row align="center">
-        <v-col
-          class="text-h5"
-          cols="6"
-        >
-          {{ vote.percentage }} % votes
-        </v-col>
-        <v-col cols="6">
-          <!-- <v-img
+                            <v-card-text>
+                                <v-row align="center">
+                                    <v-col class="text-h5" cols="6">
+                                        {{ vote.percentage }} % votes
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <!-- <v-img
             src="https://cdn.vuetifyjs.com/images/cards/sun.png"
             alt="Sunny image"
             width="92"
           ></v-img> -->
-        </v-col>
-      </v-row>
-    </v-card-text>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
 
-  
-     <v-progress-linear
-      color="black"
-      buffer-value="0"
-      :value="vote.percentage"
-      stream
-    ></v-progress-linear>
+                            <v-progress-linear color="black" buffer-value="0" :value="vote.percentage" stream></v-progress-linear>
 
-    
+                            <v-divider></v-divider>
 
-    <v-divider></v-divider>
-
-    <!-- <v-card-actions>
+                            <!-- <v-card-actions>
       <v-btn text>
         Full Report
       </v-btn>
     </v-card-actions> -->
-  </v-card>
-                          
+                        </v-card>
+
                     </div>
 
                 </div>
 
             </div>
 
-          
         </v-card>
 
         <!-- Render HTML here -->
@@ -262,8 +248,17 @@
                 <v-card-title class="headline">Nominate someone</v-card-title>
                 <v-card-text>
                     <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
+                    <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
+                    <v-row>
+                        <v-col cols="12" sm="6" md="6">
+                            <v-text-field v-model="location" label="County/Location" outlined dense></v-text-field>
 
-                    <v-text-field v-model="nomineeName" label="Nominee Name"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="6">
+                            <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+
+                        </v-col>
+                    </v-row>
 
                 </v-card-text>
                 <v-card-actions>
@@ -279,12 +274,13 @@
                 <v-card-title class="headline">Mpesa Payment</v-card-title>
                 <v-card-text>
                     <v-text-field v-model="phoneNumber" label="Phone Number (2547... format)" outlined dense></v-text-field>
-                    <v-text-field diable v-model="amount" label="Amount" type="number" outlined dense></v-text-field>
+                    <v-text-field diable v-model="voteCount" label="Enter votes" type="number" outlined dense @change="getAmount"></v-text-field>
+                    <h4>{{ amount }}</h4>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn text @click="paymentDialog = false">Cancel</v-btn>
-                    <v-btn color="primary" @click="processPayment">Pay</v-btn>
+                    <v-btn color="primary" @click="processPayment">Pay to vote</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -294,6 +290,7 @@
 
 <script>
 import axios from "axios";
+import Countdown from '@/components/Countdown.vue';
 import {
     Bar
 } from "vue-chartjs";
@@ -301,6 +298,7 @@ import {
 export default {
 
     components: {
+        Countdown,
         BarChart: {
             extends: Bar,
             props: ["chartData", "options"],
@@ -316,6 +314,8 @@ export default {
     },
     data() {
         return {
+            location: null,
+            church: null,
             step: 1,
             nomineeDialog: false,
             nomineeList: false,
@@ -398,7 +398,8 @@ export default {
             // Mpesa dialog states
             paymentDialog: false,
             phoneNumber: "254796124865",
-            amount: 10, // default vote price
+            amount: null, // default vote price
+            voteCount: null,
         };
     },
     async mounted() {
@@ -415,12 +416,19 @@ export default {
             });
     },
     methods: {
+        async getAmount() {
+            let total = this.voteCount * 10;
+            this.amount = total;
+        },
+
         async submitNominee() {
             try {
                 await axios.post("https://balanced-ambition-production.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     description: "",
+                    location: this.location,
+                    church: this.church,
                 });
                 alert("Nominee submitted successfully!");
                 this.nomineeName = "";
@@ -485,6 +493,7 @@ export default {
                         phone: this.phoneNumber,
                         amount: this.amount,
                         user_id: 2,
+                        vote_count: this.voteCount,
                         candidate_id: this.selectedNominee,
                         category_id: this.selectedCategory,
                     }
