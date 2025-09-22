@@ -88,7 +88,7 @@
 
                         <h1>Welcome to the AMAC Voting Portal</h1>
 
-                        <p>Support and celebrate the best in our community — one vote at a time. Use this portal to browse categories, nominate talents, and cast paid votes to determine the winners. Every vote costs KSh 10 and is counted only after successful M-Pesa confirmation.</p>
+                        <p>Welcome to the Annual Awards Voting Platform. Here, you can explore categories, view nominees, and take part in recognizing outstanding achievements. Nominations remain open as we count down to the official voting date, when you will have the opportunity to cast your vote and support your favorites.</p>
 
                         <Countdown targetDate="2025-09-30" />
 
@@ -188,26 +188,34 @@
                         <h1>🏆 Live Voting Results</h1>
 
                         <v-card-text>
-                            <h4 class=" mb-2" style="color: gray;font-size: 0.9rem;margin-left: 4rem;" >
-                                Choose category
-                            </h4>
-                            <v-chip-group v-model="neighborhoods" row multiple>
+
+                            <!-- <v-chip-group v-model="neighborhoods" row multiple>
                                 <div v-for="(vote, id) in categories" :key="id">
-                                    <v-chip filter color="black" text-color="white" @click="fetchOverview33(vote.id)">
+                                    <v-chip filter color="black" text-color="white" @click="">
                                         {{ vote.name }}
                                     </v-chip>
                                 </div>
 
-                            </v-chip-group>
+                            </v-chip-group> -->
+
+                            <div class="d-flex">
+                                <div>
+                                    <label for="searchCatResult"> Choose category</label>
+                                    <br>
+                                    <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
+                                </div>
+                                <v-spacer></v-spacer>
+                                <v-spacer></v-spacer>
+                                <v-spacer></v-spacer>
+
+                            </div>
                         </v-card-text>
 
                         <div class="results-page">
 
                             <!-- Loop categories -->
                             <div v-for="cat in Results" :key="cat.category_id" class="category-block">
-                                <br>
-                                <br>
-                                <br>
+
                                 <h2>{{ cat.category_name }}</h2>
                                 <p>Total Votes: {{ cat.total_votes }}</p>
                                 <p class="timestamp">Last updated: {{ }}</p>
@@ -221,7 +229,7 @@
                                     </div>
 
                                     <p>{{ nom.location }} - {{ nom.church }}</p>
-                                    <p>Votes: {{ nom.votes }} ({{ nom.percentage }}%)</p>
+                                    <p>Votes: ({{ nom.percentage }}%)</p>
 
                                     <!-- Progress bar -->
                                     <div class="progress">
@@ -458,6 +466,7 @@ export default {
     data() {
         return {
             numeral,
+            searchCatResult: null,
             nomineeName: "",
             progress_bar: false,
             timerEnabled: false,
@@ -583,6 +592,7 @@ export default {
             let that = this;
             that.snackbar_s = true;
             that.snackbarText_s = "Checking payment status...";
+            that.step = 5;
             axios
                 .post("https://balanced-ambition-production.up.railway.app/payment/mpesa_stk_push/query", {
                     checkoutRequestId: that.CheckoutRequestID,
@@ -807,11 +817,11 @@ export default {
                         console.log(response);
                         if (response.status == 200) {
                             that.step = 4;
+                            that.CheckoutRequestID = response.data.CheckoutRequestID;
                             that.snackbar = true;
                             that.message = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
                             that.progress_bar = true;
                             that.snackbarText = response.data;
-                            that.CheckoutRequestID = response.data.CheckoutRequestID;
                             that.timerEnabled = true;
                         } else if (response.status == 400) {
                             that.snackbarError = true;
