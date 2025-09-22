@@ -122,7 +122,7 @@
 
             <div class="container">
                 <div class="d-flex">
-                    <v-select v-model="searchCat" :items="categories" item-text="name" item-value="id" label="Search with Category" outlined dense @change="fetchVotesSummry2"></v-select>
+                    <v-select v-model="searchCat" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchVotesSummry2"></v-select>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
@@ -136,9 +136,9 @@
                             <v-list-item two-line>
                                 <v-list-item-content>
                                     <v-list-item-title class="text-h5">
-                                        {{ vote.nominee_name }}
+                                        {{ vote.category_name }}
                                     </v-list-item-title>
-                                    <v-list-item-subtitle>{{ vote.category_name }}</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{ vote.nominee_name }}</v-list-item-subtitle>
                                     <v-list-item-subtitle>{{ vote.location }}</v-list-item-subtitle>
                                     <v-list-item-subtitle>{{ vote.church }}</v-list-item-subtitle>
                                 </v-list-item-content>
