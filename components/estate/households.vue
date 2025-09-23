@@ -4,7 +4,7 @@
         <div class="">
             <v-card-actions>
                 <v-card-title>
-                    <h2>HouseHolds</h2>
+                    <h2>Payment transactions</h2>
                 </v-card-title>
                 <v-spacer></v-spacer>
                 <!-- <v-btn icon>
@@ -20,41 +20,32 @@
         </div>
     </v-card>
     <v-card color="#f0f0f0" elevation="0" class="" style="padding: 1rem;">
-        <v-row >
+        <v-row>
 
             <v-col cols="12" sm="12" md="12" lg="12">
                 <div>
                     <div class="container">
-                        <v-card elevation="0">
-                            <v-subheader></v-subheader>
-                            <v-data-table :headers="headers" :items="houseHolds" :items-per-page="10" class="elevation-0">
-                                <!-- index column -->
-                                <template #item.index="{ item }">
-                                    {{ item.index }}
-                                </template>
+                        <div>
+                            <v-card elevation="0">
+                                <v-data-table :headers="headers" :items="payments" :items-per-page="10" class="elevation-0">
+                                    <!-- index column -->
+                                    <template #item.index="{ item }">
+                                        {{ item.index }}
+                                    </template>
 
-                                <!-- overdue cell -->
-                                <template #item.overdue="{ item }">
-                                    <span :class="{ 'red--text': item.overdue < 0, 'green--text': item.overdue >= 0 }">
-                                        {{ formatCurrency(item.overdue) }}
-                                    </span>
-                                </template>
+                                    <!-- overdue cell -->
+                                    <template #item.overdue="{ item }">
+                                        <span :class="{ 'red--text': item.overdue < 0, 'green--text': item.overdue >= 0 }">
+                                            {{ formatCurrency(item.overdue) }}
+                                        </span>
+                                    </template>
 
-                                <template v-slot:item.actions="{ item }">
-                                    <v-icon small class="mr-2" @click="getToken(item.household_id),officialName = item.primary_owner,officialUID = item.uid,officialID = item.household_id
-                                    contact_number = item.contact_number,dialog = true">
-                                        mdi-account-badge
-                                    </v-icon>
-
-                                </template>
-
-                                <!-- any month cell could use the default -->
-                            </v-data-table>
-
-                        </v-card>
+                                    <!-- any month cell could use the default -->
+                                </v-data-table>
+                            </v-card>
+                        </div>
 
                     </div>
-
                 </div>
             </v-col>
 
@@ -99,13 +90,13 @@
                             <div class="">
                                 <v-select v-model="role" :items="roles" label="Role" flat required></v-select>
                             </div>
-                            <div class="row text--center" >
+                            <div class="row text--center">
                                 <!-- <div v-for="tag in houseHolds" :key="tag.id" class="col-md-6"></div> -->
 
                                 <v-list subheader>
                                     <v-subheader>Set Official</v-subheader>
 
-                                    <v-list-item >
+                                    <v-list-item>
                                         <v-list-item>
                                             <v-list-item-avatar>
                                                 <v-avatar color="#8051FF" size="48">
@@ -130,12 +121,11 @@
                                                 </div> -->
                                             </v-list-item-icon>
 
-                                         
                                         </v-list-item>
-                                         <v-btn color="black" style="color: black;" outlined @click="assignOfficials(officialID, officialUID)">Add an official</v-btn>
+                                        <v-btn color="black" style="color: black;" outlined @click="assignOfficials(officialID, officialUID)">Add an official</v-btn>
                                     </v-list-item>
                                 </v-list>
-                               
+
                             </div>
                         </div>
                         <v-form v-show="false" @submit.prevent="AddOfficial">
@@ -187,11 +177,9 @@ export default {
     },
     mounted() {
         console.log("Estate ID:", this.estateId);
-        this.Fetch_AllOfficials();
+        this.Fetch_Payments();
+
         // this.Fetch_ActiveHouseholds();
-        this.Fetch_PostAllEstates();
-        this.Fetch_AllPayments();
-        this.Fetch_Estates();
     },
     components: {
         Map,
@@ -202,73 +190,33 @@ export default {
     },
     data() {
         return {
+            payments: [],
             numeral,
-            headers: [{
-                    text: "Active",
-                    value: "active",
-                    align: "right",
-                },
-                {
-                    text: "#",
-                    value: "index",
+                headers: [{
+                    text: "Reciept",
+                    value: "transaction_id",
                     width: 50,
                 },
                 {
-                    text: "Name",
-                    value: "primary_owner",
+                    text: "Payment method",
+                    value: "payment_method",
                     width: 200,
                 },
                 {
-                    text: "House no",
-                    value: "house_number",
+                    text: "Status",
+                    value: "payment_status",
                     align: "right",
                 },
 
                 {
                     text: "Phone no",
-                    value: "contact_number",
+                    value: "phone_number",
                     align: "right",
                 },
                 {
-                    text: "Court",
-                    value: "court",
+                    text: "Amount",
+                    value: "amount_paid",
                     align: "right",
-                },
-
-                {
-                    text: "Section",
-                    value: "section",
-                    align: "right",
-                }, {
-                    text: "Caretaker",
-                    value: "caretaker_name",
-                    align: "right",
-                },
-
-                {
-                    text: "Spouse",
-                    value: "spouse_name",
-                    align: "right",
-                },
-                {
-                    text: "Res status",
-                    value: "residence_status",
-                    align: "right",
-                },
-                {
-                    text: "Official",
-                    value: "is_official",
-                    align: "right",
-                },
-                {
-                    text: "UID",
-                    value: "uid",
-                    align: "right",
-                },
-                {
-                    text: 'Add officials',
-                    value: 'actions',
-                    sortable: false
                 },
 
             ],
@@ -359,9 +307,9 @@ export default {
             show: false,
             show6: false,
             timerCount: 25,
-            officialName:null,
-            officialUID:null,
-             officialID:null,
+            officialName: null,
+            officialUID: null,
+            officialID: null,
             valid: true,
             name: "",
             nameRules: [
@@ -403,27 +351,49 @@ export default {
             totalPendingPayment: 0,
         };
     },
-    methods: { async Fetch_Estates() {
-      let that = this;
-      axios
-        .get(`https://web-production-27f796.up.railway.app/api/estates/estate/${this.estateId}`, {})
-        .then(function (response) {
-          if (response.status == 200) {
-            // that.snackbar = true;
-            // that.snackbarText = response.data;           
-            that.estate_urn = response.data.estate_urn;
-            console.log("Estates", response.data);
-          } else if (response.status == 400) {
-            that.snackbar2 = true;
-            that.snackbarText2 = response.data;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          that.snackbarText2 = error;
-          that.snackbar2 = true;
-        });
-    },
+    methods: {
+        async Fetch_Payments() {
+            let that = this;
+            axios
+                .get("https://balanced-ambition-production.up.railway.app/transaction/getAllPayments")
+                .then(function (response) {
+                    if (response.status === 200) {
+                        that.payments = response.data;
+                        // Calculate totals from all rows
+
+                        console.log("Payments list", that.payments);
+                    } else if (response.status === 400) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = response.data;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.snackbarText2 = error.message || "An error occurred";
+                    that.snackbar2 = true;
+                });
+        },
+        async Fetch_Estates() {
+            let that = this;
+            axios
+                .get(`https://web-production-27f796.up.railway.app/api/estates/estate/${this.estateId}`, {})
+                .then(function (response) {
+                    if (response.status == 200) {
+                        // that.snackbar = true;
+                        // that.snackbarText = response.data;           
+                        that.estate_urn = response.data.estate_urn;
+                        console.log("Estates", response.data);
+                    } else if (response.status == 400) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = response.data;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.snackbarText2 = error;
+                    that.snackbar2 = true;
+                });
+        },
         formatCurrency(val) {
             return (val || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,

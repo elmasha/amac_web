@@ -25,7 +25,7 @@ export default {
     },
     components: {
         BarChart: {
-            extends: Bar,
+            extends: Line,
             props: ["chartData", "options"],
             mounted() {
                 this.renderChart(this.chartData, this.options);
@@ -101,8 +101,8 @@ export default {
             chartData: {
                 labels: [],
                 datasets: [{
-                    label: 'Voting trends',
-                    backgroundColor: '#fff',
+                    label: 'Top Categories',
+                    backgroundColor: '#d4930686',
                     data: []
                 }]
             },
@@ -125,14 +125,14 @@ export default {
     methods: {
         async prepareChartData() {
             let that = this;
-            await axios.get('https://balanced-ambition-production.up.railway.app/api/votes/voting-activity', {})
+            await axios.get('https://balanced-ambition-production.up.railway.app/api/votes/vote-category', {})
                 .then(function (response) {
                     if (response.status == 200) {
                         // that.snackbar = true;
                         // that.snackbarText = response.data;
                         that.data = response.data;
                         console.log(that.data)
-                        that.chartData.labels = that.data.map((data) => that.formatHour(data.vote_hour));
+                        that.chartData.labels = that.data.map((data) => data.category_name);
                         that.chartData.datasets[0].data = that.data.map(
                             (data) => data.total_votes
                         );

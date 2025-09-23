@@ -4,7 +4,7 @@
         <div class="">
             <v-card-actions>
                 <v-card-title>
-                    <h3>Estate Address Configration</h3>
+                    <h3>Categories</h3>
                 </v-card-title>
                 <v-spacer></v-spacer>
                 <!-- <v-btn icon>
@@ -27,7 +27,7 @@
                     <div class="container">
                         <v-card elevation="0">
                             <v-subheader></v-subheader>
-                            <v-data-table :headers="headers" :items="houseHolds" :items-per-page="10" class="elevation-0">
+                            <v-data-table :headers="headers" :items="categories" :items-per-page="10" class="elevation-0">
                                 <!-- index column -->
                                 <template #item.index="{ item }">
                                     {{ item.index }}
@@ -207,7 +207,7 @@ export default {
     },
     mounted() {
         console.log("Estate ID:", this.estateId);
-        this.Fetch_AddressSettings();
+        this.fetchCategories();
         // this.Fetch_ActiveHouseholds();
         // this.Fetch_PostAllEstates();
         // this.Fetch_AllPayments();
@@ -222,26 +222,26 @@ export default {
     data() {
         return {
             numeral,
-       
+            categories: [],
             headers: [
               
               
                 {
-                    text: "Street",
-                    value: "street",
-                    align: "right",
+                    text: "id",
+                    value: "id",
+                    align: "left",
                 },
                 {
-                    text: "Court",
-                    value: "court",
+                    text: "Name",
+                    value: "name",
+                    align: "left",
+                },
+                {
+                    text: "Description",
+                    value: "description",
                     align: "right",
                 },
 
-                {
-                    text: "Section",
-                    value: "section",
-                    align: "right",
-                },
 
             ],
             paymentData: [{
@@ -374,7 +374,19 @@ export default {
         };
     },
     methods: {
+ async fetchCategories() {
 
+            try {
+                const {
+                    data
+                } = await axios.get(
+                    "https://balanced-ambition-production.up.railway.app/api/categories/getAll"
+                );
+                this.categories = data;
+            } catch (error) {
+                console.error("Error loading categories:", error);
+            }
+        },
         async Fetch_AddressSettings() {
             let that = this;
             that.estateConfig.splice(that.estateConfig);

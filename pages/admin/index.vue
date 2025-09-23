@@ -5,10 +5,7 @@
             <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
             <div class="d-flex" style="background-color: #b6ff00; border-radius: 120px; padding: 4px">
-                <v-avatar color="black" size="28">
-                    <span style="color: #b6ff00">El</span>
-                </v-avatar>
-                <v-toolbar-title style="color: black; margin-start: 8px; margin-right: 8px"></v-toolbar-title>
+               
             </div>
 
             <v-spacer></v-spacer>
@@ -82,7 +79,6 @@
                     <households v-show="d_5" :estateId="estateId" />
                     <estateConfig v-show="d_7" :estateId="estateId" />
                     <estateOfficials v-show="d_4" :estateId="estateId" />                    
-                    <billing :estateId="estateId" v-show="d_3" />
                     <account v-show="d_2" :estateId="estateId" />
                 </div>
             </v-col>
@@ -225,6 +221,8 @@ import households from "@/components/estate/households.vue";
 import estateConfig from "@/components/estate/estateConfig.vue";
 import estateOfficials from "@/components/estate/estateOfficials.vue";
 import account from "@/components/estate/account.vue";
+import Countdown from '@/components/Countdown.vue';
+
 
 
 import {
@@ -250,6 +248,7 @@ export default {
         this.Check_Billing();
     },
     components: {
+        Countdown,
         Map,
         dashboard,
         billing,
@@ -272,28 +271,18 @@ export default {
                     title: 'Dashboard',
                     icon: 'mdi-view-dashboard'
                 },
+                
                 {
-                    title: 'Account',
-                    icon: 'mdi-account-box'
-                },
-                {
-                    title: 'Billing',
-                    icon: 'mdi-account-credit-card-outline'
-                },
-                {
-                    title: 'Estate officials',
+                    title: 'Nominees',
                     icon: 'mdi-home-group'
                 },
                 {
-                    title: 'Resident',
+                    title: 'Payments',
                     icon: 'mdi-account-box'
                 },
+               
                 {
-                    title: 'Visitors logs',
-                    icon: 'mdi-account-settings-outline'
-                },
-                {
-                    title: 'Estate Config',
+                    title: 'Categories',
                     icon: 'mdi-store-settings'
                 },
             ],
@@ -434,7 +423,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = false;
                 this.d_7 = false;
-            } else if (val === 'Estate officials') {
+            } else if (val === 'Nominees') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;
@@ -442,7 +431,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = false;
                 this.d_7 = false;
-            } else if (val === 'Resident') {
+            } else if (val === 'Payments') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;
@@ -458,7 +447,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = true;
                 this.d_7 = false;
-            } else if (val === 'Estate Config') {
+            } else if (val === 'Categories') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;

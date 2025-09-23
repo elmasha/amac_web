@@ -272,28 +272,19 @@ export default {
                     title: 'Dashboard',
                     icon: 'mdi-view-dashboard'
                 },
+                
+            
                 {
-                    title: 'Account',
-                    icon: 'mdi-account-box'
-                },
-                {
-                    title: 'Billing',
-                    icon: 'mdi-account-credit-card-outline'
-                },
-                {
-                    title: 'Estate officials',
+                    title: 'Nominees',
                     icon: 'mdi-home-group'
                 },
                 {
-                    title: 'Resident',
+                    title: 'Payments',
                     icon: 'mdi-account-box'
                 },
+               
                 {
-                    title: 'Visitors logs',
-                    icon: 'mdi-account-settings-outline'
-                },
-                {
-                    title: 'Estate Config',
+                    title: 'Categories',
                     icon: 'mdi-store-settings'
                 },
             ],
@@ -434,7 +425,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = false;
                 this.d_7 = false;
-            } else if (val === 'Estate officials') {
+            } else if (val === 'Nominees') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;
@@ -442,7 +433,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = false;
                 this.d_7 = false;
-            } else if (val === 'Resident') {
+            } else if (val === 'Payments') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;
@@ -458,7 +449,7 @@ export default {
                 this.d_5 = false;
                 this.d_6 = true;
                 this.d_7 = false;
-            } else if (val === 'Estate Config') {
+            } else if (val === 'Categories') {
                 this.d_1 = false;
                 this.d_2 = false;
                 this.d_3 = false;

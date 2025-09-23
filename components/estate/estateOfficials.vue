@@ -4,7 +4,7 @@
         <div class="">
             <v-card-actions>
                 <v-card-title>
-                    <h2>Estate Officials</h2>
+                    <h2>Nominee</h2>
                 </v-card-title>
                 <v-spacer></v-spacer>
                 <!-- <v-btn icon>
@@ -24,10 +24,16 @@
 
             <v-col cols="12" sm="12" md="12" lg="12">
                 <div>
-                    <div class="container">
+                          <div class="container">
+                         
                         <v-card elevation="0">
-                            <v-subheader></v-subheader>
-                            <v-data-table :headers="headers" :items="officials" :items-per-page="10" class="elevation-0">
+                            <v-card-actiuons>
+                                <div class="d-flex">
+
+                                </div>
+                            </v-card-actiuons>
+                            <v-subheader> <h5></h5> </v-subheader>
+                            <v-data-table :headers="headers45" :items="nominees" :items-per-page="5" class="elevation-0">
                                 <!-- index column -->
                                 <template #item.index="{ item }">
                                     {{ item.index }}
@@ -208,6 +214,7 @@ export default {
     mounted() {
         console.log("Estate ID:", this.estateId);
         this.Fetch_AllOfficials();
+        this.fetchNominees();
         // this.Fetch_ActiveHouseholds();
         this.Fetch_PostAllEstates();
         this.Fetch_AllPayments();
@@ -222,6 +229,30 @@ export default {
     data() {
         return {
             numeral,
+               headers45: [{
+                    text: "category ID",
+                    value: "category_id",
+                    width: 50,
+                },
+                {
+                    text: "Name",
+                    value: "nominee_name",
+                    align: "left",
+                },
+                
+                {
+                    text: "Location",
+                    value: "location",
+                    align: "right",
+                },
+                {
+                    text: "Church",
+                    value: "church",
+                    align: "right",
+                },
+
+            ],
+            nominees:[],
             headers2: [
 
                 {
@@ -418,6 +449,19 @@ export default {
         };
     },
     methods: {
+          async fetchNominees() {
+
+            try {
+                const {
+                    data
+                } = await axios.get(
+                    "https://balanced-ambition-production.up.railway.app/api/nominee/list"
+                );
+                this.nominees = data;
+            } catch (error) {
+                console.error("Error loading categories:", error);
+            }
+        },
         formatCurrency(val) {
             return (val || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,

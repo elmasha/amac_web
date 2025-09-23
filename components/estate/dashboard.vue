@@ -41,12 +41,12 @@
                                         </v-btn>
                                     </div>
                                     <v-card-subtitle>
-                                        <h4>Total revenue </h4>
+                                        <h5>Total revenue </h5>
                                     </v-card-subtitle>
                                     <v-card-actions>
                                         <div class="d-flex">
                                             <span style="margin-top: 6px; margin-right:2px;">Ksh</span>
-                                            <h2 style="font-size: 1.6rem;"> {{ numeral(totalPayment).format('0,0')   }}</h2>
+                                            <h2 style="font-size: 1.6rem;"> {{ millify(numeral(totalPayment).format('0,0'))   }}</h2>
                                         </div>
                                     </v-card-actions>
                                 </div>
@@ -57,15 +57,14 @@
                             <v-card color="#d49306" dark elevation="0">
                                 <div class="container">
                                     <v-chip>
-                                        <v-icon>mdi-progress-pencil</v-icon>
+                                        <v-icon>mdi-vote</v-icon>
                                     </v-chip>
                                     <v-card-subtitle>
-                                        <h4>Total votes</h4>
+                                        <h5>Total votes</h5>
                                     </v-card-subtitle>
                                     <v-card-actions>
                                         <div class="d-flex">
-                                            <span style="margin-top: 8px; margin-right:2px;">Ksh</span>
-                                            <h2> {{ numeral(totalVotes).format('0,0')  }}</h2>
+                                            <h2> {{ millify(numeral(totalVotes).format('0,0'))  }}</h2>
                                         </div>
                                     </v-card-actions>
                                 </div>
@@ -78,15 +77,15 @@
                                     <v-card-actions>
                                         <div class="">
                                             Nominess
-                                            <h2> {{ numeral(totalNominees).format('0,0') }}</h2>
+                                            <h2> {{millify( numeral(totalNominees).format('0,0')) }}</h2>
                                         </div>
-                                      
+
                                     </v-card-actions>
-                                      <v-card-actions>
-                                        
+                                    <v-card-actions>
+
                                         <div class="">
                                             Categories
-                                            <h2> {{ numeral(totalCategories).format('0,0') }}</h2>
+                                            <h2> {{ millify(numeral(totalCategories).format('0,0')) }}</h2>
                                         </div>
                                     </v-card-actions>
                                 </div>
@@ -96,7 +95,7 @@
                         <v-col cols="12" sm="3" md="3">
                             <v-card color="white" elevation="0">
                                 <div class="container">
-                                    
+
                                     <v-card-subtitle>
                                         <h4>Count down</h4>
                                     </v-card-subtitle>
@@ -115,7 +114,7 @@
                 <div class="">
                     <v-card elevation="0">
                         <div>
-                            <v-card-title>Payments by Month</v-card-title>
+                            <v-card-title>Top Categories</v-card-title>
                             <div>
                                 <MyBarChart :estateId="estateId" />
                                 <!-- <HouseholdBarChart :payments="paymentData" /> -->
@@ -127,11 +126,10 @@
             </v-col>
             <v-col cols="12" sm="6" md="6">
                 <div class="">
-
-                    <v-card elevation="0">
-
-                        <div>
-                            <v-card-title>Household registration trend</v-card-title>
+ 
+                    <v-card elevation="0" color="#d49306" >
+                        <div class="container">
+                            <v-card-title>Voting trend</v-card-title>
                             <div>
                                 <barChart :estateId="estateId" />
                                 <!-- <HouseholdBarChart :payments="paymentData" /> -->
@@ -145,9 +143,15 @@
             <v-col cols="12" sm="6" md="6" lg="6">
                 <div>
                     <div class="container">
+                         
                         <v-card elevation="0">
-                            <v-subheader>HouseHolds</v-subheader>
-                            <v-data-table :headers="headers" :items="houseHolds" :items-per-page="5" class="elevation-0">
+                            <v-card-actiuons>
+                                <div class="d-flex">
+
+                                </div>
+                            </v-card-actiuons>
+                            <v-subheader> <h5>Nominee</h5> </v-subheader>
+                            <v-data-table :headers="headers45" :items="nominees" :items-per-page="5" class="elevation-0">
                                 <!-- index column -->
                                 <template #item.index="{ item }">
                                     {{ item.index }}
@@ -174,7 +178,29 @@
                 <div class="container">
 
                     <v-card elevation="0">
-                        <paymentSummary :estateId="estateId" />
+                          <div class="container">
+                    <div>
+                        <v-card elevation="0">
+                            <v-subheader><h5>Categories </h5></v-subheader>
+                            <v-data-table :headers="headers44" :items="categories" :items-per-page="5" class="elevation-0">
+                                <!-- index column -->
+                                <template #item.index="{ item }">
+                                    {{ item.index }}
+                                </template>
+
+                                <!-- overdue cell -->
+                                <template #item.overdue="{ item }">
+                                    <span :class="{ 'red--text': item.overdue < 0, 'green--text': item.overdue >= 0 }">
+                                        {{ formatCurrency(item.overdue) }}
+                                    </span>
+                                </template>
+
+                                <!-- any month cell could use the default -->
+                            </v-data-table>
+                        </v-card>
+                    </div>
+
+                </div>
                     </v-card>
 
                 </div>
@@ -183,8 +209,8 @@
                 <div class="container">
                     <div>
                         <v-card elevation="0">
-                            <v-subheader>Recent payments</v-subheader>
-                            <v-data-table :headers="headers44" :items="paymentsReceipt" :items-per-page="5" class="elevation-0">
+                            <v-subheader>Transactions</v-subheader>
+                            <v-data-table :headers="headers" :items="payments" :items-per-page="5" class="elevation-0">
                                 <!-- index column -->
                                 <template #item.index="{ item }">
                                     {{ item.index }}
@@ -206,17 +232,7 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="6" lg="6">
-                <v-row>
-                    <v-col cols="12" sm="12" md="12">
-                        <v-subheader>
-                            <h4>Estate Map Location</h4>
-                        </v-subheader>
-                        <div class="container">
-                            <Map />
-                        </div>
-                    </v-col>
-
-                </v-row>
+               
             </v-col>
             <v-col cols="12" sm="6" md="6" lg="6"> </v-col>
             <v-col cols="12" sm="6" md="6" lg="6">
@@ -355,14 +371,14 @@
 </template>
 
 <script>
-import MyBarChart from '@/components/charts/barChartPayment'
+import MyBarChart from '@/components/charts/votesCategory.vue'
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import dayjs from "@nuxtjs/dayjs";
 import moment from "moment";
 import numeral from 'numeral';
 import Map from "@/components/map.vue";
-
+import  millify  from 'millify';
 import HouseholdBarChart from '~/components/charts/HouseholdBarChart.vue'
 import barChart from '@/components/charts/barChartTrends.vue'
 import paymentSummary from "@/components/paymentSummary.vue";
@@ -385,11 +401,11 @@ export default {
     },
     mounted() {
         console.log("Estate ID:", this.estateId);
-        this.Fetch_AllOfficials();
         // this.Fetch_ActiveHouseholds();
-        this.Fetch_PostAllEstates();
         this.Fetch_AllPayments();
-        this.Fetch_EstateReceipt();
+        this.Fetch_Payments();
+        this.fetchCategories();
+        this.fetchNominees();
     },
     components: {
         Countdown,
@@ -401,6 +417,7 @@ export default {
     },
     data() {
         return {
+            millify,
             numeral,
             headers2: [
 
@@ -438,56 +455,34 @@ export default {
 
             ],
             headers: [{
-                    text: "#",
-                    value: "index",
+                    text: "Reciept",
+                    value: "transaction_id",
                     width: 50,
                 },
                 {
-                    text: "Name",
-                    value: "primary_owner",
+                    text: "Payment method",
+                    value: "payment_method",
                     width: 200,
                 },
                 {
-                    text: "House no",
-                    value: "house_number",
+                    text: "Status",
+                    value: "payment_status",
                     align: "right",
                 },
 
                 {
                     text: "Phone no",
-                    value: "contact_number",
+                    value: "phone_number",
                     align: "right",
                 },
                 {
-                    text: "Court",
-                    value: "court",
-                    align: "right",
-                },
-
-                {
-                    text: "Section",
-                    value: "section",
+                    text: "Amount",
+                    value: "amount_paid",
                     align: "right",
                 },
 
             ],
-            paymentData: [{
-                    month: 'January',
-                    amount: 1200
-                },
-                {
-                    month: 'February',
-                    amount: 950
-                },
-                {
-                    month: 'March',
-                    amount: 1600
-                },
-                {
-                    month: 'April',
-                    amount: 1100
-                }
-            ],
+
             roles: ["Chairman", "Secretary", "Treasurer"],
             dialog: false,
             totalEstate: 0,
@@ -599,34 +594,44 @@ export default {
             householdOwner: "",
             totalPayment: 0,
             totalVotes: 0,
-            headers44: [{
-                    text: "#",
-                    value: "index",
+            categories: [],
+            nominees:[],
+            headers45: [{
+                    text: "category ID",
+                    value: "category_id",
                     width: 50,
                 },
                 {
-                    text: "Method",
-                    value: "payment_method",
+                    text: "Name",
+                    value: "nominee_name",
+                    align: "left",
+                },
+                
+                {
+                    text: "Location",
+                    value: "location",
+                    align: "right",
+                },
+                {
+                    text: "Church",
+                    value: "church",
+                    align: "right",
+                },
+
+            ],
+            headers44: [{
+                    text: "category ID",
+                    value: "id",
+                    width: 50,
+                },
+                {
+                    text: "Category",
+                    value: "name",
                     width: 200,
                 },
                 {
-                    text: "Receipt",
-                    value: "transaction_id",
-                    align: "right",
-                },
-                {
-                    text: "Status",
-                    value: "payment_status",
-                    align: "right",
-                },
-                {
-                    text: "Charge id",
-                    value: "charge_id",
-                    align: "right",
-                },
-                {
-                    text: "Amount",
-                    value: "amount_paid",
+                    text: "Description",
+                    value: "description",
                     align: "right",
                 },
 
@@ -634,6 +639,32 @@ export default {
         };
     },
     methods: {
+        async fetchCategories() {
+
+            try {
+                const {
+                    data
+                } = await axios.get(
+                    "https://balanced-ambition-production.up.railway.app/api/categories/getAll"
+                );
+                this.categories = data;
+            } catch (error) {
+                console.error("Error loading categories:", error);
+            }
+        },
+        async fetchNominees() {
+
+            try {
+                const {
+                    data
+                } = await axios.get(
+                    "https://balanced-ambition-production.up.railway.app/api/nominee/list"
+                );
+                this.nominees = data;
+            } catch (error) {
+                console.error("Error loading categories:", error);
+            }
+        },
         async Fetch_EstateReceipt() {
             let that = this;
             that.paymentsReceipt.splice(that.paymentsReceipt);
@@ -953,20 +984,39 @@ export default {
                     });
             }
         },
+        async Fetch_Payments() {
+            let that = this;
+            axios
+                .get("https://balanced-ambition-production.up.railway.app/transaction/getAllPayments")
+                .then(function (response) {
+                    if (response.status === 200) {
+                        that.payments = response.data;
+                        // Calculate totals from all rows
+
+                        console.log("Payments list", that.payments);
+                    } else if (response.status === 400) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = response.data;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.snackbarText2 = error.message || "An error occurred";
+                    that.snackbar2 = true;
+                });
+        },
         async Fetch_AllPayments() {
             let that = this;
             axios
                 .get("https://balanced-ambition-production.up.railway.app/api/votes/dashboard-total")
                 .then(function (response) {
                     if (response.status === 200) {
-                        that.payments = response.data.total_revenue;
                         // Calculate totals from all rows
                         that.totalPayment = response.data.total_revenue;
                         that.totalVotes = response.data.total_votes;
                         that.totalNominees = response.data.total_nominees;
                         that.totalCategories = response.data.total_categories;
 
-                        console.log("Payments total", that.payments);
                     } else if (response.status === 400) {
                         that.snackbar2 = true;
                         that.snackbarText2 = response.data;
