@@ -40,15 +40,16 @@
                                             <v-icon color="#808080">mdi-refresh</v-icon>
                                         </v-btn>
                                     </div>
-                                    <v-card-subtitle>
-                                        <h5>Total revenue </h5>
-                                    </v-card-subtitle>
                                     <v-card-actions>
                                         <div class="d-flex">
-                                            <span style="margin-top: 6px; margin-right:2px;">Ksh</span>
-                                            <h2 style="font-size: 1.6rem;"> {{ millify(numeral(totalPayment).format('0,0'))   }}</h2>
+                                            <span style="margin-top: 8px; margin-right:5px;">Ksh</span>
+                                            <h2 style="font-size: 1.8rem;"> {{ millify(numeral(totalPayment).format('0,0'))   }}</h2>
                                         </div>
                                     </v-card-actions>
+                                    <v-card-subtitle>
+                                        <h6>Total revenue </h6>
+                                    </v-card-subtitle>
+                                    
                                 </div>
 
                             </v-card>
@@ -59,14 +60,15 @@
                                     <v-chip>
                                         <v-icon>mdi-vote</v-icon>
                                     </v-chip>
-                                    <v-card-subtitle>
-                                        <h5>Total votes</h5>
-                                    </v-card-subtitle>
-                                    <v-card-actions>
+                                     <v-card-actions>
                                         <div class="d-flex">
-                                            <h2> {{ millify(numeral(totalVotes).format('0,0'))  }}</h2>
+                                            <h2 style="font-size: 1.8rem;"> {{ millify(numeral(totalVotes).format('0,0'))  }}</h2>
                                         </div>
                                     </v-card-actions>
+                                    <v-card-subtitle>
+                                        <h6>Total votes</h6>
+                                    </v-card-subtitle>
+                                   
                                 </div>
                             </v-card>
                         </v-col>
@@ -93,7 +95,7 @@
                             </v-card>
                         </v-col>
                         <v-col cols="12" sm="3" md="3">
-                            <v-card color="white" elevation="0">
+                            <v-card color="black" elevation="0" dark >
                                 <div class="container">
 
                                     <v-card-subtitle>
@@ -246,15 +248,15 @@
             <v-col cols="12" sm="12" md="12"> </v-col>
         </v-row>
 
-        <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
+        <!-- <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
             {{ snackbarText_s }}
         </v-snackbar>
         <v-snackbar color="success" :timeout="2000" v-model="snackbar" outlined center>
             {{ snackbarText }}
-        </v-snackbar>
-        <v-snackbar color="error" :timeout="2500" v-model="snackbar2" outlined center>
+        </v-snackbar> -->
+        <!-- <v-snackbar color="error" :timeout="2500" v-model="snackbar2" outlined center>
             {{ snackbarText2 }}
-        </v-snackbar>
+        </v-snackbar> -->
     </v-card>
     <v-row justify="space-around">
         <v-col cols="auto">

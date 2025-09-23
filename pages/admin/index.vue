@@ -244,8 +244,7 @@ export default {
         // this.Fetch_ActiveHouseholds();
         this.Fetch_PostAllEstates();
         this.Fetch_AllPayments();
-        this.Fetch_ActiveSubs();
-        this.Check_Billing();
+
     },
     components: {
         Countdown,
