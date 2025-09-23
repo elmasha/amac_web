@@ -200,7 +200,6 @@
 
                             <div class="d-flex">
                                 <div>
-                                    <label for="searchCatResult"> Choose category</label>
                                     <br>
                                     <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
                                 </div>

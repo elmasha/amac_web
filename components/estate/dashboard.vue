@@ -20,7 +20,7 @@
         </div>
     </v-card>
     <v-card color="#f0f0f0" elevation="0" class="" style="padding: 1rem;">
-        <v-row >
+        <v-row>
             <v-col cols="12" sm="12" md="12">
 
             </v-col>
@@ -28,22 +28,24 @@
                 <div class="">
 
                     <v-row class="" v-show="true">
-                        <v-col cols="12" sm="4" md="4">
+                        <v-col cols="12" sm="3" md="3">
                             <v-card color="black" elevation="0" dark>
                                 <div class="container">
                                     <div class="d-flex">
-                                        <v-chip color="#b7ff005b">
-                                        <v-icon color="#b6ff00">mdi-cash-multiple</v-icon>
-                                    </v-chip>
-                                    <v-spacer></v-spacer>
-                                    <v-btn icon @click="Fetch_AllPayments"> <v-icon color="#808080">mdi-refresh</v-icon></v-btn>
+                                        <v-chip color="black" dark>
+                                            <v-icon color="#d49306">mdi-cash-multiple</v-icon>
+                                        </v-chip>
+                                        <v-spacer></v-spacer>
+                                        <v-btn icon @click="Fetch_AllPayments">
+                                            <v-icon color="#808080">mdi-refresh</v-icon>
+                                        </v-btn>
                                     </div>
                                     <v-card-subtitle>
-                                        <h4>Total Payment </h4>
+                                        <h4>Total revenue </h4>
                                     </v-card-subtitle>
                                     <v-card-actions>
                                         <div class="d-flex">
-                                            <span style="margin-top: 10px; margin-right:2px;">Ksh</span>
+                                            <span style="margin-top: 6px; margin-right:2px;">Ksh</span>
                                             <h2 style="font-size: 1.6rem;"> {{ numeral(totalPayment).format('0,0')   }}</h2>
                                         </div>
                                     </v-card-actions>
@@ -51,75 +53,55 @@
 
                             </v-card>
                         </v-col>
-                        <v-col cols="6" sm="2" md="2">
-                            <v-card color="#8051FF" dark elevation="0">
+                        <v-col cols="6" sm="3" md="3">
+                            <v-card color="#d49306" dark elevation="0">
                                 <div class="container">
                                     <v-chip>
                                         <v-icon>mdi-progress-pencil</v-icon>
                                     </v-chip>
                                     <v-card-subtitle>
-                                        <h4>Pending Payments</h4>
+                                        <h4>Total votes</h4>
                                     </v-card-subtitle>
                                     <v-card-actions>
                                         <div class="d-flex">
-                                            <span style="margin-top: 10px; margin-right:2px;">Ksh</span>
-                                            <h2> {{ numeral(totalPendingPayment).format('0,0')  }}</h2>
+                                            <span style="margin-top: 8px; margin-right:2px;">Ksh</span>
+                                            <h2> {{ numeral(totalVotes).format('0,0')  }}</h2>
                                         </div>
                                     </v-card-actions>
                                 </div>
                             </v-card>
                         </v-col>
-
-                        <v-col cols="6" sm="2" md="2">
+                        <v-col cols="6" sm="3" md="3">
                             <v-card color="white" elevation="0">
                                 <div class="container">
-                                    <v-chip>
-                                        <v-icon color="#000">mdi-home-city</v-icon>
-                                    </v-chip>
-                                    <v-card-subtitle>
-                                        <h4>Total Households</h4>
-                                    </v-card-subtitle>
+
                                     <v-card-actions>
-                                        <div class="d-flex">
-                                            <h2> {{ numeral(totalResidence).format('0,0') }}</h2>
+                                        <div class="">
+                                            Nominess
+                                            <h2> {{ numeral(totalNominees).format('0,0') }}</h2>
+                                        </div>
+                                      
+                                    </v-card-actions>
+                                      <v-card-actions>
+                                        
+                                        <div class="">
+                                            Categories
+                                            <h2> {{ numeral(totalCategories).format('0,0') }}</h2>
                                         </div>
                                     </v-card-actions>
                                 </div>
 
                             </v-card>
                         </v-col>
-
-                        <v-col cols="6" sm="2" md="2">
+                        <v-col cols="12" sm="3" md="3">
                             <v-card color="white" elevation="0">
                                 <div class="container">
-                                    <v-chip>
-                                        <v-icon color="#000">mdi-home-account</v-icon>
-                                    </v-chip>
+                                    
                                     <v-card-subtitle>
-                                        <h4>Active Households</h4>
+                                        <h4>Count down</h4>
                                     </v-card-subtitle>
                                     <v-card-actions>
-                                        <div class="d-flex">
-                                            <h2> {{ numeral(totalActiveResidence).format('0,0') }}</h2>
-                                        </div>
-                                    </v-card-actions>
-                                </div>
-                            </v-card>
-                        </v-col>
-                        <v-col cols="6" sm="2" md="2">
-                            <v-card color="white" elevation="0">
-                                <div class="container">
-                                    <v-chip>
-                                        <v-icon color="#000">mdi-white-balance-incandescent</v-icon>
-                                    </v-chip>
-                                    <v-card-subtitle>
-                                          <h4></h4>
-                                        <h4>Open   Incidents</h4>
-                                    </v-card-subtitle>
-                                    <v-card-actions>
-                                        <div class="d-flex">
-                                            <h2> {{ numeral(0).format('0,0') }}</h2>
-                                        </div>
+                                        <Countdown targetDate="2025-09-30" />
                                     </v-card-actions>
                                 </div>
 
@@ -135,7 +117,7 @@
                         <div>
                             <v-card-title>Payments by Month</v-card-title>
                             <div>
-                                <MyBarChart :estateId="estateId"/>
+                                <MyBarChart :estateId="estateId" />
                                 <!-- <HouseholdBarChart :payments="paymentData" /> -->
                             </div>
                         </div>
@@ -266,7 +248,7 @@
           </template> -->
                 <template v-slot:default="dialog">
                     <v-card>
-                        <v-toolbar color="#b6ff00" light>Add Official/Agent
+                        <v-toolbar color="#d49306" light>Add Official/Agent
                             <br />
 
                             <v-spacer></v-spacer>
@@ -362,7 +344,7 @@
 
                             <v-text-field v-model="email" label="Email Address" outlined required></v-text-field>
 
-                            <v-btn color="#b6ff00" class="mt-4" type="submit" style="color: black">Submit</v-btn>
+                            <v-btn color="#d49306" class="mt-4" type="submit" style="color: black">Submit</v-btn>
                         </v-form>
                     </v-card>
                 </template>
@@ -384,6 +366,7 @@ import Map from "@/components/map.vue";
 import HouseholdBarChart from '~/components/charts/HouseholdBarChart.vue'
 import barChart from '@/components/charts/barChartTrends.vue'
 import paymentSummary from "@/components/paymentSummary.vue";
+import Countdown from '@/components/Countdown.vue';
 
 import {
     uuid
@@ -409,6 +392,7 @@ export default {
         this.Fetch_EstateReceipt();
     },
     components: {
+        Countdown,
         Map,
         paymentSummary,
         HouseholdBarChart,
@@ -507,7 +491,8 @@ export default {
             roles: ["Chairman", "Secretary", "Treasurer"],
             dialog: false,
             totalEstate: 0,
-            totalResidence: 0,
+            totalNominees: 0,
+            totalCategories: 0,
             totalActiveResidence: 0,
             estate_name: null,
             estate_urn: null,
@@ -613,40 +598,39 @@ export default {
             body: "",
             householdOwner: "",
             totalPayment: 0,
-            totalPendingPayment: 0,
-             headers44: [
-        {
-          text: "#",
-          value: "index",
-          width: 50,
-        },
-        {
-          text: "Method",
-          value: "payment_method",
-          width: 200,
-        },
-        {
-          text: "Receipt",
-          value: "transaction_id",
-          align: "right",
-        },
-        {
-          text: "Status",
-          value: "payment_status",
-          align: "right",
-        },
-        {
-          text: "Charge id",
-          value: "charge_id",
-          align: "right",
-        },
-        {
-          text: "Amount",
-          value: "amount_paid",
-          align: "right",
-        },
-        
-      ],
+            totalVotes: 0,
+            headers44: [{
+                    text: "#",
+                    value: "index",
+                    width: 50,
+                },
+                {
+                    text: "Method",
+                    value: "payment_method",
+                    width: 200,
+                },
+                {
+                    text: "Receipt",
+                    value: "transaction_id",
+                    align: "right",
+                },
+                {
+                    text: "Status",
+                    value: "payment_status",
+                    align: "right",
+                },
+                {
+                    text: "Charge id",
+                    value: "charge_id",
+                    align: "right",
+                },
+                {
+                    text: "Amount",
+                    value: "amount_paid",
+                    align: "right",
+                },
+
+            ],
         };
     },
     methods: {
@@ -654,7 +638,7 @@ export default {
             let that = this;
             that.paymentsReceipt.splice(that.paymentsReceipt);
             axios
-                .get("https://web-production-27f796.up.railway.app/api/payments/getByEstateId/"+this.estateId, {})
+                .get("https://web-production-27f796.up.railway.app/api/payments/getByEstateId/" + this.estateId, {})
                 .then(function (response) {
                     if (response.status == 200) {
                         // that.snackbar = true;
@@ -970,29 +954,30 @@ export default {
             }
         },
         async Fetch_AllPayments() {
-    let that = this;
-    axios
-        .get("https://web-production-27f796.up.railway.app/api/household-payments/year-by-estate/" + this.estateId)
-        .then(function (response) {
-            if (response.status === 200) {
-                that.payments = response.data;
+            let that = this;
+            axios
+                .get("https://balanced-ambition-production.up.railway.app/api/votes/dashboard-total")
+                .then(function (response) {
+                    if (response.status === 200) {
+                        that.payments = response.data.total_revenue;
+                        // Calculate totals from all rows
+                        that.totalPayment = response.data.total_revenue;
+                        that.totalVotes = response.data.total_votes;
+                        that.totalNominees = response.data.total_nominees;
+                        that.totalCategories = response.data.total_categories;
 
-                // Calculate totals from all rows
-                that.totalPayment = that.payments.reduce((sum, row) => sum + Number(row.total_paid || 0), 0);
-                that.totalPendingPayment = that.payments.reduce((sum, row) => sum + Number(row.overdue || 0), 0);
-
-                console.log("Payments total", that.totalPayment, that.totalPendingPayment);
-            } else if (response.status === 400) {
-                that.snackbar2 = true;
-                that.snackbarText2 = response.data;
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-            that.snackbarText2 = error.message || "An error occurred";
-            that.snackbar2 = true;
-        });
-},
+                        console.log("Payments total", that.payments);
+                    } else if (response.status === 400) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = response.data;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.snackbarText2 = error.message || "An error occurred";
+                    that.snackbar2 = true;
+                });
+        },
         async Fetch_ActiveHouseholds() {
             let that = this;
             axios
@@ -1019,13 +1004,13 @@ export default {
             let that = this;
             that.houseHolds.splice(that.houseHolds);
             axios
-                .get("https://web-production-27f796.up.railway.app/api/households/getBHsHldEstId/"+this.estateId, {})
+                .get("https://web-production-27f796.up.railway.app/api/households/getBHsHldEstId/" + this.estateId, {})
                 .then(function (response) {
                     if (response.status == 200) {
                         // that.snackbar = true;
                         // that.snackbarText = response.data;
                         that.houseHolds = response.data;
-                        that.totalResidence = response.data.length;
+                        that.totalNominees = response.data.length;
                         console.log("Households", that.houseHolds);
                     } else if (response.status == 400) {
                         that.snackbar2 = true;

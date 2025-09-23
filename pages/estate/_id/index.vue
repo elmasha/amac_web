@@ -5,10 +5,7 @@
             <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
             <div class="d-flex" style="background-color: #b6ff00; border-radius: 120px; padding: 4px">
-                <v-avatar color="black" size="28">
-                    <span style="color: #b6ff00">El</span>
-                </v-avatar>
-                <v-toolbar-title style="color: black; margin-start: 8px; margin-right: 8px">Intech</v-toolbar-title>
+               
             </div>
 
             <v-spacer></v-spacer>
@@ -225,6 +222,8 @@ import households from "@/components/estate/households.vue";
 import estateConfig from "@/components/estate/estateConfig.vue";
 import estateOfficials from "@/components/estate/estateOfficials.vue";
 import account from "@/components/estate/account.vue";
+import Countdown from '@/components/Countdown.vue';
+
 
 
 import {
@@ -250,6 +249,7 @@ export default {
         this.Check_Billing();
     },
     components: {
+        Countdown,
         Map,
         dashboard,
         billing,
