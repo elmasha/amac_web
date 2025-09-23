@@ -79,7 +79,6 @@
                     <households v-show="d_5" :estateId="estateId" />
                     <estateConfig v-show="d_7" :estateId="estateId" />
                     <estateOfficials v-show="d_4" :estateId="estateId" />                    
-                    <billing :estateId="estateId" v-show="d_3" />
                     <account v-show="d_2" :estateId="estateId" />
                 </div>
             </v-col>
@@ -273,7 +272,6 @@ export default {
                     icon: 'mdi-view-dashboard'
                 },
                 
-            
                 {
                     title: 'Nominees',
                     icon: 'mdi-home-group'
