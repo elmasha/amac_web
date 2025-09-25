@@ -1,24 +1,67 @@
 <template>
 <div>
     <v-app-bar color="black" dark elevation="0">
-        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="drawer = true" v-show="navIcon"></v-app-bar-nav-icon>
 
         <div class="d-flex">
             <v-avatar color="black" size="28">
                 <v-img :src="logo"></v-img>
             </v-avatar>
-            <v-toolbar-title style="margin-left: 10px;">Amac voting booth</v-toolbar-title>
+            <v-toolbar-title style="margin-left: 10px;">Amac portal</v-toolbar-title>
         </div>
 
         <v-spacer></v-spacer>
-        <v-btn icon>
-            <v-icon>mdi-bell</v-icon>
-        </v-btn>
-        <v-btn icon>
-            <v-icon>mdi-logout</v-icon>
-        </v-btn>
+     
     </v-app-bar>
-    <v-container>
+
+    <v-navigation-drawer v-model="drawer" color="black" light absolute temporary height="100vh">
+        <v-list>
+<br>
+<br>
+<br>
+            <v-list-item style="color: aliceblue;" @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false, drawer = false">
+
+                <v-list-item-content >
+                    <div class="d-flex">
+                        <v-list-item-title style="margin: 8px;">Overview</v-list-item-title>
+                    </div>
+                </v-list-item-content>
+                <v-list-item-action @click="MoveNavigation(item.title), drawer = false">
+
+                </v-list-item-action>
+            </v-list-item>
+
+            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false, drawer = false">
+                <div class="d-flex">
+                    <v-list-item-title style="margin: 8px;"   >Live result</v-list-item-title>
+                </div>
+            </v-list-item>
+            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false,drawer = false">
+                <div class="d-flex">
+                    <v-list-item-title style="margin: 8px;">Vote</v-list-item-title>
+                </div>
+            </v-list-item>
+            <v-list-item style="color: aliceblue;" @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false,drawer = false">
+                <div class="d-flex">
+                    <v-list-item-title style="margin: 8px;">Category</v-list-item-title>
+                </div>
+            </v-list-item>
+            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true,drawer = false">
+                <div class="d-flex">
+                    <v-list-item-title style="margin: 8px;">Nominees</v-list-item-title>
+                </div>
+            </v-list-item>
+
+        </v-list>
+
+        <template v-slot:append>
+            <div class="pa-2">
+              All right reserved @2025
+            </div>
+        </template>
+    </v-navigation-drawer>
+
+    <v-container v-resize="onResize">
 
         <v-tabs color="black">
             <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
@@ -90,7 +133,7 @@
 
                         <p>Welcome to the Annual Awards Voting Platform. Here, you can explore categories, view nominees, and take part in recognizing outstanding achievements. Nominations remain open as we count down to the official voting date, when you will have the opportunity to cast your vote and support your favorites.</p>
 
-                        <Countdown targetDate="2025-09-30" />
+                        <Countdown targetDate="2025-10-11" />
 
                         <div class="d-flex">
                             <v-btn outlined color="black" @click="nomineeDialog = true">Nominate now</v-btn>
@@ -464,7 +507,13 @@ export default {
     },
     data() {
         return {
+            navIcon:false,
+            windowSize: {
+                x: window.innerHeight,
+                y: window.innerWidth,
+            },
             numeral,
+            drawer: false,
             searchCatResult: null,
             nomineeName: "",
             progress_bar: false,
@@ -492,37 +541,7 @@ export default {
             voting: require("@/assets/voting.svg"),
             voting2: require("@/assets/voting2.svg"),
             logo: require("@/assets/logo.png"),
-            questions: [{
-                    id: 1,
-                    text: "If you could choose any age to stay forever, which would it be?",
-                    avg: 8,
-                    votes: 67
-                },
-                {
-                    id: 2,
-                    text: "How likely are you to answer this question?",
-                    avg: 9,
-                    votes: 27
-                },
-                {
-                    id: 3,
-                    text: "Which languages do you speak?",
-                    avg: 6,
-                    votes: 27
-                },
-                {
-                    id: 4,
-                    text: "Why did you decide to join this event?",
-                    avg: 3,
-                    votes: 27
-                },
-                {
-                    id: 5,
-                    text: "Which of the following statements are true?",
-                    avg: 6,
-                    votes: 27
-                }
-            ],
+
             chartData: {
                 labels: ["10", "9", "8"],
                 datasets: [{
@@ -582,6 +601,19 @@ export default {
         setInterval(this.fetchAll(), 5000); // refresh every 5 seconds
     },
     methods: {
+         onResize() {
+            this.windowSize = {
+                x: window.innerWidth,
+                y: window.innerHeight,
+            };
+            console.log("size", this.windowSize.x);
+            if (this.windowSize.x < 950) {
+                this.navIcon = true;
+            } else {
+                this.navIcon = false;
+            }
+            return this.windowSize;
+        },
         fetchAll() {
             //  this.fetchCategories();
             //  this.fetchNomineesList();

@@ -1,8 +1,8 @@
 <template>
 <div>
-    <div>
+    <v-card elevation="0" color="black" dark>
         <bar-chart class="chart-container" :chart-data="chartData" :options="chartOptions" ref="barChart"></bar-chart>
-    </div>
+    </v-card>
 </div>
 </template>
 

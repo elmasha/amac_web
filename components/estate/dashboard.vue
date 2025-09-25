@@ -100,10 +100,10 @@
 
                                     <v-card-subtitle>
                                         <h4>Count down</h4>
+                                         <p style="color: grey; font-size: 0.8rem;">Count down to voting date. </p>
+                                             <Countdown targetDate="2025-10-11" />
                                     </v-card-subtitle>
-                                    <v-card-actions>
-                                        <Countdown targetDate="2025-09-30" />
-                                    </v-card-actions>
+                                    
                                 </div>
 
                             </v-card>
@@ -129,7 +129,7 @@
             <v-col cols="12" sm="6" md="6">
                 <div class="">
 
-                    <v-card elevation="0" color="#d49306">
+                    <v-card elevation="0" color="black" dark>
                         <div class="container">
                             <v-card-title>Voting trend</v-card-title>
                             <div>

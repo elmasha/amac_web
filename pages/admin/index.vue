@@ -19,7 +19,7 @@
             <v-btn icon>
                 <v-icon>mdi-bell</v-icon>
             </v-btn>
-            <v-btn icon>
+            <v-btn icon @click="logout">
                 <v-icon>mdi-logout</v-icon>
             </v-btn>
         </v-app-bar>

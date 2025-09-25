@@ -1,80 +1,49 @@
-<template>
-<v-img :src="loginbg">
-    <v-app-bar color="#ffffff00" light elevation="0">
+<template >
+<div style="background-color:#000; height: 100vh;" elevetion="0" >
+    <v-app-bar color="#ffffff00" dark elevation="0">
 
-        <div class="d-flex">
+       
 
-            <v-toolbar-title style="color: black; margin-start: 8px; margin-right: 8px">Makaazi</v-toolbar-title>
-        </div>
-
-        <v-spacer></v-spacer>
 
     </v-app-bar>
     <div class="container ">
         <v-progress-linear v-show="progress_bar" indeterminate color="green"></v-progress-linear>
-        <div class="container">
-            <v-card class="mx-auto text-center" max-width="354" style="padding: 10px;">
+        <div class="">
+              <div class="d-flex">
+            <v-spacer></v-spacer>
+ <div class="text-center">
+    <v-avatar color="black" size="108">
+                <v-img :src="logo"></v-img>
+            </v-avatar>
+            <v-toolbar-title style="color: white; margin-start: 8px; margin-right: 8px">Amac</v-toolbar-title>
+ </div>
+            <v-spacer></v-spacer>
+        </div>
+            <v-card class="mx-auto text-center" max-width="354" style="padding: 10px;" color="black" dark>
 
-                <br>
-                <v-card-actions>
-
-                    <v-img contain :src="enter" height="50"></v-img>
-
-                </v-card-actions>
-
+            
                 <v-card-subtitle>
                     <h3 style="font-size: 1.3rem; margin: 12px;"> Sign in with email</h3>
 
-                    1,000 miles of wonder
                 </v-card-subtitle>
 
                 <div class="container">
                     <v-form ref="form" v-model="valid" lazy-validation>
 
-                        <v-autocomplete v-model="select" :loading="loading" :items="items" :search-input.sync="search" cache-items @change="getEStateID(select)" class="mx-4" flat hide-no-data hide-details label="   Which estate are you from?   " solo></v-autocomplete>
-                        <div>
-                            <v-card-subtitle>
-                                {{select}}
-                            </v-card-subtitle>
-
-                        </div>
+                        <!-- <v-autocomplete v-model="select" :loading="loading" :items="items" :search-input.sync="search" cache-items @change="getEStateID(select)" class="mx-4" flat hide-no-data hide-details label="   Which estate are you from?   " solo></v-autocomplete> -->
+                   
 
                         <v-text-field v-model="auth.email" :rules="emailRules" label="E-mail" required></v-text-field>
 
                         <v-text-field v-model="auth.password" :counter="10" :rules="nameRules" label="Password" type="password"></v-text-field>
 
-                        <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?" required></v-checkbox>
 
-                        <v-btn rounded width="100%" style="color: aliceblue;" color="black" @click="login">
-                            Get started
+                        <br>
+                        <v-btn rounded width="70%" style="color: white;" color="#d49306" @click="login">
+                            Sign In
                         </v-btn>
                     </v-form>
-                    <br>
-                    <h4>
-                        <p>Or sign in with</p>
-                    </h4>
-                    <br>
-                    <div class="d-flex">
-                        <a @click="signUpGoogle">
-                            <v-card outlined class="mx-auto text-center" max-width="144">
-                                <div class="container">
-                                    <v-img contain :src="google" height="20"></v-img>
-                                </div>
-
-                            </v-card>
-                        </a>
-                        <v-spacer></v-spacer>
-                        <a>
-                            <v-card outlined class="mx-auto text-center" max-width="144">
-                                <div class="container">
-                                    <v-img contain :src="facebook" height="20"></v-img>
-                                </div>
-
-                            </v-card>
-                        </a>
-
-                    </div>
-
+                   
                 </div>
 
             </v-card>
@@ -87,7 +56,7 @@
             {{ snackbarText2 }}
         </v-snackbar>
     </div>
-</v-img>
+</div>
 </template>
 
 <script>
@@ -100,6 +69,7 @@ Vue.use(VueCountryCode);
 export default {
     data() {
         return {
+            logo: require("@/assets/logo.png"),
             estates: [],
             estate_image: "",
             estate_name: "",
@@ -118,7 +88,7 @@ export default {
             google: require("@/assets/google.png"),
             loginbg: require("@/assets/login_bg.png"),
             enter: require("@/assets/enter.png"),
-            logo: require("@/assets/logo.svg"),
+            logo: require("@/assets/logo.png"),
             intput_username: "",
             intput_email: "",
             intput_farmName: "",
@@ -193,7 +163,7 @@ export default {
         };
     },
     mounted() {
-        this.Fetch_PostAllEstates();
+        // this.Fetch_PostAllEstates();
     },
     watch: {
         search(val) {
@@ -382,14 +352,14 @@ export default {
                     that.showauth = true;
                     that.showLogin = true;
                     that.auth_state = true;
-                    that.$router.push(`/estate/${that.estate_id}`);
+                    that.$router.push(`/admin`);
                 });
               }
         },
         login() {
-           if (this.select == null) {
+           if (this.auth == null) {
                 this.snackbar2 = true;
-                this.snackbarText2 = "Provide your estate";
+                this.snackbarText2 = "Provide email and password";
             }  else {
             let that = this;
             that.progress_bar = true;
@@ -404,7 +374,7 @@ export default {
                 .then((user) => {
                     that.progress_bar = false;
                     //we are signed in
-                    that.$router.push(`/estate/${that.estate_id}`);
+                    that.$router.push(`/admin`);
                 });
               }
         },
