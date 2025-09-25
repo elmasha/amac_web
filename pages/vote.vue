@@ -147,7 +147,7 @@
                             <v-card-text>
                                 <v-row align="center">
                                     <v-col class="text-h5" cols="6">
-                                        {{ vote.percentage }} % votes
+                                        {{ vote.category_percentage }} % votes
                                     </v-col>
                                     <v-col cols="6">
                                         <!-- <v-img
@@ -159,7 +159,7 @@
                                 </v-row>
                             </v-card-text>
 
-                            <v-progress-linear color="#bf9524" buffer-value="0" :value="vote.percentage" stream></v-progress-linear>
+                            <v-progress-linear color="#bf9524" buffer-value="0" :value="vote.category_percentage" stream></v-progress-linear>
 
                             <v-divider></v-divider>
 
@@ -386,7 +386,7 @@
                     <br>
 
                     <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
-                        <p style="font-size: 0.9rem;">Thank you for your voting. You <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} for <b>{{ selectedCategory }}</b> has be successfully recorded
+                        <p style="font-size: 0.9rem;">Thank you for voting. Your <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} has been successfully recorded
                         </p>
                     </div>
                     <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>

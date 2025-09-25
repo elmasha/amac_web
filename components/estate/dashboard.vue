@@ -49,7 +49,7 @@
                                     <v-card-subtitle>
                                         <h6>Total revenue </h6>
                                     </v-card-subtitle>
-                                    
+
                                 </div>
 
                             </v-card>
@@ -60,7 +60,7 @@
                                     <v-chip>
                                         <v-icon>mdi-vote</v-icon>
                                     </v-chip>
-                                     <v-card-actions>
+                                    <v-card-actions>
                                         <div class="d-flex">
                                             <h2 style="font-size: 1.8rem;"> {{ millify(numeral(totalVotes).format('0,0'))  }}</h2>
                                         </div>
@@ -68,7 +68,7 @@
                                     <v-card-subtitle>
                                         <h6>Total votes</h6>
                                     </v-card-subtitle>
-                                   
+
                                 </div>
                             </v-card>
                         </v-col>
@@ -95,7 +95,7 @@
                             </v-card>
                         </v-col>
                         <v-col cols="12" sm="3" md="3">
-                            <v-card color="black" elevation="0" dark >
+                            <v-card color="black" elevation="0" dark>
                                 <div class="container">
 
                                     <v-card-subtitle>
@@ -128,8 +128,8 @@
             </v-col>
             <v-col cols="12" sm="6" md="6">
                 <div class="">
- 
-                    <v-card elevation="0" color="#d49306" >
+
+                    <v-card elevation="0" color="#d49306">
                         <div class="container">
                             <v-card-title>Voting trend</v-card-title>
                             <div>
@@ -145,14 +145,18 @@
             <v-col cols="12" sm="6" md="6" lg="6">
                 <div>
                     <div class="container">
-                         
+
                         <v-card elevation="0">
                             <v-card-actiuons>
                                 <div class="d-flex">
-
+                                    <v-subheader>
+                                        <h5>Nominee</h5>
+                                    </v-subheader>
+                                    <v-spacer></v-spacer>
+                                    <v-btn style="margin: 5px; color: #fff;" color="black" @click="nomineeDialog = true">Add Nomine</v-btn>
                                 </div>
                             </v-card-actiuons>
-                            <v-subheader> <h5>Nominee</h5> </v-subheader>
+
                             <v-data-table :headers="headers45" :items="nominees" :items-per-page="5" class="elevation-0">
                                 <!-- index column -->
                                 <template #item.index="{ item }">
@@ -180,29 +184,31 @@
                 <div class="container">
 
                     <v-card elevation="0">
-                          <div class="container">
-                    <div>
-                        <v-card elevation="0">
-                            <v-subheader><h5>Categories </h5></v-subheader>
-                            <v-data-table :headers="headers44" :items="categories" :items-per-page="5" class="elevation-0">
-                                <!-- index column -->
-                                <template #item.index="{ item }">
-                                    {{ item.index }}
-                                </template>
+                        <div class="container">
+                            <div>
+                                <v-card elevation="0">
+                                    <v-subheader>
+                                        <h5>Categories </h5>
+                                    </v-subheader>
+                                    <v-data-table :headers="headers44" :items="categories" :items-per-page="5" class="elevation-0">
+                                        <!-- index column -->
+                                        <template #item.index="{ item }">
+                                            {{ item.index }}
+                                        </template>
 
-                                <!-- overdue cell -->
-                                <template #item.overdue="{ item }">
-                                    <span :class="{ 'red--text': item.overdue < 0, 'green--text': item.overdue >= 0 }">
-                                        {{ formatCurrency(item.overdue) }}
-                                    </span>
-                                </template>
+                                        <!-- overdue cell -->
+                                        <template #item.overdue="{ item }">
+                                            <span :class="{ 'red--text': item.overdue < 0, 'green--text': item.overdue >= 0 }">
+                                                {{ formatCurrency(item.overdue) }}
+                                            </span>
+                                        </template>
 
-                                <!-- any month cell could use the default -->
-                            </v-data-table>
-                        </v-card>
-                    </div>
+                                        <!-- any month cell could use the default -->
+                                    </v-data-table>
+                                </v-card>
+                            </div>
 
-                </div>
+                        </div>
                     </v-card>
 
                 </div>
@@ -234,7 +240,7 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="6" lg="6">
-               
+
             </v-col>
             <v-col cols="12" sm="6" md="6" lg="6"> </v-col>
             <v-col cols="12" sm="6" md="6" lg="6">
@@ -369,6 +375,31 @@
             </v-dialog>
         </v-col>
     </v-row>
+    <v-dialog v-model="nomineeDialog" max-width="400px">
+        <v-card>
+            <v-card-title class="headline">Nominate someone</v-card-title>
+            <v-card-text>
+                <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
+                <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
+                <v-row>
+                    <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="location" label="County/Location" outlined dense></v-text-field>
+
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+
+                    </v-col>
+                </v-row>
+
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
+                <v-btn color="black" dark @click="submitNominee">Submit Nominee</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </div>
 </template>
 
@@ -380,7 +411,7 @@ import dayjs from "@nuxtjs/dayjs";
 import moment from "moment";
 import numeral from 'numeral';
 import Map from "@/components/map.vue";
-import  millify  from 'millify';
+import millify from 'millify';
 import HouseholdBarChart from '~/components/charts/HouseholdBarChart.vue'
 import barChart from '@/components/charts/barChartTrends.vue'
 import paymentSummary from "@/components/paymentSummary.vue";
@@ -419,6 +450,12 @@ export default {
     },
     data() {
         return {
+            selectedCategory:null,
+            nomineeName: "",
+            location: null,
+            church: null,
+            step: 1,
+            nomineeDialog: false,
             millify,
             numeral,
             headers2: [
@@ -597,7 +634,7 @@ export default {
             totalPayment: 0,
             totalVotes: 0,
             categories: [],
-            nominees:[],
+            nominees: [],
             headers45: [{
                     text: "category ID",
                     value: "category_id",
@@ -608,7 +645,7 @@ export default {
                     value: "nominee_name",
                     align: "left",
                 },
-                
+
                 {
                     text: "Location",
                     value: "location",
@@ -641,6 +678,24 @@ export default {
         };
     },
     methods: {
+          async submitNominee() {
+            try {
+                await axios.post("https://balanced-ambition-production.up.railway.app/api/nominee/addNominee", {
+                    name: this.nomineeName,
+                    category_id: this.selectedCategory,
+                    description: this.selectedCategory,
+                    location: this.location,
+                    church: this.church,
+                });
+                alert("Nominee submitted successfully!");
+                this.fetchNominees();
+                this.nomineeName = "";
+                this.selectedCategory = null;
+            } catch (err) {
+                console.error("Error submitting nominee:", err);
+                alert("Error submitting nominee");
+            }
+        },
         async fetchCategories() {
 
             try {
