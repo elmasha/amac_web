@@ -1,5 +1,5 @@
 <template >
-<div style="background-color:#000; height: 100vh;" elevetion="0" >
+<div style="background-color:#000; height: 95vh;" elevetion="0" >
     <v-app-bar color="#ffffff00" dark elevation="0">
 
        
