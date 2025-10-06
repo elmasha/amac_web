@@ -69,5 +69,6 @@ span {
   font-size: 1.5rem;
   margin: 0 5px;
   font-weight: bold;
+  color: gold;
 }
 </style>

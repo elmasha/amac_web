@@ -6,38 +6,52 @@
     </v-main>
     <footer bottom fixed>
         <v-card color="#000" dark>
-            <v-row>
-                <v-col cols="6" md="4">
+            <v-row class=" text-center">
+
+                <v-col cols="12" md="12">
                     <div class="container">
 
-                        <p style="font-size: 0.6rem; color: grey"></p>
-                        <h4 style="font-weight: 200">Amac</h4>
-                        <div class="d-flex"></div>
-                    </div>
-                </v-col>
-                <v-col cols="6" md="4">
-                    <div class="container">
-                        <h6 style="font-weight: 200">Follow us on</h6>
                         <div class="d-flex">
-                            <a href="" style="margin: 2px">
-                                <v-icon small>mdi-facebook</v-icon>
-                            </a>
-                            <a href="" style="margin: 2px">
-                                <v-icon small>mdi-instagram</v-icon>
-                            </a>
-                            <a href="" style="margin: 2px">
-                                <v-icon small>mdi-whatsapp</v-icon>
-                            </a>
+
+                            <v-spacer></v-spacer>
+                            <div>
+                                <h4 style="font-weight: 200;"> Amac</h4>
+                                <div class="text-center ">
+                                    <v-avatar color="black" size="28">
+                                        <v-img :src="logo"></v-img>
+                                    </v-avatar>
+
+                                </div>
+
+                                <div class="text-center">
+                                    <h6 style="font-weight: 200; font-size:0.8rem; margin: 2px;">Follow us on</h6>
+                                    <div class="d-flex ">
+                                         <v-spacer></v-spacer>
+                                        <a href="" style="margin: 8px">
+                                            <v-icon small>mdi-facebook</v-icon>
+                                        </a>
+                                        <a href="" style="margin: 8px">
+                                            <v-icon small>mdi-instagram</v-icon>
+                                        </a>
+                                        <a href="" style="margin: 8px">
+                                            <v-icon small>mdi-whatsapp</v-icon>
+                                        </a>
+                                         <v-spacer></v-spacer>
+                                    </div>
+                                    <div class="container text-center">
+                                        <span style="font-size: 0.6rem; color: grey"> © Copyright Amac</span>
+                                        <span style="font-size: 0.6rem; color: grey"> All Rights Reserved</span><br />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <v-spacer></v-spacer>
+
                         </div>
+
                     </div>
                 </v-col>
-                <v-col cols="12" md="4">
-                    <div class="container text-center">
-                        <span style="font-size: 0.6rem; color: grey"> © Copyright Amac</span>
-                        <span style="font-size: 0.6rem; color: grey"> All Rights Reserved</span><br />
-                     
-                    </div>
-                </v-col>
+
             </v-row>
         </v-card>
     </footer>
@@ -52,6 +66,8 @@ export default {
     name: "DefaultLayout",
     data() {
         return {
+            logo: require("@/assets/logo.png"),
+
             clipped: false,
             drawer: false,
             fixed: false,

@@ -1,238 +1,298 @@
 <template>
-<div>
-    <v-app-bar color="black" dark elevation="0">
-        <v-app-bar-nav-icon @click="drawer = true" v-show="navIcon"></v-app-bar-nav-icon>
+<v-card color="black" dark elevation="0" style="min-height: 100vh;">
+    <div>
+        <v-app-bar color="black" dark elevation="0">
+            <v-app-bar-nav-icon @click="drawer = true" v-show="navIcon"></v-app-bar-nav-icon>
 
-        <div class="d-flex">
-            <v-avatar color="black" size="28">
-                <v-img :src="logo"></v-img>
-            </v-avatar>
-            <v-toolbar-title style="margin-left: 10px;">Amac portal</v-toolbar-title>
-        </div>
-
-        <v-spacer></v-spacer>
-     
-    </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" color="black" light absolute temporary height="100vh">
-        <v-list>
-<br>
-<br>
-<br>
-            <v-list-item style="color: aliceblue;" @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false, drawer = false">
-
-                <v-list-item-content >
-                    <div class="d-flex">
-                        <v-list-item-title style="margin: 8px;">Overview</v-list-item-title>
-                    </div>
-                </v-list-item-content>
-                <v-list-item-action @click="MoveNavigation(item.title), drawer = false">
-
-                </v-list-item-action>
-            </v-list-item>
-
-            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false, drawer = false">
-                <div class="d-flex">
-                    <v-list-item-title style="margin: 8px;"   >Live result</v-list-item-title>
-                </div>
-            </v-list-item>
-            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false,drawer = false">
-                <div class="d-flex">
-                    <v-list-item-title style="margin: 8px;">Vote</v-list-item-title>
-                </div>
-            </v-list-item>
-            <v-list-item style="color: aliceblue;" @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false,drawer = false">
-                <div class="d-flex">
-                    <v-list-item-title style="margin: 8px;">Category</v-list-item-title>
-                </div>
-            </v-list-item>
-            <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true,drawer = false">
-                <div class="d-flex">
-                    <v-list-item-title style="margin: 8px;">Nominees</v-list-item-title>
-                </div>
-            </v-list-item>
-
-        </v-list>
-
-        <template v-slot:append>
-            <div class="pa-2">
-              All right reserved @2025
-            </div>
-        </template>
-    </v-navigation-drawer>
-
-    <v-container v-resize="onResize">
-
-        <v-tabs color="black">
-            <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
-            <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
-            <v-tab @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false">Vote</v-tab>
-            <v-tab @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Category</v-tab>
-            <v-tab @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true">Nominee List</v-tab>
-
-        </v-tabs>
-
-        <v-card v-show="nomineeList" elevation="0" dark color="black" class="pa-4" outlined>
-            <v-card-title class="text-h5 text--gold">All Nominees </v-card-title>
-            <v-card-subtitle>Nominess by vote percentage</v-card-subtitle>
-
-            <div class="container">
-                <div class="d-flex">
-                    <v-select v-model="searchNomineeCat" :items="categories" item-text="name" item-value="id" label="Search with Category" outlined dense @change="fetchVotesSummry22()"></v-select>
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
-
-                </div>
-                <div class="row">
-                    <div v-for="(nom, id) in nomineesList" :key="id" class="col-md-3">
-
-                        <v-card elevation="0" class="mx-auto" max-width="400" color="black">
-                            <v-list-item two-three>
-                                <v-list-item-content>
-                                    <v-list-item-title class="text-h6">
-                                        {{ nom.nominee_name }}
-                                    </v-list-item-title>
-                                    <v-list-item-subtitle>{{ nom.category_name }}</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-
-                            <div class="d-flex">
-                                <div>
-                                    <v-card-text>
-                                        <p style="color: #bf9524;">{{ nom.location }} <br>{{ nom.church }} </p>
-                                    </v-card-text>
-
-                                </div>
-                                <v-spacer></v-spacer>
-                                <v-progress-circular color="white" size="70" buffer-value="0" :value="nom.percentage" stream>
-
-                                    <strong style="font-size: 0.9rem;"> {{ numeral(nom.percentage).format("0.0") }} % </strong>
-                                </v-progress-circular>
-                            </div>
-
-                        </v-card>
-
-                    </div>
-
-                </div>
-
+            <div class="d-flex">
+                <v-avatar color="black" size="28">
+                    <v-img :src="logo"></v-img>
+                </v-avatar>
+                <v-toolbar-title style="margin-left: 10px;">Amac portal</v-toolbar-title>
             </div>
 
-        </v-card>
+            <v-spacer></v-spacer>
 
-        <v-card v-show="Home" elevation="0">
-            <v-row>
+        </v-app-bar>
 
-                <v-col cols="12" sm="12" md="12"></v-col>
-                <v-col cols="12" sm="12" md="12"></v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <div class="container">
+        <v-navigation-drawer v-model="drawer" color="black" light absolute temporary height="100vh">
+            <v-list>
+                <br>
+                <br>
+                <br>
+                <v-list-item style="color: aliceblue;" @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false, drawer = false">
 
-                        <h1>Welcome to the AMAC Voting Portal</h1>
-
-                        <p>Welcome to the Annual Awards Voting Platform. Here, you can explore categories, view nominees, and take part in recognizing outstanding achievements. Nominations remain open as we count down to the official voting date, when you will have the opportunity to cast your vote and support your favorites.</p>
-
-                        <Countdown targetDate="2025-10-11" />
-
+                    <v-list-item-content>
                         <div class="d-flex">
-                            <v-btn outlined color="black" @click="nomineeDialog = true">Nominate now</v-btn>
+                            <v-list-item-title style="margin: 8px;">Overview</v-list-item-title>
+                        </div>
+                    </v-list-item-content>
+                    <v-list-item-action @click="MoveNavigation(item.title), drawer = false">
 
-                            <p style="margin: 12px;"></p>
-                            <v-btn v-show="false" style="color: aliceblue;" color="black" @click="Home = false, Leaderboard = false, Live_Results = true">Vote now</v-btn>
+                    </v-list-item-action>
+                </v-list-item>
+
+                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false, drawer = false">
+                    <div class="d-flex">
+                        <v-list-item-title style="margin: 8px;">Live result</v-list-item-title>
+                    </div>
+                </v-list-item>
+                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false,drawer = false">
+                    <div class="d-flex">
+                        <v-list-item-title style="margin: 8px;">Vote</v-list-item-title>
+                    </div>
+                </v-list-item>
+                <v-list-item style="color: aliceblue;" @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false,drawer = false">
+                    <div class="d-flex">
+                        <v-list-item-title style="margin: 8px;">Category</v-list-item-title>
+                    </div>
+                </v-list-item>
+                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true,drawer = false">
+                    <div class="d-flex">
+                        <v-list-item-title style="margin: 8px;">Nominees</v-list-item-title>
+                    </div>
+                </v-list-item>
+
+            </v-list>
+
+            <template v-slot:append>
+                <div class="pa-2">
+                    All right reserved @2025
+                </div>
+            </template>
+        </v-navigation-drawer>
+
+        <v-container v-resize="onResize" color="black">
+
+            <v-tabs color="white">
+                <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
+                <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
+                <v-tab @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Category</v-tab>
+                <v-tab @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true">Nominee List</v-tab>
+            </v-tabs>
+
+            <v-card v-show="nomineeList" elevation="0" dark color="black" class="pa-4" outlined>
+                <v-card-title class="text-h5 text--gold">All Nominees </v-card-title>
+                <v-card-subtitle>Nominess by vote percentage</v-card-subtitle>
+
+                <div class="container">
+                    <div class="d-flex">
+                        <v-select v-model="searchNomineeCat" :items="categories" item-text="name" item-value="id" label="Search with Category" outlined dense @change="fetchVotesSummry22()"></v-select>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+
+                    </div>
+                    <div class="row">
+                        <div v-for="(nom, id) in nomineesList" :key="id" class="col-md-3">
+
+                            <v-card elevation="0" class="mx-auto" max-width="400" color="black">
+                                <v-list-item two-three>
+                                    <v-list-item-content>
+                                        <v-list-item-title class="text-h6">
+                                            {{ nom.nominee_name }}
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle>{{ nom.category_name }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <div class="d-flex">
+                                    <div>
+                                        <v-card-text>
+                                            <p style="color: #bf9524;">{{ nom.location }} <br>{{ nom.church }} </p>
+                                        </v-card-text>
+
+                                    </div>
+                                    <v-spacer></v-spacer>
+                                    <v-progress-circular color="white" size="70" buffer-value="0" :value="nom.percentage" stream>
+
+                                        <strong style="font-size: 0.9rem;"> {{ numeral(nom.percentage).format("0.0") }} % </strong>
+                                    </v-progress-circular>
+                                </div>
+
+                            </v-card>
 
                         </div>
 
                     </div>
-                </v-col>
-
-                <v-col cols="12" sm="6" md="6">
-                    <div class="">
-                        <v-img :src="voting" class="mt-12" contain height="200px">
-
-                        </v-img>
-                    </div>
-                </v-col>
-
-            </v-row>
-
-        </v-card>
-
-        <v-card v-show="Leaderboard" elevation="0" dark color="black" class="pa-4" outlined>
-
-            <v-card-title class="text-h5 text--gold">Category Leaderboard</v-card-title>
-            <v-card-subtitle>Top nominess by vote percentage</v-card-subtitle>
-
-            <div class="container">
-                <div class="d-flex">
-                    <v-select v-model="searchCat" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchVotesSummry2"></v-select>
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
 
                 </div>
-                <div class="row">
-                    <div v-for="(vote, id) in voteSum" :key="id" class="col-md-3">
-                        <div class="container"></div>
 
-                        <v-card elevation="0" class="mx-auto" max-width="400">
-                            <v-list-item two-line>
-                                <v-list-item-content>
-                                    <v-list-item-title class="text-h5">
-                                        {{ vote.category_name }}
-                                    </v-list-item-title>
-                                    <v-list-item-subtitle>{{ vote.nominee_name }}</v-list-item-subtitle>
-                                    <v-list-item-subtitle>{{ vote.location }}</v-list-item-subtitle>
-                                    <v-list-item-subtitle>{{ vote.church }}</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
+            </v-card>
 
-                            <v-card-text>
-                                <v-row align="center">
-                                    <v-col class="text-h5" cols="6">
-                                        {{ vote.category_percentage }} % votes
-                                    </v-col>
-                                    <v-col cols="6">
-                                        <!-- <v-img
+            <v-card v-show="Home" elevation="0" dark color="black" class="pa-4" outlined>
+
+                <v-row>
+                    <v-col cols="12" sm="7" md="7">
+                        <v-row>
+
+                            <v-col cols="12" sm="12" md="12"></v-col>
+                            <v-col cols="12" sm="12" md="12"></v-col>
+                            <v-col cols="12" sm="12" md="12">
+                                <div class="container">
+
+                                    <h1>Welcome to the AMAC Voting Portal</h1>
+
+                                    <p>Welcome to the Annual Awards Voting Platform. Here, you can explore categories, view nominees, and take part in recognizing outstanding achievements. Nominations remain open as we count down to the official voting date, when you will have the opportunity to cast your vote and support your favorites.</p>
+
+                                    <Countdown targetDate="2025-10-11" />
+
+                                    <div class="d-flex">
+                                        <v-btn outlined color="white" @click="nomineeDialog = true">Nominate now</v-btn>
+
+                                        <p style="margin: 12px;"></p>
+                                        <v-btn v-show="false" style="color: aliceblue;" color="black" @click="Home = false, Leaderboard = false, Live_Results = true">Vote now</v-btn>
+
+                                    </div>
+
+                                </div>
+                            </v-col>
+
+                        </v-row>
+
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <div class="container">
+
+                                    <v-card elevation="0" color="black" class="mb-4" dark>
+                                        <v-stepper v-model="step" elevation="0" color="black">
+                                            <!-- Step 1 -->
+                                            <v-stepper-header color="black">
+                                                <v-stepper-step color="#bf9524" :complete="step > 1" step="1">Choose Category</v-stepper-step>
+                                                <v-divider></v-divider>
+                                                <v-stepper-step color="#bf9524" :complete="step > 2" step="2">Nominate</v-stepper-step>
+                                                <v-divider></v-divider>
+                                                <v-stepper-step color="#bf9524" :complete="step > 3" step="3">Vote</v-stepper-step>
+                                                <v-divider></v-divider>
+                                                <v-stepper-step color="#bf9524" :complete="step > 4" step="4">Payment</v-stepper-step>
+                                                <v-divider></v-divider>
+                                                <v-stepper-step color="#bf9524" step="5">Confirmation</v-stepper-step>
+                                            </v-stepper-header>
+
+                                            <!-- Step 1 content -->
+                                            <v-stepper-items>
+
+                                            </v-stepper-items>
+                                        </v-stepper>
+                                    </v-card>
+                                    <br>
+                                    <br>
+                                    <h2 class="mb-4">Vote for Your Nominee</h2>
+
+                                    <!-- Category Selector -->
+                                    <label for="selectedCategory">Select Category</label>
+                                    <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" placeholders="Select Category" outlined dense @change="fetchNominees"></v-select>
+
+                                    <!-- Nominee Form -->
+                                    <!-- <v-text-field v-model="nomineeName" label="Nominee Name"></v-text-field>
+      <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn> -->
+
+                                    <!-- Nominees List -->
+                                    <v-radio-group v-model="selectedNominee" class="mt-4">
+                                        <v-radio v-for="nominee in nominees" :key="nominee.id" :label="nominee.name" :value="nominee.id" @click="step = 3, nomineeName = nominee.name">
+                                            <div class="nominee-card">
+                                                <img src="nominee.image" alt="Nominee" />
+                                                <h3>{{ nominee.name }}</h3>
+                                                <button @click="selectNominee(category.id, nominee.id),step = 3">Vote</button>
+                                            </div>
+
+                                        </v-radio>
+                                    </v-radio-group>
+
+                                    <!-- Submit Vote -->
+                                    <v-btn color="#bf9524" class="mt-4" :disabled="!selectedNominee" @click="openPaymentDialog">
+                                        Cast Vote
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+
+                        </v-row>
+
+                    </v-col>
+                    <v-col cols="12" sm="5" md="5">
+                        <v-carousel cycle :show-arrows="false">
+                            <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
+                        </v-carousel>
+                    </v-col>
+                </v-row>
+
+            </v-card>
+
+            <v-card v-show="Leaderboard" elevation="0" dark color="black" class="pa-4" outlined>
+
+                <v-card-title class="text-h5 text--gold">Category Leaderboard</v-card-title>
+                <v-card-subtitle>Top nominess by vote percentage</v-card-subtitle>
+
+                <div class="container">
+                    <div class="d-flex">
+                        <v-select v-model="searchCat" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchVotesSummry2"></v-select>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+
+                    </div>
+                    <div class="row">
+                        <div v-for="(vote, id) in voteSum" :key="id" class="col-md-3">
+                            <div class="container"></div>
+
+                            <v-card elevation="0" class="mx-auto" max-width="400">
+                                <v-list-item two-line>
+                                    <v-list-item-content>
+                                        <v-list-item-title class="text-h5">
+                                            {{ vote.category_name }}
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle>{{ vote.nominee_name }}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>{{ vote.location }}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>{{ vote.church }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-card-text>
+                                    <v-row align="center">
+                                        <v-col class="text-h5" cols="6">
+                                            {{ vote.category_percentage }} % votes
+                                        </v-col>
+                                        <v-col cols="6">
+                                            <!-- <v-img
             src="https://cdn.vuetifyjs.com/images/cards/sun.png"
             alt="Sunny image"
             width="92"
           ></v-img> -->
-                                    </v-col>
-                                </v-row>
-                            </v-card-text>
+                                        </v-col>
+                                    </v-row>
+                                </v-card-text>
 
-                            <v-progress-linear color="#bf9524" buffer-value="0" :value="vote.category_percentage" stream></v-progress-linear>
+                                <v-progress-linear color="#bf9524" buffer-value="0" :value="vote.category_percentage" stream></v-progress-linear>
 
-                            <v-divider></v-divider>
+                                <v-divider></v-divider>
 
-                            <!-- <v-card-actions>
+                                <!-- <v-card-actions>
       <v-btn text>
         Full Report
       </v-btn>
     </v-card-actions> -->
-                        </v-card>
+                            </v-card>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            </v-card>
 
-        </v-card>
+            <!-- Render HTML here -->
+            <v-card v-show="Live_Results" class="pa-4" elevation="0">
 
-        <!-- Render HTML here -->
-        <v-card v-show="Live_Results" class="pa-4" elevation="0">
+                <v-row>
+                    <v-col cols="12" sm="12" md="12">
+                        <div class="container">
+                            <br>
+                            <h1>🏆 Live Voting Results</h1>
 
-            <v-row>
-                <v-col cols="12" sm="12" md="12">
-                    <div class="container">
-                        <br>
-                        <h1>🏆 Live Voting Results</h1>
+                            <v-card-text>
 
-                        <v-card-text>
-
-                            <!-- <v-chip-group v-model="neighborhoods" row multiple>
+                                <!-- <v-chip-group v-model="neighborhoods" row multiple>
                                 <div v-for="(vote, id) in categories" :key="id">
                                     <v-chip filter color="black" text-color="white" @click="">
                                         {{ vote.name }}
@@ -241,223 +301,163 @@
 
                             </v-chip-group> -->
 
-                            <div class="d-flex">
-                                <div>
-                                    <br>
+                                <div class="d-flex">
+
                                     <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
+
+                                    <v-spacer></v-spacer>
+
                                 </div>
-                                <v-spacer></v-spacer>
-                                <v-spacer></v-spacer>
-                                <v-spacer></v-spacer>
+                            </v-card-text>
 
-                            </div>
-                        </v-card-text>
+                            <div class="results-page row ">
 
-                        <div class="results-page">
-
-                            <!-- Loop categories -->
-                            <div v-for="cat in Results" :key="cat.category_id" class="category-block">
-
-                                <h2>{{ cat.category_name }}</h2>
-                                <p>Total Votes: {{ cat.total_votes }}</p>
-                                <p class="timestamp">Last updated: {{ }}</p>
-
-                                <!-- Nominees list -->
-                                <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="nominee">
+                                <div v-for="cat in Results" :key="cat.category_id" class="col-md-6" style="border: 1px solid #808080; border-radius: 9px;margin: 0px;">
                                     <br>
-                                    <div class="nominee-header">
-                                        <strong>{{ nom.nominee_name }}</strong>
-                                        <span v-if="nom.is_leader" class="leader-badge">Leading</span>
-                                    </div>
+                                    <h2 style="color: #bf9524;">{{ cat.category_name }}</h2>
+                                    <hr>
 
-                                    <p>{{ nom.location }} - {{ nom.church }}</p>
-                                    <p>Votes: ({{ nom.percentage }}%)</p>
+                                    <!-- Nominees list -->
+                                    <div class="row">
+                                        <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="col-md-4">
+                                            <br>
+                                            <div class="nominee-header">
 
-                                    <!-- Progress bar -->
-                                    <div class="progress">
-                                        <div class="progress-bar" :style="{ width: nom.percentage + '%' }"></div>
+                                                <v-chip outlined color="white" text-color="white" @click="" style="margin: 1px;">
+                                                    <strong>{{ nom.nominee_name }}</strong>
+                                                </v-chip>
+
+                                                <span v-if="nom.is_leader" class="leader-badge" style="color: greenyellow;">Leading</span>
+                                            </div>
+                                            <br>
+                                            <p style="margin: 3px;">{{ nom.location }} - {{ nom.church }}</p>
+                                            <p style="margin: 3px;">Votes: ({{ nom.percentage }}%)</p>
+
+                                            <!-- Progress bar -->
+                                            <div class="">
+                                                <!-- <div class="progress-bar" :style="{ width: nom.percentage + '%' , color: '#808080'}"></div> -->
+                                                <v-progress-linear v-model="nom.percentage" stream color="amber" height="50">{{ nom.percentage }}%</v-progress-linear>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- Loop categories -->
+
                             </div>
+
+                        </div>
+                    </v-col>
+
+                </v-row>
+
+                <!-- Message -->
+
+            </v-card>
+
+            <!-- Render HTML here -->
+            <v-card v-show="vote" class="pa-4" outlined dark color="black">
+
+            </v-card>
+
+            <!-- Mpesa Payment Dialog -->
+            <v-dialog v-model="nomineeDialog" max-width="400px">
+                <v-card>
+                    <v-card-title class="headline">Nominate someone</v-card-title>
+                    <v-card-text>
+                        <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
+                        <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
+                        <v-row>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-text-field v-model="location" label="County/Location" outlined dense></v-text-field>
+
+                            </v-col>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+
+                            </v-col>
+                        </v-row>
+
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
+                        <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="paymentDialog" max-width="400px">
+                <v-card>
+                    <v-card-title class="headline">Vote Confirmation</v-card-title>
+                    <v-card-text>
+                        <label for="phoneNumber">Provide you mpesa number</label>
+                        <v-text-field v-model="phoneNumber" :prefix="phonePrefix" placeholder="(7.. format)" dense></v-text-field>
+                        <label for="voteCount">Number of votes you wish to cast</label>
+                        <v-text-field diable v-model="voteCount" placeholder="" type="number" dense @change="getAmount"></v-text-field>
+                        <span>1 Vote is eqaul to 10sh (1 vote = 10 ksh)</span>
+                        <br>
+                        <br>
+                        <div class="d-flex">
+                            <p style="font-size: 0.9rem;">Total amount to be paid. <h6>{{ numeral(amount).format("0,0") }} ksh</h6>
+                            </p>
                         </div>
 
-                    </div>
-                </v-col>
+                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                            <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+phoneNumber }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount).format("0,0") }}</b> ksh</p>
+                        </div>
+                        <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+                        <!-- Message -->
+                        <v-alert v-if="message" class="mt-4" type="success" dense outlined>
+                            {{ message }}
+                        </v-alert>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="paymentDialog = false">Cancel</v-btn>
+                        <v-btn color="black" @click="processPayment" style="color: white;">Vote</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
 
-            </v-row>
-
-            <!-- Message -->
-            <v-alert v-if="message" class="mt-4" type="success" dense outlined>
-                {{ message }}
-            </v-alert>
-        </v-card>
-
-        <!-- Render HTML here -->
-        <v-card v-show="vote" class="pa-4" outlined dark color="black">
-
-            <v-row>
-                <v-col cols="12" sm="6" md="6">
-                    <div class="container">
-
-                        <v-card elevation="0" color="black" class="mb-4">
-                            <v-stepper v-model="step" elevation="0" color="black">
-                                <!-- Step 1 -->
-                                <v-stepper-header color="black">
-                                    <v-stepper-step color="#bf9524" :complete="step > 1" step="1">Choose Category</v-stepper-step>
-                                    <v-divider></v-divider>
-                                    <v-stepper-step color="#bf9524" :complete="step > 2" step="2">Nominate</v-stepper-step>
-                                    <v-divider></v-divider>
-                                    <v-stepper-step color="#bf9524" :complete="step > 3" step="3">Vote</v-stepper-step>
-                                    <v-divider></v-divider>
-                                    <v-stepper-step color="#bf9524" :complete="step > 4" step="4">Payment</v-stepper-step>
-                                    <v-divider></v-divider>
-                                    <v-stepper-step color="#bf9524" step="5">Confirmation</v-stepper-step>
-                                </v-stepper-header>
-
-                                <!-- Step 1 content -->
-                                <v-stepper-items>
-
-                                </v-stepper-items>
-                            </v-stepper>
-                        </v-card>
-                        <h2 class="mb-4">Vote for Your Nominee</h2>
-
-                        <!-- Category Selector -->
-                        <label for="selectedCategory">Select Category</label>
-                        <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" placeholders="Select Category" outlined dense @change="fetchNominees"></v-select>
-
-                        <!-- Nominee Form -->
-                        <!-- <v-text-field v-model="nomineeName" label="Nominee Name"></v-text-field>
-      <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn> -->
-
-                        <!-- Nominees List -->
-                        <v-radio-group v-model="selectedNominee" class="mt-4">
-                            <v-radio v-for="nominee in nominees" :key="nominee.id" :label="nominee.name" :value="nominee.id" @click="step = 3, nomineeName = nominee.name">
-                                <div class="nominee-card">
-                                    <img src="nominee.image" alt="Nominee" />
-                                    <h3>{{ nominee.name }}</h3>
-                                    <button @click="selectNominee(category.id, nominee.id),step = 3">Vote</button>
-                                </div>
-
-                            </v-radio>
-                        </v-radio-group>
-
-                        <!-- Submit Vote -->
-                        <v-btn color="#bf9524" class="mt-4" :disabled="!selectedNominee" @click="openPaymentDialog">
-                            Cast Vote
-                        </v-btn>
-
-                    </div>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <div class="">
-                        <v-img :src="voting2" class="mt-12" contain height="300px">
-
-                        </v-img>
-                    </div>
-                </v-col>
-            </v-row>
-
-        </v-card>
-
-        <!-- Mpesa Payment Dialog -->
-        <v-dialog v-model="nomineeDialog" max-width="400px">
-            <v-card>
-                <v-card-title class="headline">Nominate someone</v-card-title>
-                <v-card-text>
-                    <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
-                    <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
-                    <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                            <v-text-field v-model="location" label="County/Location" outlined dense></v-text-field>
-
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                            <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
-
-                        </v-col>
-                    </v-row>
-
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
-                    <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="paymentDialog" max-width="400px">
-            <v-card>
-                <v-card-title class="headline">Vote Confirmation</v-card-title>
-                <v-card-text>
-                    <label for="phoneNumber">Provide you mpesa number</label>
-                    <v-text-field v-model="phoneNumber" :prefix="phonePrefix" placeholder="(7.. format)" dense></v-text-field>
-                    <label for="voteCount">Number of votes you wish to cast</label>
-                    <v-text-field diable v-model="voteCount" placeholder="" type="number" dense @change="getAmount"></v-text-field>
-                    <span>1 Vote is eqaul to 10sh (1 vote = 10 ksh)</span>
+            <v-dialog v-model="paymentConfirmDialog" max-width="400px">
+                <v-card class="text-center" style="padding: 1rem;">
+                    <v-img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGxrZTVjZ254ajR0NXVnMWV4NWYxcTBheTZ1cDA5bTJiM2c5NTV6NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jtd26qRGDzgjiqcwbp/giphy.gif" contain height="150px"></v-img>
                     <br>
-                    <br>
-                    <div class="d-flex">
-                        <p style="font-size: 0.9rem;">Total amount to be paid. <h6>{{ numeral(amount).format("0,0") }} ksh</h6>
-                        </p>
-                    </div>
+                    <h5>Voting Confirmed</h5>
+                    <v-card-text>
+                        <br>
 
-                    <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
-                        <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+phoneNumber }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount).format("0,0") }}</b> ksh</p>
-                    </div>
-                    <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
-                    <!-- Message -->
-                    <v-alert v-if="message" class="mt-4" type="success" dense outlined>
-                        {{ message }}
-                    </v-alert>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="paymentDialog = false">Cancel</v-btn>
-                    <v-btn color="black" @click="processPayment" style="color: white;">Vote</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                            <p style="font-size: 0.9rem;">Thank you for voting. Your <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} has been successfully recorded
+                            </p>
+                        </div>
+                        <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+                        <!-- Message -->
 
-        <v-dialog v-model="paymentConfirmDialog" max-width="400px">
-            <v-card class="text-center" style="padding: 1rem;">
-                <v-img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGxrZTVjZ254ajR0NXVnMWV4NWYxcTBheTZ1cDA5bTJiM2c5NTV6NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jtd26qRGDzgjiqcwbp/giphy.gif" contain height="150px"></v-img>
-                <br>
-                <h5>Voting Confirmed</h5>
-                <v-card-text>
-                    <br>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <div>
 
-                    <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
-                        <p style="font-size: 0.9rem;">Thank you for voting. Your <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} has been successfully recorded
-                        </p>
-                    </div>
-                    <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
-                    <!-- Message -->
+                            <v-btn text @click="paymentConfirmDialog = false">Close</v-btn>
+                        </div>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </v-container>
 
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <div>
-
-                        <v-btn text @click="paymentConfirmDialog = false">Close</v-btn>
-                    </div>
-                    <v-spacer></v-spacer>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-container>
-
-    <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
-        {{ snackbarText_s }}
-    </v-snackbar>
-    <v-snackbar color="success" :timeout="2000" v-model="snackbar" outlined center>
-        {{ snackbarText }}
-    </v-snackbar>
-    <v-snackbar color="error" :timeout="4000" v-model="snackbarError" outlined center>
-        {{ snackbarTextError }}
-    </v-snackbar>
-</div>
+        <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
+            {{ snackbarText_s }}
+        </v-snackbar>
+        <v-snackbar color="success" :timeout="2000" v-model="snackbar" outlined center>
+            {{ snackbarText }}
+        </v-snackbar>
+        <v-snackbar color="error" :timeout="4000" v-model="snackbarError" outlined center>
+            {{ snackbarTextError }}
+        </v-snackbar>
+    </div>
+</v-card>
 </template>
 
 <script>
@@ -507,7 +507,20 @@ export default {
     },
     data() {
         return {
-            navIcon:false,
+            items: [{
+                    src: require("@/assets/app-8.jpg"),
+                },
+                {
+                    src: require("@/assets/app-9.jpg"),
+                },
+                {
+                    src: require("@/assets/app-3.jpg"),
+                },
+                {
+                    src: require("@/assets/app-4.jpg"),
+                },
+            ],
+            navIcon: false,
             windowSize: {
                 x: window.innerHeight,
                 y: window.innerWidth,
@@ -601,7 +614,7 @@ export default {
         setInterval(this.fetchAll(), 5000); // refresh every 5 seconds
     },
     methods: {
-         onResize() {
+        onResize() {
             this.windowSize = {
                 x: window.innerWidth,
                 y: window.innerHeight,
