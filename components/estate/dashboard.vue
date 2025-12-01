@@ -100,10 +100,10 @@
 
                                     <v-card-subtitle>
                                         <h4>Count down</h4>
-                                         <p style="color: grey; font-size: 0.8rem;">Count down to voting date. </p>
-                                             <Countdown targetDate="2025-10-11" />
+                                        <p style="color: grey; font-size: 0.8rem;">Count down to voting date. </p>
+                                        <Countdown targetDate="2025-10-11" />
                                     </v-card-subtitle>
-                                    
+
                                 </div>
 
                             </v-card>
@@ -450,7 +450,7 @@ export default {
     },
     data() {
         return {
-            selectedCategory:null,
+            selectedCategory: null,
             nomineeName: "",
             location: null,
             church: null,
@@ -678,9 +678,9 @@ export default {
         };
     },
     methods: {
-          async submitNominee() {
+        async submitNominee() {
             try {
-                await axios.post("https://balanced-ambition-production.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-6a8c.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     description: this.selectedCategory,
@@ -702,9 +702,10 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://balanced-ambition-production.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-6a8c.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
+                console.log("categories:", this.categories);
             } catch (error) {
                 console.error("Error loading categories:", error);
             }
@@ -715,7 +716,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://balanced-ambition-production.up.railway.app/api/nominee/list"
+                    "https://amacserver-production-6a8c.up.railway.app/api/nominee/list"
                 );
                 this.nominees = data;
             } catch (error) {
@@ -1044,7 +1045,7 @@ export default {
         async Fetch_Payments() {
             let that = this;
             axios
-                .get("https://balanced-ambition-production.up.railway.app/transaction/getAllPayments")
+                .get("https://amacserver-production-6a8c.up.railway.app/transaction/getAllPayments")
                 .then(function (response) {
                     if (response.status === 200) {
                         that.payments = response.data;
@@ -1065,7 +1066,7 @@ export default {
         async Fetch_AllPayments() {
             let that = this;
             axios
-                .get("https://balanced-ambition-production.up.railway.app/api/votes/dashboard-total")
+                .get("https://amacserver-production-6a8c.up.railway.app/api/votes/dashboard-total")
                 .then(function (response) {
                     if (response.status === 200) {
                         // Calculate totals from all rows

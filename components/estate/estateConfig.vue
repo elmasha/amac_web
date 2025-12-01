@@ -380,7 +380,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://balanced-ambition-production.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-6a8c.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {

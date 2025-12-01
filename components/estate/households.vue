@@ -355,7 +355,7 @@ export default {
         async Fetch_Payments() {
             let that = this;
             axios
-                .get("https://balanced-ambition-production.up.railway.app/transaction/getAllPayments")
+                .get("https://amacserver-production-6a8c.up.railway.app/transaction/getAllPayments")
                 .then(function (response) {
                     if (response.status === 200) {
                         that.payments = response.data;

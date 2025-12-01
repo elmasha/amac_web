@@ -455,7 +455,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://balanced-ambition-production.up.railway.app/api/nominee/list"
+                    "https://amacserver-production-6a8c.up.railway.app/api/nominee/list"
                 );
                 this.nominees = data;
             } catch (error) {
