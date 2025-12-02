@@ -65,166 +65,181 @@
         <v-container v-resize="onResize" color="black">
 
             <div class="container ">
-                <v-btn icon to="/vote">
-
-                    <v-icon large>mdi-chevron-left</v-icon>
-                </v-btn>
-
-                <div class="container">
-                    <h2> 🏆 Live Results</h2>
-                </div>
 
                 <v-row class="">
+                    <v-col cols="12" md="12">
+                        <v-card elevation="0" max-width="1300" color="black">
+                            <div class="container">
+                                <v-card-title>
+                                    <h3> Start voting process</h3>
+                                </v-card-title>
+                               
+                            </div>
+                        </v-card>
+                    </v-col>
 
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="12">
+
                         <v-card elevation="0">
                             <div class="container">
 
-                                <div>
+                                <div class="d-flex">
+                                    <div>
+                                    
+                                
+                                        <div >
+                                            <div class="container col-md-12">
 
-                                    <v-card-subtitle>
+                                                <v-card elevation="0" color="black" class="mb-4" dark>
+                                                    <v-stepper v-model="step" elevation="0" color="black">
 
-                                    </v-card-subtitle>
-                                    <v-row>
-                                        <v-col cols="12" sm="12" md="12">
-                                            <div class="container">
+                                                        <v-stepper-header color="black">
+                                                            <v-stepper-step color="#bf9524" :complete="step > 1" step="1">Choose Category</v-stepper-step>
+                                                            <v-divider></v-divider>
+                                                            <v-stepper-step color="#bf9524" :complete="step > 2" step="2">Nominate</v-stepper-step>
+                                                            <v-divider></v-divider>
+                                                            <v-stepper-step color="#bf9524" :complete="step > 3" step="3">Vote</v-stepper-step>
+                                                            <v-divider></v-divider>
+                                                            <v-stepper-step color="#bf9524" :complete="step > 4" step="4">Payment</v-stepper-step>
+                                                            <v-divider></v-divider>
+                                                            <v-stepper-step color="#bf9524" step="5">Confirmation</v-stepper-step>
+                                                        </v-stepper-header>
 
-                                                <v-card-text>
+                                                        <v-stepper-items>
 
-                                                    <div class="d-flex">
-
-                                                        <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
-
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn @click="RefreshData()" icon>
-                                                            <v-icon>mdi-refresh</v-icon>
-                                                        </v-btn>
-
-                                                    </div>
-                                                </v-card-text>
-                                                <v-card elevation="0" v-scroll.self="onScroll" class="overflow-y-auto" max-height="900">
-                                                    <v-card-text>
-                                                        <div class="results-page row">
-
-                                                            <div v-for="cat in Results" :key="cat.category_id" class="col-md-12" style="margin: 0px;">
-                                                                <hr>
-                                                                <h3 style="color: #bf9524;">{{ cat.category_name }}</h3>
-
-                                                                <!-- Nominees list -->
-                                                                <div class="row">
-                                                                    <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="col-md-12">
-                                                                        <div class="nominee-header">
-                                                                            <div class="">
-                                                                                <h5> <strong>{{ nom.nominee_name }}</strong></h5>
-                                                                                <p style="margin: 3px;">{{ nom.location }} - {{ nom.church }}</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <br>
-                                                                        <div class="text-start ">
-                                                                            <span v-if="nom.is_leader" class="leader-badge" style="color: greenyellow;">Leading in this category</span>
-                                                                        </div>
-                                                                        <!-- Progress bar -->
-                                                                        <div class="col-md-8">
-                                                                            <!-- <div class="progress-bar" :style="{ width: nom.percentage + '%' , color: '#808080'}"></div> -->
-                                                                            <v-progress-linear width="50%" rounded v-model="nom.percentage" stream color="amber" height="20">Votes {{ nom.percentage }}%</v-progress-linear>
-                                                                            <v-spacer></v-spacer>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <!-- Loop categories -->
-
-                                                        </div>
-                                                    </v-card-text>
-
+                                                        </v-stepper-items>
+                                                    </v-stepper>
                                                 </v-card>
+                                                <br>
+                                                <br>
+                                                <h2 class="mb-4">Vote for Your Nominee</h2>
+
+                                                <label for="selectedCategory">Select Category</label>
+                                                <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" placeholders="Select Category" outlined dense @change="fetchNominees"></v-select>
+
+                                                <v-radio-group v-model="selectedNominee" class="mt-4">
+                                                    <v-radio v-for="nominee in nominees" :key="nominee.id" :label="nominee.name" :value="nominee.id" @click="step = 3, nomineeName = nominee.name">
+                                                        <div class="nominee-card">
+                                                            <img src="nominee.image" alt="Nominee" />
+                                                            <h3>{{ nominee.name }}</h3>
+                                                            <button @click="selectNominee(category.id, nominee.id),step = 3">Vote</button>
+                                                        </div>
+
+                                                    </v-radio>
+                                                </v-radio-group>
+
+                                                <v-btn color="#bf9524" class="mt-4" :disabled="!selectedNominee" @click="openPaymentDialog">
+                                                    Cast Vote
+                                                </v-btn>
 
                                             </div>
-                                        </v-col>
-
-                                    </v-row>
-
-                                </div>
-                            </div>
-                        </v-card>
-                    </v-col>
-
-                    <v-col cols="12" md="6">
-                        <v-card elevation="0">
-                            <div class="container ">
-                                <div>
-                                    <v-card-subtitle>
-                                        Voting process
-
-                                    </v-card-subtitle>
-
-                                    <div class="d-flex text-center">
-                                        <v-spacer></v-spacer>
-                                        <!-- <strong style="font-size: 0.9rem;"> {{ numeral(nomineeCount).format("0.0") }}</strong> -->
-                                        <v-progress-linear color="white" size="70" buffer-value="0" :value="nomineeCount" stream>
-                                        </v-progress-linear>
-                                        <v-spacer></v-spacer>
-                                    </div>
-
-                                    <v-card-text>
-                                        <p style="color: #bf9524;"> </p>
-                                    </v-card-text>
-
-                                    <v-card-subtitle>
-                                        <h5 style="color: grey;">Nominated Candidates</h5>
-                                    </v-card-subtitle>
-                                    <div>
-                                        <div class="d-flex">
-                                            <v-select v-model="searchNomineeCat" :items="categories" item-text="name" item-value="id" label="Search with Category" outlined dense @change="fetchVotesSummry22()"></v-select>
-                                            <v-spacer></v-spacer>
-                                            <v-spacer></v-spacer>
 
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div v-for="(nom, id) in nomineesList" :key="id" class="col-md-6">
-
-                                            <v-card elevation="0" class="mx-auto" max-width="400" color="black">
-                                                <v-list-item two-three>
-                                                    <v-list-item-content>
-                                                        <v-list-item-title class="text-h6">
-                                                            {{ nom.nominee_name }}
-                                                        </v-list-item-title>
-                                                        <v-list-item-subtitle>{{ nom.category_name }}</v-list-item-subtitle>
-                                                    </v-list-item-content>
-                                                </v-list-item>
-
-                                                <div class="d-flex">
-                                                    <div>
-                                                        <v-card-text>
-                                                            <p style="color: #bf9524;">{{ nom.location }} <br>{{ nom.church }} </p>
-                                                        </v-card-text>
-
-                                                    </div>
-                                                    <v-spacer></v-spacer>
-                                                    <v-progress-circular color="white" size="60" buffer-value="0" :value="nom.percentage" stream>
-
-                                                        <strong style="font-size: 0.9rem;"> {{ numeral(nom.percentage).format("0.0") }} % </strong>
-                                                    </v-progress-circular>
-                                                    <v-spacer></v-spacer>
-                                                </div>
-
-                                            </v-card>
-
-                                        </div>
-
-                                    </div>
-
+                                   
                                 </div>
                             </div>
                         </v-card>
+
                     </v-col>
+                    
+
+                   
+                   
+                    <v-col cols="12" md="6"></v-col>
+                    <v-col cols="12" md="6"></v-col>
                 </v-row>
             </div>
 
+            
+
+
+
+            <v-dialog v-model="nomineeDialog" max-width="400px">
+                <v-card>
+                    <v-card-title class="headline">Nominate someone</v-card-title>
+                    <v-card-text>
+                        <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
+                        <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
+                        <v-row>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-text-field v-model="location" label="County/Location" outlined dense></v-text-field>
+
+                            </v-col>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+
+                            </v-col>
+                        </v-row>
+
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
+                        <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="paymentDialog" max-width="400px">
+                <v-card>
+                    <v-card-title class="headline">Vote Confirmation</v-card-title>
+                    <v-card-text>
+                        <label for="phoneNumber">Provide you mpesa number</label>
+                        <v-text-field v-model="phoneNumber" :prefix="phonePrefix" placeholder="(7.. format)" dense></v-text-field>
+                        <label for="voteCount">Number of votes you wish to cast</label>
+                        <v-text-field diable v-model="voteCount" placeholder="" type="number" dense @change="getAmount"></v-text-field>
+                        <span>1 Vote is eqaul to 10sh (1 vote = 10 ksh)</span>
+                        <br>
+                        <br>
+                        <div class="d-flex">
+                            <p style="font-size: 0.9rem;">Total amount to be paid. <h6>{{ numeral(amount).format("0,0") }} ksh</h6>
+                            </p>
+                        </div>
+
+                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                            <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+phoneNumber }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount).format("0,0") }}</b> ksh</p>
+                        </div>
+                        <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+                        <!-- Message -->
+                        <v-alert v-if="message" class="mt-4" type="success" dense outlined>
+                            {{ message }}
+                        </v-alert>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="paymentDialog = false">Cancel</v-btn>
+                        <v-btn color="black" @click="processPayment" style="color: white;">Vote</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="paymentConfirmDialog" max-width="400px">
+                <v-card class="text-center" style="padding: 1rem;">
+                    <v-img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGxrZTVjZ254ajR0NXVnMWV4NWYxcTBheTZ1cDA5bTJiM2c5NTV6NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jtd26qRGDzgjiqcwbp/giphy.gif" contain height="150px"></v-img>
+                    <br>
+                    <h5>Voting Confirmed</h5>
+                    <v-card-text>
+                        <br>
+
+                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                            <p style="font-size: 0.9rem;">Thank you for voting. Your <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} has been successfully recorded
+                            </p>
+                        </div>
+                        <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+                        <!-- Message -->
+
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <div>
+
+                            <v-btn text @click="paymentConfirmDialog = false">Close</v-btn>
+                        </div>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-container>
 
         <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
@@ -396,14 +411,6 @@ export default {
         setInterval(this.fetchAll(), 5000); // refresh every 5 seconds
     },
     methods: {
-        async RefreshData() {
-            this.searchCatResult = null
-            await this.fetchCategories();
-            await this.fetchLiveResults();
-            await this.fetchNomineesList();
-            await this.fetchVotesSummry();
-            await this.fetchOverview();
-        },
         onScroll(e) {
             this.offsetTop = e.target.scrollTop
         },

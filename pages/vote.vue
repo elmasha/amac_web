@@ -107,7 +107,7 @@
                                         <br>
                                         <v-card-actions>
 
-                                            <v-btn outlined rounded color="white" width="50%" @click="vote=!vote">Vote now <v-icon v-show="vote">mdi-close</v-icon>
+                                            <v-btn outlined rounded color="white" width="50%" to="/voting">Vote now <v-icon v-show="vote">mdi-close</v-icon>
                                             </v-btn>
                                         </v-card-actions>
 
@@ -191,9 +191,17 @@
 
                                 <div>
 
-                                    <v-card-subtitle>
-                                        🏆 Live Results
-                                    </v-card-subtitle>
+                                    <div class="d-flex">
+                                        <v-card-subtitle>
+                                            🏆 Live Results
+                                        </v-card-subtitle>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="transparent" to="/live-results">
+                                            View All Results
+                                            <v-icon>mdi-chevron-right</v-icon>
+                                        </v-btn>
+                                    </div>
+
                                     <v-row>
                                         <v-col cols="12" sm="12" md="12">
                                             <div class="container">
@@ -204,8 +212,6 @@
 
                                                         <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
 
-                                                        <v-spacer></v-spacer>
-
                                                     </div>
                                                 </v-card-text>
                                                 <v-card elevation="0" v-scroll.self="onScroll" class="overflow-y-auto" max-height="400">
@@ -213,9 +219,9 @@
                                                         <div class="results-page row">
 
                                                             <div v-for="cat in Results" :key="cat.category_id" class="col-md-12" style="margin: 0px;">
-                                                                  <hr>
+                                                                <hr>
                                                                 <h3 style="color: #bf9524;">{{ cat.category_name }}</h3>
-                                                              
+
                                                                 <!-- Nominees list -->
                                                                 <div class="row">
                                                                     <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="col-md-12">
@@ -333,7 +339,7 @@
                 </v-row>
             </div>
 
-            <v-tabs color="white">
+            <!-- <v-tabs color="white">
                 <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
                 <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
                 <v-tab @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Category</v-tab>
@@ -497,15 +503,6 @@
 
                             <v-card-text>
 
-                                <!-- <v-chip-group v-model="neighborhoods" row multiple>
-                                <div v-for="(vote, id) in categories" :key="id">
-                                    <v-chip filter color="black" text-color="white" @click="">
-                                        {{ vote.name }}
-                                    </v-chip>
-                                </div>
-
-                            </v-chip-group> -->
-
                                 <div class="d-flex">
 
                                     <v-select v-model="searchCatResult" :items="categories" item-text="name" item-value="id" placeholder="Search with Category" outlined dense @change="fetchOverview33(searchCatResult)"></v-select>
@@ -522,7 +519,6 @@
                                     <h2 style="color: #bf9524;">{{ cat.category_name }}</h2>
                                     <hr>
 
-                                    <!-- Nominees list -->
                                     <div class="row">
                                         <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="col-md-4">
                                             <br>
@@ -536,15 +532,12 @@
                                             <p style="margin: 3px;">{{ nom.location }} - {{ nom.church }}</p>
                                             <p style="margin: 3px;">Votes: ({{ nom.percentage }}%)</p>
 
-                                            <!-- Progress bar -->
                                             <div class="">
-                                                <!-- <div class="progress-bar" :style="{ width: nom.percentage + '%' , color: '#808080'}"></div> -->
                                                 <v-progress-linear v-model="nom.percentage" stream color="amber" height="50">{{ nom.percentage }}%</v-progress-linear>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Loop categories -->
 
                             </div>
 
@@ -557,7 +550,7 @@
 
             <v-card v-show="vote" class="pa-4" outlined dark color="black">
 
-            </v-card>
+            </v-card> -->
 
             <v-dialog v-model="nomineeDialog" max-width="400px">
                 <v-card>
