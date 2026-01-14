@@ -48,9 +48,9 @@ export default {
   googleFonts: {
     download: true,
     families: {
-      Lato: true,
+      Quicksand: true,
     },
-    display: "Lato",
+    display: "Quicksand",
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -103,11 +103,11 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
           green: "#66CC33",
-          primary: "#B6FF00",
+          primary: "#FFD700",
           accent: "#8051FF",
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,

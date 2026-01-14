@@ -1,6 +1,5 @@
 <template>
-<v-app dark>
-
+<v-app dark style="background-color: black;">
     <v-main>
         <Nuxt />
     </v-main>
@@ -92,6 +91,15 @@ export default {
 </script>
 
 <style>
+
+* {
+    font-family: "Quicksand", sans-serif;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    
+
+}
+
 /* @media (max-width: 100%) {
   .section span {
     width: calc(10vw - 2px);
