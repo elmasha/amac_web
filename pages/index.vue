@@ -61,7 +61,7 @@
                     <home></home>
                 </section>
             </v-col>
-            <v-col cols="12" md="12">
+            <v-col cols="12" md="12" class="parallax">
                 <section id="about" class="bg-gray-100 ">
                     <about></about>
                 </section>
@@ -81,7 +81,7 @@
                     <team></team>
                 </section>
             </v-col>
-            <v-col cols="12" md="12">
+            <v-col cols="12" md="12" class="parallax_contact">
                 <section id="contact" class="bg-gray-100 ">
                     <contact></contact>
                 </section>
@@ -189,6 +189,24 @@ export default {
     background-position: center;
     background-size: cover;
     width: 100%;
+}
+
+.parallax_contact {
+    background-image: url('~/assets/p2.svg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+}
+
+.parallax {
+    background-image: url('~/assets/p3.svg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
 }
 
 #link {

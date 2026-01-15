@@ -1,4 +1,4 @@
-<template class="parallax_about">
+<template >
 <div >
     <v-row>
         <v-col cols="12" md="12" sm="12">

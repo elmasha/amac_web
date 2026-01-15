@@ -1,6 +1,6 @@
 <template>
 
-    <div class="parallax_about">
+    <div >
         <div class="">
             <div class="text-center">
                 <h1>
