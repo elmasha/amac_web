@@ -114,7 +114,7 @@ export default {
     border-radius: 12px;
 }
  .parallax_about {
-    background-image: url('~/assets/pg.png');
+    background-image: url('~/assets/p1.svg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
