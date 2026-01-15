@@ -1,6 +1,6 @@
 <!-- Please remove this file from your project -->
 <template>
-<v-app style="background-color: black;">
+
     <div style="margin-top: 30px;">
         <v-row>
             <v-col cols="12" md="12" sm="12">
@@ -30,7 +30,7 @@
         </v-row>
 
     </div>
-</v-app>
+
 </template>
 
 <script>

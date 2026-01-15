@@ -1,6 +1,5 @@
 <template>
-<v-app dark  class="parallax_about">
-    <div class="container text-center">
+    <div class="container text-center parallax_about">
 
         <h1 class="container" style="padding-top: 80px;">Our Dedicated team</h1>
 
@@ -74,7 +73,6 @@
 
     </div>
 
-</v-app>
 </template>
 
 <script>
