@@ -184,11 +184,11 @@ export default {
 
 <style>
 .parallax_about {
-    background-image: url('~/assets/pg.png');
+    background-image: url('~/assets/pg.svg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     width: 100%;
 }
 
