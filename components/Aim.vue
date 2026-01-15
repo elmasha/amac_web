@@ -108,7 +108,7 @@ export default {
 
 <style scoped>
 .parallax_about {
-    background-image: url('~/assets/p2.svg');
+    background-image: url('~/assets/pg.png');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;

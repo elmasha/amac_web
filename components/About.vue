@@ -9,7 +9,7 @@
         </v-col>
         <v-col cols="12" md="3" sm="12"></v-col>
 
-        <v-col cols="12" md="3" sm="12" style="margin-top: 30px;">
+        <v-col cols="12" md="3" sm="12" >
             <div class="container ">
                 <br>
 
