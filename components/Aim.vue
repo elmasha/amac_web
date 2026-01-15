@@ -1,5 +1,5 @@
 <template>
-<v-app style="margin-top: 80px;" class="parallax_about">
+<v-app style="margin-top: 80px;" >
     <div class="container text-center ">
         <v-row>
             <v-col cols="12" md="12" sm="12">
@@ -107,14 +107,6 @@ export default {
 </script>
 
 <style scoped>
-.parallax_about {
-    background-image: url('~/assets/pg.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-}
 
 .fade-section {
     opacity: 0;

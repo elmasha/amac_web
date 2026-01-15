@@ -42,7 +42,7 @@
                     </div>
                     <v-spacer></v-spacer>
 
-                    <v-btn outlined color="primary" rounded >
+                    <v-btn outlined color="primary" rounded>
                         <p style="color: white; margin-top: 14px;">Nominate now</p>
                     </v-btn>
 
@@ -66,7 +66,7 @@
                     <about></about>
                 </section>
             </v-col>
-            <v-col cols="12" md="12">
+            <v-col cols="12" md="12" class="parallax_about">
                 <section id="aim" class="bg-gray-100 ">
                     <aim></aim>
                 </section>
@@ -82,7 +82,7 @@
                 </section>
             </v-col>
             <v-col cols="12" md="12">
-                <section id="contact" class="bg-gray-100 " >
+                <section id="contact" class="bg-gray-100 ">
                     <contact></contact>
                 </section>
             </v-col>
@@ -102,8 +102,6 @@ import About from "../components/About.vue"
 import Aim from "../components/Aim.vue"
 import Team from "../components/Team.vue"
 import Contact from "../components/Contact.vue"
-
-
 
 export default {
     components: {
@@ -185,6 +183,13 @@ export default {
 </script>
 
 <style>
+.parallax_about {
+    background-image: url('~/assets/pg.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
 #link {
     color: gold;
     font-weight: 800;
