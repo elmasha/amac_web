@@ -1,6 +1,5 @@
-<template>
- <v-app style="margin-top: 30px;" class="parallax_about">
-    <div class="">
+<template class="parallax_about">
+<div >
     <v-row>
         <v-col cols="12" md="12" sm="12">
             <div class="container text-center" style="margin-top: 120px;">
@@ -9,7 +8,7 @@
         </v-col>
         <v-col cols="12" md="3" sm="12"></v-col>
 
-        <v-col cols="12" md="3" sm="12" >
+        <v-col cols="12" md="3" sm="12">
             <div class="container ">
                 <br>
 
@@ -27,8 +26,6 @@
     </v-row>
 
 </div>
- </v-app>   
-
 </template>
 
 <script>
@@ -61,14 +58,14 @@ export default {
 </script>
 
 <style scoped>
-
 .parallax_about {
     background-image: url('~/assets/p1.svg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    width:100%;
+    width: 100%;
 }
+
 .fade-section {
     opacity: 0;
     transform: translateY(40px);
