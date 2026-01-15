@@ -187,7 +187,6 @@ export default {
     background-image: url('~/assets/pg.svg');
     background-attachment: fixed;
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
 }
