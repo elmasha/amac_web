@@ -1,5 +1,5 @@
 <template>
-<v-app dark style="background-color: black;" class="parallax_about">
+<v-app dark  class="parallax_about">
     <div class="container text-center">
 
         <h1 class="container" style="padding-top: 80px;">Our Dedicated team</h1>

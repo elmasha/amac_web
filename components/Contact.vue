@@ -1,5 +1,5 @@
 <template>
-<v-app style="background-color: black;">
+<v-app >
     <div class="parallax_about">
         <div class="">
             <div class="text-center">
@@ -65,8 +65,8 @@
 
                         <v-textarea outlined rounded v-model="email" placeholder="Send a Message" required></v-textarea>
 
-                        <v-btn large outlined color="primary" rounded width="50%">
-                            Send us a Message
+                        <v-btn large outlined color="primary" rounded width="100%">
+                            Send 
                             <v-icon right dark>
                                 mdi-chat
                             </v-icon>

@@ -1,8 +1,8 @@
 <!-- Please remove this file from your project -->
 <template>
-<v-app style="background-color: black;margin-top: 50px;" class="gradient-background" >
+<v-app style="margin-top: 50px;" class="gradient-background" >
     <div class="gradient-background">
-        <v-carousel height="800" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus" style=" background: linear-gradient(to right,
+        <v-carousel height="700" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus" style=" background: linear-gradient(to right,
             #FFD700,
             transparent,
             transparent,

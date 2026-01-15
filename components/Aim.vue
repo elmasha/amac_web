@@ -1,5 +1,5 @@
 <template>
-<v-app style="background-color: black;margin-top: 80px;" class="parallax_about">
+<v-app style="margin-top: 80px;" class="parallax_about">
     <div class="container text-center ">
         <v-row>
             <v-col cols="12" md="12" sm="12">
