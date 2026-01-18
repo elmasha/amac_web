@@ -100,7 +100,7 @@
                 <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
                 <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
                 <v-row>
-                    <v-col cols="12" sm="12" md="6">
+                    <v-col cols="12" sm="12" md="12">
                         <v-autocomplete v-model="location" clearable filled rounded dense :loading="loading" 
                          :items="counties" :search-input.sync="search" cache-items class="mx-2" flat hide-no-data hide-details placeholder="Search county you are from?   "></v-autocomplete>
 
