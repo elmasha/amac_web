@@ -1,80 +1,80 @@
 <template>
-
-    <div class="container text-center ">
-        <v-row>
-            <v-col cols="12" md="12" sm="12">
-                <div class="container text-center" style="margin-top: 10px;">
-                    <h1>Aims and Objectives</h1>
-                    <br>
-                    <br>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" class="">
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        Spiritual Upliftment
-                    </h3>
-                    <p>
-                        We believe in using music as a powerful tool to enhance spiritual growth, creating an atmosphere where individuals can connect with God on a deeper level.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" >
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        Unity and Collaboration showcase
-                    </h3>
-                    <p>
-                        We value the unity of the Seventh-day Adventist community and seek to foster collaboration among musicians, singers, and composers, promoting a sense of togetherness in worship. </p>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" >
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        No Competition, Only Celebration
-                    </h3>
-                    <p>
-                        AMAC is committed to creating an environment where musical talents are celebrated, and there is no emphasis on competition. We believe in recognizing and appreciating the unique contributions of each individual or group. </p>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" >
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        Celebration of Diversity and Cultural Relevance.
-                    </h3>
-                    <p>
-                        We celebrate the diverse musical talents within the Adventist community, acknowledging that each unique expression adds richness to our worship experience. We recognize and appreciate the cultural diversity within the Adventist community in Kenya, encouraging the incorporation of various musical styles and traditions that resonate with our members.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" >
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        Community Engagement
-                    </h3>
-                    <p>
-                        The Amac Awards actively engage with the communities it aims to represent, seeking input and involvement from diverse individuals and organizations. This includes partnerships with community-based initiatives, advocacy groups, and platforms that promote inclusivity and uplift underrepresented artists
-                    </p>
-                    <br>
-                    <br>
-                </div>
-            </v-col>
-            <v-col cols="12" md="4" sm="12" >
-                <div class="container box">
-                    <h3 style="color: #FFD700;">
-                        Empowerment of all church ministries and departments.
-                    </h3>
-                    <p>
-                        AMAC aims to provide a platform for SDA musicians to showcase their talents, encouraging their active participation in the musical ministry of the Seventh-day Adventist Church.
-                    </p>
-                    <br>
-                    <br>
-                </div>
-            </v-col>
-        </v-row>
+<div class=" text-center ">
+    <div class="container text-center" style="margin-top: 80px;">
+        <h1>Aims and Objectives</h1>
 
     </div>
+    <v-card v-scroll.self="onScroll" class="overflow-y-auto" max-height="1200" elevation="0" color="transparent">
+        
+<v-row>
 
+        <v-col cols="12" md="4" sm="12" class="">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    Spiritual Upliftment
+                </h3>
+                <p>
+                    We believe in using music as a powerful tool to enhance spiritual growth, creating an atmosphere where individuals can connect with God on a deeper level.
+                </p>
+            </div>
+        </v-col>
+        <v-col cols="12" md="4" sm="12">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    Unity and Collaboration showcase
+                </h3>
+                <p>
+                    We value the unity of the Seventh-day Adventist community and seek to foster collaboration among musicians, singers, and composers, promoting a sense of togetherness in worship. </p>
+            </div>
+        </v-col>
+        <v-col cols="12" md="4" sm="12">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    No Competition, Only Celebration
+                </h3>
+                <p>
+                    AMAC is committed to creating an environment where musical talents are celebrated, and there is no emphasis on competition. We believe in recognizing and appreciating the unique contributions of each individual or group. </p>
+            </div>
+        </v-col>
+        <v-col cols="12" md="4" sm="12">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    Celebration of Diversity and Cultural Relevance.
+                </h3>
+                <p>
+                    We celebrate the diverse musical talents within the Adventist community, acknowledging that each unique expression adds richness to our worship experience. We recognize and appreciate the cultural diversity within the Adventist community in Kenya, encouraging the incorporation of various musical styles and traditions that resonate with our members.
+                </p>
+            </div>
+        </v-col>
+        <v-col cols="12" md="4" sm="12">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    Community Engagement
+                </h3>
+                <p>
+                    The Amac Awards actively engage with the communities it aims to represent, seeking input and involvement from diverse individuals and organizations. This includes partnerships with community-based initiatives, advocacy groups, and platforms that promote inclusivity and uplift underrepresented artists
+                </p>
+                <br>
+                <br>
+            </div>
+        </v-col>
+        <v-col cols="12" md="4" sm="12">
+            <div class="container box">
+                <h3 style="color: #FFD700;">
+                    Empowerment of all church ministries and departments.
+                </h3>
+                <p>
+                    AMAC aims to provide a platform for SDA musicians to showcase their talents, encouraging their active participation in the musical ministry of the Seventh-day Adventist Church.
+                </p>
+                <br>
+                <br>
+            </div>
+        </v-col>
+    </v-row>
+
+    </v-card>
+    
+</div>
 </template>
 
 <script>
@@ -92,10 +92,17 @@ export default {
     data() {
         return {
             about,
+            scrollInvoked: 0,
             pageNotFound: '404 Not Found',
             otherError: 'An error occurred'
         }
+
     },
+    methods: {
+        onScroll() {
+            this.scrollInvoked++
+        },
+    }
     //   head () {
     //     const title =
     //       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
@@ -107,7 +114,6 @@ export default {
 </script>
 
 <style scoped>
-
 .fade-section {
     opacity: 0;
     transform: translateY(40px);
@@ -220,10 +226,29 @@ export default {
     background-color: rgb(255 255 255 / 30%);
     backdrop-filter: blur(5px);
     border-radius: 12px;
+    transition: 0.3s;
+}
+
+.box:hover {
+    background-image: url('~/assets/pg.svg');
+    font-weight: 800;
+    width: 100%;
+
 }
 
 .box1 {
     background-color: rgb(255 255 255 / 30%);
     backdrop-filter: blur(14px);
+}
+
+#link {
+    color: gold;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+#link:hover {
+    color: #fff;
+    font-weight: 800;
 }
 </style>

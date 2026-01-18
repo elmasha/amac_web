@@ -1,17 +1,19 @@
 <!-- Please remove this file from your project -->
 <template>
 
-    <div style="margin-top: 30px;">
-        <v-row>
-            <v-col cols="12" md="12" sm="12">
-                <div class="container text-center" style="margin-top: 120px;">
-                    <h1>Gallery</h1>
-                    <p>The inaugural edition, themed the Elegant Edition, was held on November 24th, 2024, at KICC, attracting over 2,600 attendees.</p>
+    <div >
+        <div class="container text-center" style="margin-top: 80px;">
+                   <h1>Gallery</h1>
+                   <p>The inaugural edition, themed the Elegant Edition, was held on November 24th, 2024, at KICC, attracting over 2,600 attendees.</p>
                 </div>
+                
+        <v-row >
+            <v-col cols="12" md="12" sm="12">
+                
             </v-col>
             <v-col cols="12" md="6" sm="12">
                 <div class="">
-                    <v-carousel height="500" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
+                    <v-carousel height="200" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
 
                         <v-carousel-item width="100%" v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
 
@@ -20,7 +22,7 @@
             </v-col>
             <v-col cols="12" md="6" sm="12">
                 <div class="">
-                    <v-carousel height="500" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
+                    <v-carousel height="200" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
 
                         <v-carousel-item width="100%" v-for="(item,i) in items2" :key="i" :src="item.src"></v-carousel-item>
 

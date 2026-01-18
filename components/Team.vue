@@ -1,19 +1,21 @@
 <template>
-    <div class="container text-center parallax_about">
+    <div class="container text-center ">
 
-        <h1 class="container" style="padding-top: 80px;">Our Dedicated team</h1>
+        <div class="container" style="margin-top: 80px;">
+                    <h1  >Our Dedicated team</h1>
+
+        </div>
 
         <div class="container">
             <v-row class="text-center">
                 <v-col cols="6" md="3" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t1" contain height="300"></v-img>
+                        <v-img :src="t1" contain height="200"></v-img>
                         <v-card-subtitle>
-                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Kevin Kamau Njeri
+                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">JOHN NYOGOT
                             </b>
-                            <p>Founder & Managing Director
-                                <br>
-                                Europe / Kenya</p>
+                            <p>Director - Business Development
+                               </p>
                         </v-card-subtitle>
 
                     </v-card>
@@ -21,14 +23,11 @@
                 </v-col>
                 <v-col cols="6" md="3" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t3" contain height="300"></v-img>
+                        <v-img :src="t3" contain height="200"></v-img>
                         <v-card-subtitle>
-                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Lucy Muchene Schumacher
+                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Ombati Isaac
                             </b>
-                            <p>Director and Shareholder
-                                <br>
-
-                                Europe / Kenya</p>
+                            <p>Director, Logistics and Operations</p>
                         </v-card-subtitle>
 
                     </v-card>
@@ -36,13 +35,11 @@
                 </v-col>
                 <v-col cols="6" md="3" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t2" contain height="300"></v-img>
+                        <v-img :src="t2" contain height="200"></v-img>
                         <v-card-subtitle>
-                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Allan Mwema
+                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Lilian Koech Memusi
                             </b>
-                            <p>Chief Executive Officer (CEO) <br>
-
-                                Nairobi, Kenya</p>
+                            <p>Product Director, Partnerships</p>
                         </v-card-subtitle>
 
                     </v-card>
@@ -50,24 +47,16 @@
                 </v-col>
                 <v-col cols="6" md="3" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t4" contain height="300"></v-img>
+                        <v-img :src="t4" contain height="200"></v-img>
                         <v-card-subtitle>
-                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">Stella
-                                Wmabui</b>
-                            <p>Head of Human Resources &
-                                Training
-                                <br>
-                                Nairobi, Kenya</p>
+                            <b style="font-size: 1.1rem; font-weight: 700; color: white;">BENJAMIN ACHUTI</b>
+                            <p>Director - Resource Mobilization</p>
                         </v-card-subtitle>
 
                     </v-card>
 
                 </v-col>
-                <v-col cols="6" md="12" class="">
-                    <div class="container">
-                        <h1 class="container" style="padding-top: 80px;">Sponsors</h1>
-                    </div>
-                </v-col>
+                
             </v-row>
         </div>
 
@@ -112,14 +101,7 @@ export default {
 
 <style scoped>
 
-   .parallax_about {
-    background-image: url('~/assets/p3.svg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width:100%;
-} 
+ 
 /* .parallax_about {
     background-image: url('~/assets/p_about.png');
     background-attachment: fixed;

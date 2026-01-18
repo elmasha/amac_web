@@ -1,19 +1,39 @@
 <!-- Please remove this file from your project -->
 <template>
-<v-app style="margin-top: 50px;" class="gradient-background" >
-    <div class="gradient-background">
-        <v-carousel height="700" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus" style=" background: linear-gradient(to right,
-            #FFD700,
-            transparent,
-            transparent,
-            transparent);" >
-            <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
-        </v-carousel>
-        <div>
-            <countdown targetDate="2026-02-11"></countdown>
-        </div>
-    </div>
-</v-app>
+<div style="margin-top: 50px;">
+<div class="d-flex">    
+<countdown style="font-size: small;" targetDate="2026-08-11"></countdown>
+</div>
+    <v-carousel height="700" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
+        <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
+            <div class=" gradient-background">
+                <v-row>
+
+                    <v-col cols="12" md="6">
+                        <div class="container text-start" style="margin-top: 300px;color:white;">
+                            <h1 class="typing-title">
+                                {{ item.title+"\n" }}
+                            </h1>
+                            <div class="d-flex" style="margin-top: 50px;">
+                                <v-btn color="white" rounded>
+                                    <p style="color: black; margin-top: 14px;">Nominate now</p>
+                                </v-btn>
+
+                            </div>
+                        </div>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+
+                    </v-col>
+                </v-row>
+
+            </div>
+        </v-carousel-item>
+    </v-carousel>
+
+    
+</div>
 </template>
 
 <script>
@@ -22,11 +42,11 @@ import h2 from "@/assets/h2.jpg";
 import h3 from "@/assets/h3.jpg";
 import axios from "axios";
 import numeral from "numeral";
-import Countdown from "../components/Countdown.vue";
+import Countdown from "../components/Countdown2.vue";
 
 export default {
     name: 'NuxtTutorial',
-    components:{
+    components: {
         Countdown
     },
     props: {
@@ -42,12 +62,15 @@ export default {
             numeral,
             items: [{
                     src: h1,
+                    title: "Wecolme to Amac   "
                 },
                 {
                     src: h2,
+                    title: "Enjoy the experience"
                 },
                 {
                     src: h3,
+                    title: ""
                 },
 
             ],
@@ -68,18 +91,55 @@ export default {
 </script>
 
 <style scoped>
-    .gradient-background {
+.gradient-background {
     width: 100%;
     height: 100vh;
     /* You can adjust the height as needed */
-    background: linear-gradient(to left,
-            #FFD700,
+    background: linear-gradient(to right,
+            #0c0b0393,
+            #0000004d,
+            #0000004d,
+            #0000001f,
+            transparent,
             transparent,
             transparent,
             transparent);
     background-size: 200% 100%;
     animation: gradient-animation 3s linear infinite;
+    
 }
+
+.typing-title {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid currentColor;
+    width: 0;
+    animation:
+        typing 3s steps(30, end) forwards,
+        blink 0.8s step-end infinite;
+    font-size: 2.4rem;
+    color: white;
+    font-weight: 1200;
+}
+
+/* Typing animation */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+/* Cursor blink */
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
 .box {
     background-color: rgb(255 255 255 / 30%);
     backdrop-filter: blur(5px);

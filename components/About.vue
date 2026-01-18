@@ -1,16 +1,15 @@
-<template >
-<div >
-    <v-row>
-        <v-col cols="12" md="12" sm="12">
-            <div class="container text-center" style="margin-top: 120px;">
-                <h1>What is Amac</h1>
-            </div>
-        </v-col>
-        <v-col cols="12" md="3" sm="12"></v-col>
+<template>
+<div class="container">
 
-        <v-col cols="12" md="3" sm="12">
-            <div class="container ">
-                <br>
+    <div class="container text-center" style="margin-top: 80px;">
+        <div class=" text-center" >
+                        <h1>What is Amac</h1>
+                    </div>
+    </div>
+    <v-row>
+
+        <v-col cols="12" md="12" sm="12">
+            <div class="container text-center">
 
                 <p>The Adventist Music Annual Concert and Awards (AMAC) is a unique initiative aimed at cultivating a harmonious and spiritually uplifting atmosphere within the Seventh-day Adventist community.</p>
 
@@ -19,10 +18,7 @@
                 <p>Through AMAC, we aim to create a platform that unites musicians, singers, and composers in the spirit of collaboration and shared worship, fostering an environment where their God-given gifts are acknowledged, celebrated, and utilized for the glory of the Lord.</p>
             </div>
         </v-col>
-        <v-col cols="12" md="3" sm="12">
-            <v-img :src="about" height="500" contain />
-        </v-col>
-        <v-col cols="12" md="3" sm="12"></v-col>
+        
     </v-row>
 
 </div>
@@ -58,14 +54,6 @@ export default {
 </script>
 
 <style scoped>
-.parallax_about {
-    background-image: url('~/assets/p1.svg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-}
-
 .fade-section {
     opacity: 0;
     transform: translateY(40px);

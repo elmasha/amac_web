@@ -3,7 +3,7 @@
     <v-row v-resize="onResize">
         <v-col cols="12" md="12">
             <div>
-                <v-app-bar height="80" dark elevation="0" class="" color="black" fixed>
+                <v-app-bar dark elevation="0" class="" color="black" fixed>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on, attrs }">
 
@@ -42,7 +42,7 @@
                     </div>
                     <v-spacer></v-spacer>
 
-                    <v-btn outlined color="primary" rounded>
+                    <v-btn outlined color="primary" @click="nomineeDialog = true" rounded>
                         <p style="color: white; margin-top: 14px;">Nominate now</p>
                     </v-btn>
 
@@ -54,41 +54,71 @@
 
             </div>
         </v-col>
-        <v-row>
 
-            <v-col cols="12" md="12">
+        <div>
+
+            <div>
                 <section id="home">
                     <home></home>
                 </section>
-            </v-col>
-            <v-col cols="12" md="12" class="parallax">
-                <section id="about" class="bg-gray-100 ">
+            </div>
+            <div class="parallax">
+                <section id="about">
                     <about></about>
                 </section>
-            </v-col>
-            <v-col cols="12" md="12" class="parallax_about">
-                <section id="aim" class="bg-gray-100 ">
+            </div>
+            <div class="parallax_aim">
+                <section id="aim">
                     <aim></aim>
                 </section>
-            </v-col>
-            <v-col cols="12" md="12">
-                <section id="gallery" class="bg-gray-100 ">
+            </div>
+            <div>
+                <section id="gallery">
+
                     <gallery></gallery>
                 </section>
-            </v-col>
-            <v-col cols="12" md="12">
-                <section id="team" class="bg-gray-100 ">
+            </div>
+            <div class="parallax_about">
+                <section id="team">
+
                     <team></team>
                 </section>
-            </v-col>
-            <v-col cols="12" md="12" class="parallax_contact">
-                <section id="contact" class="bg-gray-100 ">
+            </div>
+            <div class="parallax_contact">
+                <section id="contact">
+
                     <contact></contact>
                 </section>
-            </v-col>
-        </v-row>
+            </div>
+        </div>
     </v-row>
 
+    <v-dialog v-model="nomineeDialog" max-width="400px">
+        <v-card>
+            <v-card-title class="headline">Nominate someone</v-card-title>
+            <v-card-text>
+                <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
+                <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
+                <v-row>
+                    <v-col cols="12" sm="12" md="6">
+                        <v-autocomplete v-model="location" clearable filled rounded dense :loading="loading" 
+                         :items="counties" :search-input.sync="search" cache-items class="mx-2" flat hide-no-data hide-details placeholder="Search county you are from?   "></v-autocomplete>
+
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+
+                    </v-col>
+                </v-row>
+
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
+                <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </v-app>
 <!-- Render HTML here -->
 </template>
@@ -102,9 +132,11 @@ import About from "../components/About.vue"
 import Aim from "../components/Aim.vue"
 import Team from "../components/Team.vue"
 import Contact from "../components/Contact.vue"
+import Countdown from "../components/Countdown.vue";
 
 export default {
     components: {
+        Countdown,
         Contact,
         Team,
         Gallery,
@@ -114,6 +146,11 @@ export default {
     },
     data() {
         return {
+            loading: false,
+            items: [],
+            search: null,
+            counties: [],
+            nomineeDialog: false,
             logo,
             windowSize: {
                 x: window.innerHeight,
@@ -122,21 +159,40 @@ export default {
             htmlContent: "",
             showBurger: false,
             showBurger: false,
+            categories: [],
+            nomineeName: "",
+            selectedCategory: "",
+            description: "",
+            location: "",
+            church: "",
         };
     },
     async mounted() {
         // await this.fetchCategories();
         // Load external HTML file at runtime
-        fetch("/snippets/index.html") // Place myfile.html in `public/` folder
-            .then((res) => res.text())
-            .then((html) => {
-                this.htmlContent = html;
-            })
-            .catch((err) => {
-                console.error("Error loading HTML:", err);
-            });
+        this.fetchCategories();
+        let response = await axios.get("https://amacserver-production-c845.up.railway.app/api/counties/get-counties");
+        this.counties = response.data;
+        console.log(this.counties);
     },
     methods: {
+        async submitNominee() {
+            try {
+                await axios.post("https://amacserver-production-c845.up.railway.app/api/nominee/addNominee", {
+                    name: this.nomineeName,
+                    category_id: this.selectedCategory,
+                    location: this.location,
+                    church: this.church,
+                });
+                alert("Nominee submitted successfully!");
+                this.nomineeName = "";
+                this.nomineeDesc = "";
+                this.selectedCategory = null;
+            } catch (err) {
+                console.error("Error submitting nominee:", err);
+                alert("Error submitting nominee");
+            }
+        },
         onResize() {
             this.windowSize = {
                 x: window.innerWidth,
@@ -149,6 +205,19 @@ export default {
                 this.showBurger = false;
             }
             return this.windowSize;
+        },
+        async fetchCategories() {
+
+            try {
+                const {
+                    data
+                } = await axios.get(
+                    "https://amacserver-production-c845.up.railway.app/api/categories/getAll"
+                );
+                this.categories = data;
+            } catch (error) {
+                console.error("Error loading categories:", error);
+            }
         },
         scrollToSection(id) {
             const target = document.getElementById(id)
@@ -183,12 +252,31 @@ export default {
 </script>
 
 <style>
-.parallax_about {
+.parallax_aim {
     background-image: url('~/assets/pg.svg');
-    background-attachment: fixed;
     background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
+    height: 100vh;
+}
+
+.parallax_team {
+    background-image: url('~/assets/p2.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100vh;
+}
+
+.parallax_about {
+    background-image: url('~/assets/p3.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
 }
 
 .parallax_contact {
@@ -197,26 +285,29 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width:100%;
+    width: 100%;
+    height: 100vh;
+
 }
 
 .parallax {
-    background-image: url('~/assets/p3.svg');
+    background-image: url('~/assets/p2.svg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width:100%;
+    width: 100%;
+    height: 100vh;
 }
 
 #link {
-    color: gold;
+    color: #dbdbdb;
     font-weight: 800;
     transition: 0.3s;
 }
 
 #link:hover {
-    color: #fff;
+    color: gold;
     font-weight: 800;
 }
 </style>
