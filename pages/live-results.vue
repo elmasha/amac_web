@@ -289,19 +289,7 @@ export default {
         return {
             offsetTop: 0,
             picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            items: [{
-                    src: require("@/assets/app-8.jpg"),
-                },
-                {
-                    src: require("@/assets/app-9.jpg"),
-                },
-                {
-                    src: require("@/assets/app-3.jpg"),
-                },
-                {
-                    src: require("@/assets/app-4.jpg"),
-                },
-            ],
+          
             navIcon: false,
             windowSize: {
                 x: window.innerHeight,

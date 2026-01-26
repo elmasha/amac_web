@@ -1,27 +1,23 @@
-<template >
-<div style="background-color:#000; height: 95vh;" elevetion="0" >
+<template>
+<div style="background-color:#000; height: 95vh;" elevetion="0">
     <v-app-bar color="#ffffff00" dark elevation="0">
-
-       
-
 
     </v-app-bar>
     <div class="container ">
-        <v-progress-linear v-show="progress_bar" indeterminate color="green"></v-progress-linear>
+        <v-progress-linear v-show="progress_bar" indeterminate color="primary"></v-progress-linear>
         <div class="">
-              <div class="d-flex">
-            <v-spacer></v-spacer>
- <div class="text-center">
-    <v-avatar color="black" size="108">
-                <v-img :src="logo"></v-img>
-            </v-avatar>
-            <v-toolbar-title style="color: white; margin-start: 8px; margin-right: 8px">Amac</v-toolbar-title>
- </div>
-            <v-spacer></v-spacer>
-        </div>
+            <div class="d-flex">
+                <v-spacer></v-spacer>
+                <div class="text-center">
+                    <v-avatar color="black" size="108">
+                        <v-img :src="logo"></v-img>
+                    </v-avatar>
+                    <v-toolbar-title style="color: white; margin-start: 8px; margin-right: 8px">Amac</v-toolbar-title>
+                </div>
+                <v-spacer></v-spacer>
+            </div>
             <v-card class="mx-auto text-center" max-width="354" style="padding: 10px;" color="black" dark>
 
-            
                 <v-card-subtitle>
                     <h3 style="font-size: 1.3rem; margin: 12px;"> Sign in with email</h3>
 
@@ -31,19 +27,17 @@
                     <v-form ref="form" v-model="valid" lazy-validation>
 
                         <!-- <v-autocomplete v-model="select" :loading="loading" :items="items" :search-input.sync="search" cache-items @change="getEStateID(select)" class="mx-4" flat hide-no-data hide-details label="   Which estate are you from?   " solo></v-autocomplete> -->
-                   
 
                         <v-text-field v-model="auth.email" :rules="emailRules" label="E-mail" required></v-text-field>
 
                         <v-text-field v-model="auth.password" :counter="10" :rules="nameRules" label="Password" type="password"></v-text-field>
-
 
                         <br>
                         <v-btn rounded width="70%" style="color: white;" color="#d49306" @click="login">
                             Sign In
                         </v-btn>
                     </v-form>
-                   
+
                 </div>
 
             </v-card>
@@ -151,7 +145,7 @@ export default {
             },
             image: null,
             estates: [],
-            estate_id:0,
+            estate_id: 0,
             s: false,
             timerCount: 30,
             timerEnabled: false,
@@ -333,50 +327,50 @@ export default {
             }
         },
         signUpGoogle() {
-          if (this.select == null) {
+            if (this.select == null) {
                 this.snackbar2 = true;
                 this.snackbarText2 = "Provide your estate";
-            }  else {
-            let that = this;
-            const provider = new that.$fireModule.auth.GoogleAuthProvider();
-            that.$fire.auth
-                .signInWithPopup(provider)
-                .catch((error) => {
-                    console.log(error);
-                    that.snackbar2 = true;
-                    that.snackbarText2 = error;
-                })
-                .then((user) => {
-                    that.snackbar = true;
-                    that.snackbarText = "Sign up success";
-                    that.showauth = true;
-                    that.showLogin = true;
-                    that.auth_state = true;
-                    that.$router.push(`/admin`);
-                });
-              }
+            } else {
+                let that = this;
+                const provider = new that.$fireModule.auth.GoogleAuthProvider();
+                that.$fire.auth
+                    .signInWithPopup(provider)
+                    .catch((error) => {
+                        console.log(error);
+                        that.snackbar2 = true;
+                        that.snackbarText2 = error;
+                    })
+                    .then((user) => {
+                        that.snackbar = true;
+                        that.snackbarText = "Sign up success";
+                        that.showauth = true;
+                        that.showLogin = true;
+                        that.auth_state = true;
+                        that.$router.push(`/admin`);
+                    });
+            }
         },
         login() {
-           if (this.auth == null) {
+            if (this.auth == null) {
                 this.snackbar2 = true;
                 this.snackbarText2 = "Provide email and password";
-            }  else {
-            let that = this;
-            that.progress_bar = true;
-            const mAuth = this.$fire.auth;
-            mAuth
-                .signInWithEmailAndPassword(that.auth.email, that.auth.password)
-                .catch(function (error) {
-                    that.snackbarText = error.message;
-                    that.snackbar = true;
-                    that.progress_bar = false;
-                })
-                .then((user) => {
-                    that.progress_bar = false;
-                    //we are signed in
-                    that.$router.push(`/admin`);
-                });
-              }
+            } else {
+                let that = this;
+                that.progress_bar = true;
+                const mAuth = this.$fire.auth;
+                mAuth
+                    .signInWithEmailAndPassword(that.auth.email, that.auth.password)
+                    .catch(function (error) {
+                        that.snackbarText = error.message;
+                        that.snackbar = true;
+                        that.progress_bar = false;
+                    })
+                    .then((user) => {
+                        that.progress_bar = false;
+                        //we are signed in
+                        that.$router.push(`/admin`);
+                    });
+            }
         },
         signUp() {
             if (this.auth.email == "") {

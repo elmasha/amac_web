@@ -21,6 +21,7 @@
                             <v-list-item> <a id="link" @click.prevent="scrollToSection('gallery')" style="margin: 8px;">Gallery</a></v-list-item>
                             <v-list-item> <a id="link" @click.prevent="scrollToSection('team')" style="margin: 8px;">Team</a></v-list-item>
                             <v-list-item> <a id="link" @click.prevent="scrollToSection('contact')" style="margin: 8px;">Contact</a></v-list-item>
+                            <v-list-item> <a id="link" @click.prevent="scrollToSection1('voting')" style="margin: 8px;">Vote</a></v-list-item>
 
                         </v-list>
                     </v-menu>
@@ -39,10 +40,11 @@
                         <a id="link" @click.prevent="scrollToSection('gallery')" style="margin: 8px;">Gallery</a>
                         <a id="link" @click.prevent="scrollToSection('team')" style="margin: 8px;">Team</a>
                         <a id="link" @click.prevent="scrollToSection('contact')" style="margin: 8px;">Contact</a>
+                        <a id="link" @click.prevent="scrollToSection1('voting')" style="margin: 8px;">Vote</a>
                     </div>
                     <v-spacer></v-spacer>
 
-                    <v-btn outlined color="primary" @click="nomineeDialog = true" rounded>
+                    <v-btn outlined color="primary" to="/nomination" rounded>
                         <p style="color: white; margin-top: 14px;">Nominate now</p>
                     </v-btn>
 
@@ -95,14 +97,21 @@
 
     <v-dialog v-model="nomineeDialog" max-width="400px">
         <v-card>
-            <v-card-title class="headline">Nominate someone</v-card-title>
+            <div class="d-flex">
+                <v-card-title class="headline">Nominate someone</v-card-title>
+
+                <v-spacer></v-spacer>
+                <v-btn text @click="nomineeDialog = false">
+                    <v-icon color="red">mdi-close</v-icon>
+                </v-btn>
+
+            </div>
             <v-card-text>
                 <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
                 <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
                 <v-row>
                     <v-col cols="12" sm="12" md="12">
-                        <v-autocomplete v-model="location" clearable filled rounded dense :loading="loading" 
-                         :items="counties" :search-input.sync="search" cache-items class="mx-2" flat hide-no-data hide-details placeholder="Search county you are from?   "></v-autocomplete>
+                        <v-autocomplete v-model="location" clearable filled rounded dense :loading="loading" :items="counties" :search-input.sync="search" cache-items class="mx-2" flat hide-no-data hide-details placeholder="Search county you are from?   "></v-autocomplete>
 
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
@@ -115,7 +124,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
-                <v-btn color="primary" @click="submitNominee">Submit Nominee</v-btn>
+                <v-btn color="primary" style="color:black;" @click="submitNominee">Submit Nominee</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -170,10 +179,10 @@ export default {
     async mounted() {
         // await this.fetchCategories();
         // Load external HTML file at runtime
-        this.fetchCategories();
-        let response = await axios.get("https://amacserver-production-c845.up.railway.app/api/counties/get-counties");
-        this.counties = response.data;
-        console.log(this.counties);
+        // this.fetchCategories();
+        // let response = await axios.get("https://amacserver-production-c845.up.railway.app/api/counties/get-counties");
+        // this.counties = response.data;
+        // console.log(this.counties);
     },
     methods: {
         async submitNominee() {
@@ -217,6 +226,11 @@ export default {
                 this.categories = data;
             } catch (error) {
                 console.error("Error loading categories:", error);
+            }
+        },
+        scrollToSection1(id) {
+            if (id != null) {
+                this.$router.push(`/${id}`)
             }
         },
         scrollToSection(id) {

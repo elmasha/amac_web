@@ -82,7 +82,7 @@
 
                     <v-col cols="12" md="6">
 
-                        <v-card elevation="0">
+                        <v-card elevation="0" class="parallax_aim">
                             <div class="container">
 
                                 <div class="d-flex">
@@ -186,7 +186,7 @@
 
                     </v-col>
                     <v-col cols="12" md="6">
-                        <v-card elevation="0">
+                        <v-card elevation="0" class="">
                             <div class="container">
 
                                 <div>
@@ -701,19 +701,7 @@ export default {
         return {
             offsetTop: 0,
             picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            items: [{
-                    src: require("@/assets/app-8.jpg"),
-                },
-                {
-                    src: require("@/assets/app-9.jpg"),
-                },
-                {
-                    src: require("@/assets/app-3.jpg"),
-                },
-                {
-                    src: require("@/assets/app-4.jpg"),
-                },
-            ],
+            
             navIcon: false,
             windowSize: {
                 x: window.innerHeight,
@@ -1089,3 +1077,13 @@ export default {
     },
 };
 </script>
+
+<style scoped> 
+.parallax_aim {
+    background-image: url('~/assets/pg.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
+</style>

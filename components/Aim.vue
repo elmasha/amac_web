@@ -1,7 +1,7 @@
 <template>
-<div class=" text-center ">
-    <div class="container text-center" style="margin-top: 80px;">
-        <h1>Aims and Objectives</h1>
+<div class="container text-center ">
+    <div class="container text-center" style="margin-top: 10px;">
+        <h1 style="padding: 50px;">Aims and Objectives</h1>
 
     </div>
     <v-card v-scroll.self="onScroll" class="overflow-y-auto" max-height="1200" elevation="0" color="transparent">

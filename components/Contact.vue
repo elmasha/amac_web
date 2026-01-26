@@ -1,50 +1,48 @@
 <template>
 <div>
     <div class="container">
-        <div class="text-center" style="margin-top: 80px;">
-            <h1>
+        <div class="text-center" style="margin-top: 40px;">
+            <h1 style="padding: 50px;">
                 Contact Us
             </h1>
 
         </div>
         <v-row>
-            <v-col cols="12" md="12" class="fade-in-right">
+            <v-col cols="12" md="6" class="fade-in-right">
                 <v-row>
-                    <v-col cols="12" md="4" class="fade-in-right">
+                    <v-col cols="12" md="12" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-map-marker-outline</v-icon>
                                 <br>
-                                <h3>
+                                <h3 style="font-size: 1.2rem;">
                                     Address
                                 </h3>
-                                <h5>Twiga towers , Nairobi Kenya</h5>
+                                <h5 style="font-size: 1.2rem;">Twiga towers , Nairobi Kenya</h5>
                             </div>
                         </v-card>
 
                     </v-col>
-                    <v-col cols="12" md="4" class="fade-in-right">
+                    <v-col cols="12" md="12" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-phone-outline</v-icon>
-                                <br>
-                                <h3>
+                                <h3 style="font-size: 1.2rem;">
                                     Call us
                                 </h3>
-                                <h5>+254 727 815 885</h5>
+                                <h5 style="font-size: 1.2rem;">+254 727 815 885</h5>
                             </div>
                         </v-card>
 
                     </v-col>
-                    <v-col cols="12" md="4" class="fade-in-right">
+                    <v-col cols="12" md="12" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-email-multiple-outline</v-icon>
-                                <br>
-                                <h3>
+                                <h3 style="font-size: 1.2rem;">
                                     Email us
                                 </h3>
-                                <h5>info@amac.africa</h5>
+                                <h5 style="font-size: 1.2rem;">info@amac.africa</h5>
                             </div>
                         </v-card>
 
@@ -52,14 +50,16 @@
                 </v-row>
 
             </v-col>
-            <v-col cols="12" md="12" class="box">
+            <v-col cols="12" md="6" class="box">
 
-                <div class="container text-center">
+                <div class=" text-center">
                     <v-form v-model="valid">
 
                         <v-text-field outlined rounded v-model="firstname" :counter="10" placeholder="Full name" required></v-text-field>
 
                         <v-text-field outlined rounded v-model="email" placeholder="Email" required></v-text-field>
+
+                        <v-text-field outlined rounded v-model="email" placeholder="Subject" required></v-text-field>
 
                         <v-textarea outlined rounded v-model="email" placeholder="Send a Message" required></v-textarea>
 

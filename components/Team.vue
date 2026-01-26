@@ -1,16 +1,16 @@
 <template>
-    <div class="container text-center ">
+    <div class=" text-center ">
 
-        <div class="container" style="margin-top: 80px;">
-                    <h1  >Our Dedicated team</h1>
+        <div class="container" style="margin-top: 10px;">
+                    <h1 style="padding: 50px;" >Our Dedicated team</h1>
 
         </div>
 
-        <div class="container">
+        <div class="">
             <v-row class="text-center">
-                <v-col cols="6" md="3" class="">
+                <v-col cols="6" md="6" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t1" contain height="200"></v-img>
+                        <v-img :src="t1" contain max-height="200"></v-img>
                         <v-card-subtitle>
                             <b style="font-size: 1.1rem; font-weight: 700; color: white;">JOHN NYOGOT
                             </b>
@@ -21,9 +21,9 @@
                     </v-card>
 
                 </v-col>
-                <v-col cols="6" md="3" class="">
+                <v-col cols="6" md="6" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t3" contain height="200"></v-img>
+                        <v-img :src="t3" contain max-height="200"></v-img>
                         <v-card-subtitle>
                             <b style="font-size: 1.1rem; font-weight: 700; color: white;">Ombati Isaac
                             </b>
@@ -33,9 +33,9 @@
                     </v-card>
 
                 </v-col>
-                <v-col cols="6" md="3" class="">
+                <v-col cols="6" md="6" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t2" contain height="200"></v-img>
+                        <v-img :src="t2" contain max-height="200"></v-img>
                         <v-card-subtitle>
                             <b style="font-size: 1.1rem; font-weight: 700; color: white;">Lilian Koech Memusi
                             </b>
@@ -45,9 +45,9 @@
                     </v-card>
 
                 </v-col>
-                <v-col cols="6" md="3" class="">
+                <v-col cols="6" md="6" class="">
                     <v-card elevation="0" color="transparent">
-                        <v-img :src="t4" contain height="200"></v-img>
+                        <v-img :src="t4" contain max-height="200"></v-img>
                         <v-card-subtitle>
                             <b style="font-size: 1.1rem; font-weight: 700; color: white;">BENJAMIN ACHUTI</b>
                             <p>Director - Resource Mobilization</p>

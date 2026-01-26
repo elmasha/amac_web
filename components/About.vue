@@ -1,9 +1,9 @@
 <template>
 <div class="container">
 
-    <div class="container text-center" style="margin-top: 80px;">
+    <div class="container text-center" style="margin-top: 20px;">
         <div class=" text-center" >
-                        <h1>What is Amac</h1>
+                        <h1 style="padding: 50px;">What is Amac</h1>
                     </div>
     </div>
     <v-row>

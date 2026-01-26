@@ -1,66 +1,53 @@
 <template>
-<v-card color="black" dark elevation="0" style="min-height: 100vh;">
+<v-app color="black" dark elevation="0" style="min-height: 100vh;margin-top: 80px; background-color: black;">
     <div>
-        <v-app-bar color="black" dark elevation="0">
-            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+        <div>
+            <v-app-bar dark elevation="0" class="" color="black" fixed>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
 
-            <div class="d-flex">
-                <v-avatar color="black" size="28">
-                    <v-img :src="logo"></v-img>
-                </v-avatar>
-                <v-toolbar-title style="margin-left: 10px;">Amac portal</v-toolbar-title>
-            </div>
+                        <v-app-bar-nav-icon v-show="showBurger" light v-bind="attrs" v-on="on" color="white"></v-app-bar-nav-icon>
+                    </template>
+                    <v-list>
+                        <!-- <v-list-item v-for="(item, index) in items" :key="item.title">
+                                                   <v-list-item-action @click="checkNav(item.title)">{{ item.title }}</v-list-item-action>
+                                                   <v-list-item-title></v-list-item-title>
+                                               </v-list-item> -->
 
-            <v-spacer></v-spacer>
+                        <v-list-item> <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Home</a></v-list-item>
+                        <v-list-item><a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">About</a></v-list-item>
+                        <v-list-item><a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Aim & Objectives</a></v-list-item>
+                        <v-list-item> <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Gallery</a></v-list-item>
+                        <v-list-item> <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Team</a></v-list-item>
+                        <v-list-item> <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Contact</a></v-list-item>
 
-        </v-app-bar>
-
-        <v-navigation-drawer v-model="drawer" color="black" light absolute temporary height="100vh">
-            <v-list>
-                <br>
-                <br>
-                <br>
-                <v-list-item style="color: aliceblue;" @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false, drawer = false">
-
-                    <v-list-item-content>
-                        <div class="d-flex">
-                            <v-list-item-title style="margin: 8px;">Overview</v-list-item-title>
-                        </div>
-                    </v-list-item-content>
-                    <v-list-item-action @click="MoveNavigation(item.title), drawer = false">
-
-                    </v-list-item-action>
-                </v-list-item>
-
-                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false, drawer = false">
-                    <div class="d-flex">
-                        <v-list-item-title style="margin: 8px;">Live result</v-list-item-title>
-                    </div>
-                </v-list-item>
-                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false,vote = true, Live_Results = false,nomineeList = false,drawer = false">
-                    <div class="d-flex">
-                        <v-list-item-title style="margin: 8px;">Vote</v-list-item-title>
-                    </div>
-                </v-list-item>
-                <v-list-item style="color: aliceblue;" @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false,drawer = false">
-                    <div class="d-flex">
-                        <v-list-item-title style="margin: 8px;">Category</v-list-item-title>
-                    </div>
-                </v-list-item>
-                <v-list-item style="color: aliceblue;" @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true,drawer = false">
-                    <div class="d-flex">
-                        <v-list-item-title style="margin: 8px;">Nominees</v-list-item-title>
-                    </div>
-                </v-list-item>
-
-            </v-list>
-
-            <template v-slot:append>
-                <div class="pa-2">
-                    All right reserved @2025
+                    </v-list>
+                </v-menu>
+                <div class="d-flex">
+                    <v-avatar color="black" size="28">
+                        <v-img :src="logo"></v-img>
+                    </v-avatar>
+                    <v-toolbar-title style="margin-left: 10px;">Amac </v-toolbar-title>
                 </div>
-            </template>
-        </v-navigation-drawer>
+
+                <v-spacer></v-spacer>
+                <div v-show="!showBurger" id="nav_bar_links">
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Home</a>
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">About</a>
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Aim & Objectives</a>
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Gallery</a>
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Team</a>
+                    <a id="link" @click.prevent="scrollToSection('')" style="margin: 8px;">Contact</a>
+                </div>
+                <v-spacer></v-spacer>
+
+                <!-- <v-btn icon @click="$fire.auth.signOut()" v-if="show_auth">
+                                           <v-icon>mdi-logout</v-icon>
+                                       </v-btn> -->
+
+            </v-app-bar>
+
+        </div>
 
         <v-container v-resize="onResize" color="black">
 
@@ -73,7 +60,7 @@
                                 <v-card-title>
                                     <h3> Start voting process</h3>
                                 </v-card-title>
-                               
+
                             </div>
                         </v-card>
                     </v-col>
@@ -85,9 +72,8 @@
 
                                 <div class="d-flex">
                                     <div>
-                                    
-                                
-                                        <div >
+
+                                        <div>
                                             <div class="container col-md-12">
 
                                                 <v-card elevation="0" color="black" class="mb-4" dark>
@@ -117,17 +103,18 @@
                                                 <label for="selectedCategory">Select Category</label>
                                                 <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" placeholders="Select Category" outlined dense @change="fetchNominees"></v-select>
 
-                                                <v-radio-group v-model="selectedNominee" class="mt-4">
-                                                    <v-radio v-for="nominee in nominees" :key="nominee.id" :label="nominee.name" :value="nominee.id" @click="step = 3, nomineeName = nominee.name">
-                                                        <div class="nominee-card">
-                                                            <img src="nominee.image" alt="Nominee" />
-                                                            <h3>{{ nominee.name }}</h3>
-                                                            <button @click="selectNominee(category.id, nominee.id),step = 3">Vote</button>
-                                                        </div>
+                                                <v-chip-group multiple v-for="nominee in nominees" :key="nominee.id">
+                                                    <v-radio-group v-model="selectedNominee" class="mt-0">
+                                                        <v-chip>
+                                                            <v-radio :label="nominee.name" :value="nominee.id" @click="step = 3, nomineeName = nominee.name">
 
-                                                    </v-radio>
-                                                </v-radio-group>
-
+                                                            </v-radio>
+                                                        </v-chip>
+                                                    </v-radio-group>
+                                                </v-chip-group>
+                                                <div class="container">
+                                                    {{ pay_process }}
+                                                </div>
                                                 <v-btn color="#bf9524" class="mt-4" :disabled="!selectedNominee" @click="openPaymentDialog">
                                                     Cast Vote
                                                 </v-btn>
@@ -136,24 +123,17 @@
 
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                             </div>
                         </v-card>
 
                     </v-col>
-                    
 
-                   
-                   
                     <v-col cols="12" md="6"></v-col>
                     <v-col cols="12" md="6"></v-col>
                 </v-row>
             </div>
-
-            
-
-
 
             <v-dialog v-model="nomineeDialog" max-width="400px">
                 <v-card>
@@ -182,13 +162,16 @@
             </v-dialog>
 
             <v-dialog v-model="paymentDialog" max-width="400px">
-                <v-card>
+                <v-card light color="white">
                     <v-card-title class="headline">Vote Confirmation</v-card-title>
-                    <v-card-text>
+
+                    <div class="container" style="margin: 10px;">
                         <label for="phoneNumber">Provide you mpesa number</label>
-                        <v-text-field v-model="phoneNumber" :prefix="phonePrefix" placeholder="(7.. format)" dense></v-text-field>
-                        <label for="voteCount">Number of votes you wish to cast</label>
-                        <v-text-field diable v-model="voteCount" placeholder="" type="number" dense @change="getAmount"></v-text-field>
+                        <v-text-field v-model="phoneNumber" :prefix="phonePrefix" type="number" placeholder="(7.. format)" outlined rounded></v-text-field>
+                        <v-text-field v-model="voteCount" placeholder="" type="number" label="Number of votes you wish to cast" @change="getAmount" outlined rounded></v-text-field>
+                    </div>
+
+                    <v-card-text>
                         <span>1 Vote is eqaul to 10sh (1 vote = 10 ksh)</span>
                         <br>
                         <br>
@@ -242,17 +225,17 @@
             </v-dialog>
         </v-container>
 
-        <v-snackbar color="primary accent-8" :timeout="6000" v-model="snackbar_s" centered bottom>
+        <v-snackbar color="blue accent-8"  :timeout="4000" v-model="snackbar_s" outlined bottom>
             {{ snackbarText_s }}
         </v-snackbar>
-        <v-snackbar color="success" :timeout="2000" v-model="snackbar" outlined center>
+        <v-snackbar color="success" :timeout="4000" v-model="snackbar" outlined bottom>
             {{ snackbarText }}
         </v-snackbar>
-        <v-snackbar color="error" :timeout="4000" v-model="snackbarError" outlined center>
+        <v-snackbar color="error" :timeout="4000" v-model="snackbarError" outlined bottom>
             {{ snackbarTextError }}
         </v-snackbar>
     </div>
-</v-card>
+</v-app>
 </template>
 
 <script>
@@ -293,6 +276,7 @@ export default {
                         this.timerCount--;
                     }, 1000);
                 } else if (value == 0) {
+                    this.pay_process = "";
                     this.StkQuery();
                     this.timerCount = 25;
                 }
@@ -304,19 +288,7 @@ export default {
         return {
             offsetTop: 0,
             picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            items: [{
-                    src: require("@/assets/app-8.jpg"),
-                },
-                {
-                    src: require("@/assets/app-9.jpg"),
-                },
-                {
-                    src: require("@/assets/app-3.jpg"),
-                },
-                {
-                    src: require("@/assets/app-4.jpg"),
-                },
-            ],
+
             navIcon: false,
             windowSize: {
                 x: window.innerHeight,
@@ -400,6 +372,8 @@ export default {
             amount: null, // default vote price
             voteCount: null,
             nomineeCount: 0,
+            showBurger: false,
+            pay_process: "",
         };
     },
     async mounted() {
@@ -421,9 +395,9 @@ export default {
             };
             console.log("size", this.windowSize.x);
             if (this.windowSize.x < 950) {
-                this.navIcon = true;
+                this.showBurger = true;
             } else {
-                this.navIcon = false;
+                this.showBurger = false;
             }
             return this.windowSize;
         },
@@ -438,7 +412,7 @@ export default {
             that.snackbarText_s = "Checking payment status...";
             that.step = 5;
             axios
-                .post("https://amacserver-production-6a8c.up.railway.app/payment/mpesa_stk_push/query", {
+                .post("https://amacserver-production-c845.up.railway.app/payment/mpesa_stk_push/query", {
                     checkoutRequestId: that.CheckoutRequestID,
                 })
                 .then(function (response) {
@@ -452,6 +426,7 @@ export default {
                         that.snackbarText = response.data.ResultDesc;
                         if (response.data.ResultCode == "0") {
                             that.paymentConfirmDialog = true;
+                            that.step = 5;
                         }
                         that.timerCount = 25;
                         that.timerEnabled = false;
@@ -475,7 +450,7 @@ export default {
 
         async submitNominee() {
             try {
-                await axios.post("https://amacserver-production-6a8c.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-c845.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     description: "",
@@ -497,7 +472,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-6a8c.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-c845.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {
@@ -509,7 +484,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-6a8c.up.railway.app/api/votes/summaryCat/" + val
+                    "https://amacserver-production-c845.up.railway.app/api/votes/summaryCat/" + val
                 );
                 this.categories = data;
             } catch (error) {
@@ -522,7 +497,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-6a8c.up.railway.app/api/votes/summary/" + this.searchCat
+                    "https://amacserver-production-c845.up.railway.app/api/votes/summary/" + this.searchCat
                 );
 
                 this.voteSum = data;
@@ -537,7 +512,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-6a8c.up.railway.app/api/votes/summary/" + this.searchNomineeCat
+                    "https://amacserver-production-c845.up.railway.app/api/votes/summary/" + this.searchNomineeCat
                 );
 
                 this.nomineesList = data;
@@ -552,7 +527,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/votes/summary`
+                    `https://amacserver-production-c845.up.railway.app/api/votes/summary`
                 );
 
                 this.voteSum = data;
@@ -567,7 +542,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/votes/live-results/`
+                    `https://amacserver-production-c845.up.railway.app/api/votes/live-results/`
                 );
 
                 this.liveStreams = data;
@@ -581,7 +556,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/votes/overview`
+                    `https://amacserver-production-c845.up.railway.app/api/votes/overview`
                 );
 
                 this.Results = data;
@@ -595,7 +570,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/votes/overview/${val}`
+                    `https://amacserver-production-c845.up.railway.app/api/votes/overview/${val}`
                 );
 
                 this.Results = data;
@@ -611,7 +586,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
+                    `https://amacserver-production-c845.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
                 );
                 this.nominees = data;
                 this.nomineeCount = this.nominees.length;
@@ -624,7 +599,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-6a8c.up.railway.app/api/nominee/list`
+                    `https://amacserver-production-c845.up.railway.app/api/nominee/list`
                 );
                 this.nomineesList = data;
                 this.nomineeCount = this.nomineesList.length;
@@ -652,8 +627,9 @@ export default {
                     that.snackbarError = true;
                     return;
                 }
+                this.pay_process = "Please wait processing payment...."
                 axios
-                    .post("https://amacserver-production-6a8c.up.railway.app/payment/mpesa_stk_push", {
+                    .post("https://amacserver-production-c845.up.railway.app/payment/mpesa_stk_push", {
                         phone: phone,
                         amount: that.amount,
                         user_id: 2,
@@ -669,15 +645,19 @@ export default {
                             that.snackbar = true;
                             that.message = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
                             that.progress_bar = true;
-                            that.snackbarText = response.data;
+                            that.snackbarText = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
                             that.timerEnabled = true;
+                            that.paymentDialog = false;
                         } else if (response.status == 400) {
                             that.snackbarError = true;
                             that.snackbarTextError = response.data;
+                            that.paymentDialog = false;
+                            that.pay_process = "";
                         }
                     })
                     .catch(function (error) {
                         console.log(error);
+                        that.pay_process = "";
                         that.snackbarTextError = error;
                         that.snackbarError = true;
                         that.progress_bar = false;
@@ -688,7 +668,25 @@ export default {
         selectNominee(categoryId, nomineeId) {
             this.selectedCategory = categoryId;
             this.selectedNominee = nomineeId;
-        }
+        },
+        scrollToSection(id) {
+            if (id != null) {
+                this.$router.push(`/${id}`)
+            }
+        },
     },
 };
 </script>
+
+<style scoped>
+#link {
+    color: #dbdbdb;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+#link:hover {
+    color: gold;
+    font-weight: 800;
+}
+</style>

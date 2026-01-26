@@ -15,7 +15,7 @@
                                 {{ item.title+"\n" }}
                             </h1>
                             <div class="d-flex" style="margin-top: 50px;">
-                                <v-btn color="white" rounded>
+                                <v-btn color="white" rounded to="/nomination">
                                     <p style="color: black; margin-top: 14px;">Nominate now</p>
                                 </v-btn>
 
@@ -96,15 +96,16 @@ export default {
     height: 100vh;
     /* You can adjust the height as needed */
     background: linear-gradient(to right,
-            #0c0b0393,
-            #0000004d,
-            #0000004d,
+            #0c0b03da,
+            #000000a1,
+            #00000077,
             #0000001f,
             transparent,
             transparent,
             transparent,
             transparent);
     background-size: 200% 100%;
+    height: 100vh;
     animation: gradient-animation 3s linear infinite;
     
 }
