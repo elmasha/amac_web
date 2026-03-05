@@ -1,45 +1,57 @@
 <template>
-  <v-container>
+  <div class="scanner">
     <h2>Scan Ticket</h2>
 
-    <qrcode-stream @decode="onDecode" @init="onInit" />
-    <div v-if="scanResult" class="result">
-      <p>{{ scanResult.message }}</p>
-      <pre>{{ scanResult.ticket }}</pre>
+    <qrcode-stream @decode="onDecode" @init="onInit"></qrcode-stream>
+
+    <div v-if="result" class="result">
+      <h3>{{ result.message }}</h3>
+      <pre>{{ result }}</pre>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import QrcodeStream from 'vue-qrcode-reader'
-
-Vue.use(QrcodeStream)
+import { QrcodeStream } from "vue-qrcode-reader"
+import axios from "axios"
 
 export default {
-  components: { QrcodeStream },
+  components: {
+    QrcodeStream
+  },
+
   data() {
     return {
-      scanResult: null
+      result: null
     }
   },
+
   methods: {
     async onDecode(qrToken) {
+
       try {
-        const { data } = await axios.post(
+
+        const res = await axios.post(
           "https://amacserver-production-ebd5.up.railway.app/api/tickets/scan",
           { qr_token: qrToken }
         )
-        this.scanResult = data
+
+        this.result = res.data
+
       } catch (err) {
-        console.error(err)
-        this.scanResult = { success: false, message: "Error scanning ticket" }
+
+        this.result = {
+          success:false,
+          message:"Scan failed"
+        }
+
       }
+
     },
+
     onInit(promise) {
       promise.catch(err => {
-        console.error("Camera init failed:", err)
+        console.error(err)
       })
     }
   }
@@ -47,5 +59,17 @@ export default {
 </script>
 
 <style scoped>
-.result { margin-top: 20px; }
+
+.scanner{
+  max-width:600px;
+  margin:auto;
+  text-align:center;
+}
+
+.result{
+  margin-top:20px;
+  padding:10px;
+  background:#f5f5f5;
+}
+
 </style>
