@@ -139,7 +139,7 @@ export default {
         },
         async prepareChartData() {
             let that = this;
-            await axios.get('https://amacserver-production-c845.up.railway.app/api/votes/categoty-activity', {})
+            await axios.get('https://amacserver-production-ebd5.up.railway.app/api/votes/categoty-activity', {})
                 .then(function (response) {
                     if (response.status == 200) {
                         // that.snackbar = true;

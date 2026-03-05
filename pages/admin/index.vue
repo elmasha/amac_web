@@ -392,7 +392,7 @@ export default {
         this.fetchTransaction();
         this.fetchVotes();
         this.fetchCategories();
-        // let response = await axios.get("https://amacserver-production-c845.up.railway.app/api/votes/dashboard-total");
+        // let response = await axios.get("https://amacserver-production-ebd5.up.railway.app/api/votes/dashboard-total");
         // this.dashboard = response.data;
         // console.log(this.dashboard);
     },
@@ -408,7 +408,7 @@ export default {
         },
         async submitNominee() {
             try {
-                await axios.post("https://amacserver-production-c845.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-ebd5.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     location: this.location,
@@ -428,7 +428,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/nominee/list`
+                    `https://amacserver-production-ebd5.up.railway.app/api/nominee/list`
                 );
                 this.nomineesList = data;
                 // this.nomineeCount = this.nomineesList.length;
@@ -442,7 +442,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/transaction/getAllPayments`
+                    `https://amacserver-production-ebd5.up.railway.app/transaction/getAllPayments`
                 );
                 this.transactions = data;
                 // this.nomineeCount = this.nomineesList.length;
@@ -456,7 +456,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/votes/get-all-votes`
+                    `https://amacserver-production-ebd5.up.railway.app/api/votes/get-all-votes`
                 );
                 this.votes = data;
                 // this.nomineeCount = this.nomineesList.length;
@@ -471,7 +471,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-ebd5.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {
@@ -497,7 +497,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/votes/dashboard-total"
+                    "https://amacserver-production-ebd5.up.railway.app/api/votes/dashboard-total"
                 );
                 this.dashboard = data;
                 this.total_revenue = data.total_revenue;

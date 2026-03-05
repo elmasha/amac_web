@@ -65,7 +65,7 @@ export default {
       this.error = false;
 
       try {
-        const response = await axios.post('https://amacserver-production-6a8c.up.railway.app/api/categories/add', {
+        const response = await axios.post('https://amacserver-production-ebd5.up.railway.app/api/categories/add', {
           name: this.name,
           description: this.description,
         });

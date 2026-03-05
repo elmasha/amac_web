@@ -411,8 +411,9 @@ export default {
             that.snackbar_s = true;
             that.snackbarText_s = "Checking payment status...";
             that.step = 5;
+            that.paymentDialog = false;
             axios
-                .post("https://amacserver-production-c845.up.railway.app/payment/mpesa_stk_push/query", {
+                .post("https://amacserver-production-ebd5.up.railway.app/payment/mpesa_stk_push/query", {
                     checkoutRequestId: that.CheckoutRequestID,
                 })
                 .then(function (response) {
@@ -450,7 +451,7 @@ export default {
 
         async submitNominee() {
             try {
-                await axios.post("https://amacserver-production-c845.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-ebd5.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     description: "",
@@ -472,7 +473,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-ebd5.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {
@@ -484,7 +485,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/votes/summaryCat/" + val
+                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summaryCat/" + val
                 );
                 this.categories = data;
             } catch (error) {
@@ -497,7 +498,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/votes/summary/" + this.searchCat
+                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summary/" + this.searchCat
                 );
 
                 this.voteSum = data;
@@ -512,7 +513,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/votes/summary/" + this.searchNomineeCat
+                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summary/" + this.searchNomineeCat
                 );
 
                 this.nomineesList = data;
@@ -527,7 +528,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/votes/summary`
+                    `https://amacserver-production-ebd5.up.railway.app/api/votes/summary`
                 );
 
                 this.voteSum = data;
@@ -542,7 +543,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/votes/live-results/`
+                    `https://amacserver-production-ebd5.up.railway.app/api/votes/live-results/`
                 );
 
                 this.liveStreams = data;
@@ -556,7 +557,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/votes/overview`
+                    `https://amacserver-production-ebd5.up.railway.app/api/votes/overview`
                 );
 
                 this.Results = data;
@@ -570,7 +571,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/votes/overview/${val}`
+                    `https://amacserver-production-ebd5.up.railway.app/api/votes/overview/${val}`
                 );
 
                 this.Results = data;
@@ -586,7 +587,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
+                    `https://amacserver-production-ebd5.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
                 );
                 this.nominees = data;
                 this.nomineeCount = this.nominees.length;
@@ -599,7 +600,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-c845.up.railway.app/api/nominee/list`
+                    `https://amacserver-production-ebd5.up.railway.app/api/nominee/list`
                 );
                 this.nomineesList = data;
                 this.nomineeCount = this.nomineesList.length;
@@ -629,7 +630,7 @@ export default {
                 }
                 this.pay_process = "Please wait processing payment...."
                 axios
-                    .post("https://amacserver-production-c845.up.railway.app/payment/mpesa_stk_push", {
+                    .post("https://amacserver-production-ebd5.up.railway.app/payment/mpesa_stk_push", {
                         phone: phone,
                         amount: that.amount,
                         user_id: 2,
@@ -647,7 +648,7 @@ export default {
                             that.progress_bar = true;
                             that.snackbarText = "📲 Payment initiated. Enter Mpesa PIN to confirm.";
                             that.timerEnabled = true;
-                            that.paymentDialog = false;
+                            // that.paymentDialog = false;
                         } else if (response.status == 400) {
                             that.snackbarError = true;
                             that.snackbarTextError = response.data;

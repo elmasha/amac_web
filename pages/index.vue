@@ -180,14 +180,14 @@ export default {
         // await this.fetchCategories();
         // Load external HTML file at runtime
         // this.fetchCategories();
-        // let response = await axios.get("https://amacserver-production-c845.up.railway.app/api/counties/get-counties");
+        // let response = await axios.get("https://amacserver-production-ebd5.up.railway.app/api/counties/get-counties");
         // this.counties = response.data;
         // console.log(this.counties);
     },
     methods: {
         async submitNominee() {
             try {
-                await axios.post("https://amacserver-production-c845.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-ebd5.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     location: this.location,
@@ -221,7 +221,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-c845.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-ebd5.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {
