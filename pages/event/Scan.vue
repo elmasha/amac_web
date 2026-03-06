@@ -14,8 +14,15 @@
 
     </div>
 
-    <div v-if="result" class="result" :class="result.success ? 'valid' : 'invalid'">
+    <!-- FLASH SCREEN -->
+    <div v-if="flash" :class="['flash', flash]"></div>
 
+    <!-- RESULT -->
+    <div
+      v-if="result"
+      class="result"
+      :class="result.success ? 'valid' : 'invalid'"
+    >
       <h3>{{ result.message }}</h3>
 
       <div v-if="result.ticket">
@@ -42,6 +49,7 @@ export default {
 
       result:null,
       scanning:true,
+      flash:null,
 
       api:"https://amacserver-production-ebd5.up.railway.app/api/tickets/scan"
 
@@ -66,11 +74,13 @@ export default {
 
         if(res.data.success){
 
-          this.playSuccess()
+          this.flash="green"
+          this.vibrateSuccess()
 
         }else{
 
-          this.playError()
+          this.flash="red"
+          this.vibrateError()
 
         }
 
@@ -81,14 +91,18 @@ export default {
           message:"Scan failed"
         }
 
-        this.playError()
+        this.flash="red"
+        this.vibrateError()
 
       }
 
       setTimeout(()=>{
+
         this.result=null
+        this.flash=null
         this.scanning=true
-      },3000)
+
+      },2000)
 
     },
 
@@ -100,17 +114,19 @@ export default {
 
     },
 
-    playSuccess(){
+    vibrateSuccess(){
 
-      const audio = new Audio("/success.mp3")
-      audio.play()
+      if(navigator.vibrate){
+        navigator.vibrate(200)
+      }
 
     },
 
-    playError(){
+    vibrateError(){
 
-      const audio = new Audio("/error.mp3")
-      audio.play()
+      if(navigator.vibrate){
+        navigator.vibrate([200,100,200])
+      }
 
     }
 
@@ -152,6 +168,35 @@ export default {
   pointer-events:none;
 
 }
+
+/* FLASH SCREEN */
+
+.flash{
+
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:999;
+  opacity:0.6;
+  pointer-events:none;
+
+}
+
+.flash.green{
+
+  background:#00ff66;
+
+}
+
+.flash.red{
+
+  background:#ff0000;
+
+}
+
+/* RESULT CARD */
 
 .result{
 

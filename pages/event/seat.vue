@@ -39,11 +39,11 @@
         Generate Tickets
     </v-btn>
 
-     <v-btn color="secondary" class="buy-btn" to="/event/scan">
-         Scan Tickets
+    <v-btn color="secondary" class="buy-btn" to="/event/scan">
+        Scan Tickets
     </v-btn>
 
-<Tickets :orderId="'55b6d82e-ddf9-4e95-b4ef-36d5c79fd21d'" />
+    <Tickets :orderId="'d23bf691-71ad-4bef-b654-f09ffa2567df'" />
 </v-container>
 </template>
 
@@ -51,17 +51,17 @@
 import axios from "axios";
 
 export default {
-  components: {
-    Tickets: () => import("../../components/Tickets.vue")
-  },  
-  data() {
-    
+    components: {
+        Tickets: () => import("../../components/Tickets.vue")
+    },
+    data() {
+
         return {
-            prefix:"254",
+            prefix: "254",
             seatRows: [],
             selectedSeats: [],
             eventId: "33302ecb-17d5-11f1-9f1e-a2aab1a5696f",
-            userUid: "user-1234",
+            userUid: "user-32434254435",
             phone: ""
         };
     },
@@ -126,15 +126,16 @@ export default {
         },
 
         async buyTickets() {
-            if (!this.phone) {
-                this.phone = prompt("Enter phone number (2547XXXXXXXX)");
-                if (!this.phone) return;
+            let phone = this.prefix + this.phone;
+            if (phone.length < 12) {
+                alert("Please enter your phone number.");
+                return;
             }
 
             const payload = {
                 event_id: this.eventId,
                 user_uid: this.userUid,
-                phone: this.phone,
+                phone: phone,
                 items: this.selectedSeats.map(s => ({
                     seat_id: s.id,
                     price: s.price
@@ -142,16 +143,23 @@ export default {
             };
 
             await axios.post(
-                "https://amacserver-production-ebd5.up.railway.app/api/orders/create",
-                payload
-            );
+                    "https://amacserver-production-ebd5.up.railway.app/api/orders/create",
+                    payload
+                ).then((response) => {
+                    console.log(response.data);
+                    alert("STK Push initiated! Check your phone for payment.");
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert("Failed to initiate payment. Please try again.");
+                });
 
-            alert("STK Push initiated! Check your phone for payment.");
+           
         },
         async generateTickets() {
             axios
                 .post("https://amacserver-production-ebd5.up.railway.app/api/tickets/generate", {
-                    order_id: "55b6d82e-ddf9-4e95-b4ef-36d5c79fd21d",
+                    order_id: "d23bf691-71ad-4bef-b654-f09ffa2567df",
                     event_id: this.eventId,
                     user_id: this.userUid,
                 })
@@ -161,7 +169,6 @@ export default {
                 .catch(function (error) {
                     console.error(error);
                 });
-
 
         }
     }
