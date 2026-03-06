@@ -45,16 +45,17 @@
 </template>
 
 <script>
-import Vue from "vue";
 
 import axios from "axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 // import html2canvas from "html2canvas";
 // import jspdf from "jspdf";
 // Register the Vue component
-Vue.component("qr-code", VueQRCodeComponent);
 
 export default {
+    components: {
+        "qr-code": VueQRCodeComponent
+    },
     props: {
         orderId: {
             type: String,
