@@ -29,6 +29,7 @@
         <div class="total">Total: KES {{ totalAmount }}</div>
     </div>
 
+    <v-text-field label="Phone Number" v-model="phone" :prefix="prefix"></v-text-field>
     <!-- Buy Button -->
     <v-btn color="primary" class="buy-btn" @click="buyTickets" :disabled="!selectedSeats.length">
         Buy Tickets
@@ -56,6 +57,7 @@ export default {
   data() {
     
         return {
+            prefix:"254",
             seatRows: [],
             selectedSeats: [],
             eventId: "33302ecb-17d5-11f1-9f1e-a2aab1a5696f",

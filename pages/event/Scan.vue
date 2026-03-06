@@ -1,4 +1,4 @@
-<template>
+<template dark>
   <div class="scanner">
     <h2>Scan Ticket</h2>
 
@@ -8,6 +8,15 @@
       <h3>{{ result.message }}</h3>
       <pre>{{ result }}</pre>
     </div>
+    <v-alert v-model="result">
+        <div v-if="result.success" class="success">
+            <h3>{{ result.message }}</h3>
+            <p>Ticket ID: {{ result.ticket_id }}</p>
+        </div>
+        <div v-else class="error">
+            <h3>{{ result.message }}</h3>
+        </div>
+    </v-alert>
   </div>
 </template>
 
@@ -30,7 +39,6 @@ export default {
     async onDecode(qrToken) {
 
       try {
-
         const res = await axios.post(
           "https://amacserver-production-ebd5.up.railway.app/api/tickets/scan",
           { qr_token: qrToken }
