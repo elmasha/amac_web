@@ -1,6 +1,5 @@
-<template>
+<!-- <template>
 <v-container>
-    <v-card>
         <v-card-title>Create Organizer</v-card-title>
         <v-card-text>
             <v-form ref="form">
@@ -10,12 +9,9 @@
                 <v-btn color="primary" @click="createOrganizer">Create</v-btn>
             </v-form>
         </v-card-text>
-    </v-card>
 
-    <v-card class="mt-5">
         <v-card-title>All Organizers</v-card-title>
         <v-data-table :items="organizers" :headers="headers"></v-data-table>
-    </v-card>
 </v-container>
 </template>
 
@@ -62,4 +58,4 @@ export default {
         },
     },
 };
-</script>
+</script> -->

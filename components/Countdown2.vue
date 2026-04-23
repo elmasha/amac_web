@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="timeLeft.total > 0" class="container my-4">
     <div class="d-flex">
       <v-icon style="margin-bottom: 1.2rem;"  >mdi-timer-play-outline</v-icon>
@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    // Example: "2025-09-30 23:59:59" or "2025-09-30"
+     Example: "2025-09-30 23:59:59" or "2025-09-30"
     targetDate: {
       type: String,
       required: true
@@ -75,4 +75,4 @@ span {
   font-weight: bold;
   color: gold;
 }
-</style>
+</style> -->

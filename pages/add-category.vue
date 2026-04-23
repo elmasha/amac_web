@@ -1,9 +1,8 @@
-<template>
+<!-- <template>
   <div class="container mx-auto p-4 max-w-md">
     <h1 class="text-2xl font-bold mb-4">Add New Category</h1>
 
     <form @submit.prevent="submitForm" class="space-y-4">
-      <!-- Name -->
       <div>
         <label class="block font-medium mb-1">Category Name *</label>
         <input
@@ -15,7 +14,6 @@
         />
       </div>
 
-      <!-- Description -->
       <div>
         <label class="block font-medium mb-1">Description</label>
         <textarea
@@ -26,7 +24,6 @@
         ></textarea>
       </div>
 
-      <!-- Submit v-btn -->
       <v-btn
         type="submit"
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -36,7 +33,6 @@
       </v-btn>
     </form>
 
-    <!-- Success/Error messages -->
     <div v-if="message" :class="`mt-4 p-2 rounded ${error ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}`">
       {{ message }}
     </div>
@@ -65,7 +61,7 @@ export default {
       this.error = false;
 
       try {
-        const response = await axios.post('https://amacserver-production-ebd5.up.railway.app/api/categories/add', {
+        const response = await axios.post('https://amacserver-production-48fd.up.railway.app/api/categories/add', {
           name: this.name,
           description: this.description,
         });
@@ -87,4 +83,4 @@ export default {
 
 <style scoped>
 /* optional basic styling */
-</style>
+</style> -->

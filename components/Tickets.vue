@@ -9,6 +9,7 @@
 
     <div v-else class="tickets-grid" ref="pdfContent">
         <div v-for="ticket in tickets" :key="ticket.id" class="ticket-card">
+
             <div class="d-flex">
 
                 <div style="color: black;">
@@ -45,7 +46,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 // import html2canvas from "html2canvas";
@@ -145,7 +145,7 @@ export default {
 
 .ticket-card {
     width: 370px;
-    border: 2px solid #2196f3;
+    border: 2px solid #000;
     border-radius: 12px;
     padding: 12px;
     text-align: center;

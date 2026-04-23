@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-container>
     <v-card>
       <v-card-title>My Tickets</v-card-title>
@@ -37,4 +37,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

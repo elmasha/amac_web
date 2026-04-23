@@ -30,10 +30,10 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'bootstrap/dist/css/bootstrap.min.css'
+   
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["@/plugins/mapGoogle.client.js","@/plugins/directionsRenderer.js",'@/plugins/chart.js','@/plugins/bootstrap.js'],
+  plugins: ['@/plugins/chart.js'],
 
   router: {
     middleware: ["auth"]
@@ -45,13 +45,12 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  googleFonts: {
-    download: true,
-    families: {
-      Quicksand: true,
-    },
-    display: "Quicksand",
+ googleFonts: {
+  families: {
+    Quicksand: true
   },
+  display: "swap"
+},
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -121,5 +120,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    parallel: true,
+    cache: true,
+    transpile: ['vue-qrcode-reader']
   }
 }

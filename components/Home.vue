@@ -1,6 +1,5 @@
-<!-- Please remove this file from your project -->
 <template>
-<div style="margin-top: 50px;">
+<div style="margin-top: 0px;">
 <div class="d-flex">    
 <countdown style="font-size: small;" targetDate="2026-08-11"></countdown>
 </div>
@@ -10,14 +9,14 @@
                 <v-row>
 
                     <v-col cols="12" md="6">
-                        <div class="container text-start" style="margin-top: 300px;color:white;">
+                        <div class="container text-start" style="margin-top: 300px;margin-left: 20px;color: white;">
                             <h1 class="typing-title">
                                 {{ item.title+"\n" }}
                             </h1>
                             <div class="d-flex" style="margin-top: 50px;">
-                                <v-btn color="white" rounded to="/nomination">
+                                <!-- <v-btn color="white" rounded to="/nomination">
                                     <p style="color: black; margin-top: 14px;">Nominate now</p>
-                                </v-btn>
+                                </v-btn> -->
 
                             </div>
                         </div>
@@ -94,7 +93,7 @@ export default {
 .gradient-background {
     width: 100%;
     height: 100vh;
-    /* You can adjust the height as needed */
+   
     background: linear-gradient(to right,
             #0c0b03da,
             #000000a1,
@@ -123,7 +122,6 @@ export default {
     font-weight: 1200;
 }
 
-/* Typing animation */
 @keyframes typing {
     from {
         width: 0;
@@ -134,7 +132,6 @@ export default {
     }
 }
 
-/* Cursor blink */
 @keyframes blink {
     50% {
         border-color: transparent;
@@ -157,7 +154,6 @@ export default {
     border-radius: 10px;
 }
 
-/* Active animation */
 .fade-in {
     opacity: 1;
     transform: translateY(0);
@@ -171,7 +167,6 @@ export default {
     padding: 40px;
 }
 
-/* Fade In from Top */
 .fade-in-up {
     opacity: 0;
     transform: translateY(30px);

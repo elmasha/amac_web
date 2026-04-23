@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="timeLeft.total > 0" class="container my-4">
    <h2 style="font-size: 2.3rem;">
      <span style="font-size: 2.2rem;">{{ timeLeft.days }}d :</span>
@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    // Example: "2025-09-30 23:59:59" or "2025-09-30"
+    Example: "2025-09-30 23:59:59" or "2025-09-30"
     targetDate: {
       type: String,
       required: true
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     calculateTimeLeft() {
-      // Convert simple format into valid Date
+       Convert simple format into valid Date
       const target = new Date(this.targetDate.replace(" ", "T"))
       const now = new Date()
       const diff = target.getTime() - now.getTime()
@@ -71,4 +71,4 @@ span {
   font-weight: bold;
   color: gold;
 }
-</style>
+</style> -->

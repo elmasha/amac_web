@@ -1,14 +1,12 @@
-<template>
+<!-- <template>
 <v-container class="auditorium-container">
 
-    <!-- Stage -->
     <div class="stage">
         <div class="stage-label">🎤 STAGE</div>
     </div>
 
     <div class="seating-area">
         <div v-for="(row, rIndex) in seatRows" :key="rIndex" class="seat-row" :style="getRowStyle(rIndex)">
-            <!-- Row Label -->
             <div class="row-label">{{ getRowLabel(rIndex) }}</div>
 
             <div v-for="seat in row" :key="seat.id" class="seat" :class="getSeatClass(seat)" @click="toggleSeat(seat)">
@@ -20,7 +18,6 @@
         </div>
     </div>
 
-    <!-- Selected Seats -->
     <div class="selected-seats" v-if="selectedSeats.length">
         <strong>Selected:</strong>
         <span v-for="seat in selectedSeats" :key="seat.id" class="selected-chip">
@@ -30,7 +27,6 @@
     </div>
 
     <v-text-field label="Phone Number" v-model="phone" :prefix="prefix"></v-text-field>
-    <!-- Buy Button -->
     <v-btn color="primary" class="buy-btn" @click="buyTickets" :disabled="!selectedSeats.length">
         Buy Tickets
     </v-btn>
@@ -45,6 +41,12 @@
 
     <Tickets :orderId="'d23bf691-71ad-4bef-b654-f09ffa2567df'" />
 </v-container>
+<v-snackbar color="white--text" :timeout="4000" v-model="snackbar" center>
+    {{ snackbarText }}
+</v-snackbar>
+<v-snackbar color="red" :timeout="4000" v-model="snackbar2" outlined bottom center>
+    {{ snackbarText2 }}
+</v-snackbar>
 </template>
 
 <script>
@@ -57,6 +59,12 @@ export default {
     data() {
 
         return {
+            snackbar: false,
+            snackbarText: "No error message",
+            snackbarText2: "No error message",
+            snackbar2: false,
+            showLogin: false,
+            snackbarText2: "",
             prefix: "254",
             seatRows: [],
             selectedSeats: [],
@@ -79,6 +87,7 @@ export default {
     },
 
     methods: {
+       
         async fetchSeats() {
             try {
                 const {
@@ -86,7 +95,6 @@ export default {
                 } = await axios.get(`https://amacserver-production-ebd5.up.railway.app/api/seats/event/${this.eventId}`);
                 const rowsMap = {};
                 data.forEach(seat => {
-                    // seat.id here is the real database ID from MySQL
                     if (!rowsMap[seat.row_no]) rowsMap[seat.row_no] = [];
                     rowsMap[seat.row_no].push(seat);
                 });
@@ -115,7 +123,6 @@ export default {
             return String.fromCharCode(65 + index);
         },
 
-        // 🔹 Simple Curve
         getRowStyle(rIndex) {
             const totalRows = this.seatRows.length;
             const curveStrength = 0; // smaller = subtle curve
@@ -154,7 +161,6 @@ export default {
                     alert("Failed to initiate payment. Please try again.");
                 });
 
-           
         },
         async generateTickets() {
             axios
@@ -301,4 +307,4 @@ export default {
         line-height: 14px;
     }
 }
-</style>
+</style> -->

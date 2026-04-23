@@ -8,9 +8,9 @@
 
         </div>
         <v-row>
-            <v-col cols="12" md="6" class="fade-in-right">
+            <v-col cols="12" md="12" class="fade-in-right">
                 <v-row>
-                    <v-col cols="12" md="12" class="fade-in-right">
+                    <v-col cols="12" md="4" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-map-marker-outline</v-icon>
@@ -23,7 +23,7 @@
                         </v-card>
 
                     </v-col>
-                    <v-col cols="12" md="12" class="fade-in-right">
+                    <v-col cols="12" md="4" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-phone-outline</v-icon>
@@ -35,7 +35,7 @@
                         </v-card>
 
                     </v-col>
-                    <v-col cols="12" md="12" class="fade-in-right">
+                    <v-col cols="12" md="4" class="fade-in-right">
                         <v-card outlined>
                             <div class="container text-center">
                                 <v-icon color="primary">mdi-email-multiple-outline</v-icon>
@@ -50,7 +50,7 @@
                 </v-row>
 
             </v-col>
-            <v-col cols="12" md="6" class="box">
+            <v-col cols="12" md="6" class="box" v-show="false">
 
                 <div class=" text-center">
                     <v-form v-model="valid">
@@ -95,13 +95,7 @@ export default {
             otherError: 'An error occurred'
         }
     },
-    // head () {
-    //   const title =
-    //     this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    //   return {
-    //     title
-    //   }
-    // }
+ 
 }
 </script>
 

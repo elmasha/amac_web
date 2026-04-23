@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 <v-card color="black" dark elevation="0" style="min-height: 100vh;">
     <div>
         <v-app-bar color="black" dark elevation="0">
@@ -177,7 +177,6 @@
                             <div class="container">
 
                                 <div>
-                                    <!-- v-model="picker" -->
                                     <v-date-picker width="100%"></v-date-picker>
                                 </div>
                             </div>
@@ -222,7 +221,6 @@
                                                                 <hr>
                                                                 <h3 style="color: #bf9524;">{{ cat.category_name }}</h3>
 
-                                                                <!-- Nominees list -->
                                                                 <div class="row">
                                                                     <div v-for="nom in cat.nominees" :key="nom.nominee_id" class="col-md-12">
                                                                         <div class="nominee-header">
@@ -237,9 +235,7 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- Progress bar -->
                                                                         <div class="col-md-8">
-                                                                            <!-- <div class="progress-bar" :style="{ width: nom.percentage + '%' , color: '#808080'}"></div> -->
                                                                             <v-progress-linear width="50%" rounded v-model="nom.percentage" stream color="amber" height="20">Votes {{ nom.percentage }}%</v-progress-linear>
                                                                             <v-spacer></v-spacer>
                                                                         </div>
@@ -247,7 +243,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- Loop categories -->
 
                                                         </div>
                                                     </v-card-text>
@@ -274,7 +269,6 @@
 
                                     <div class="d-flex text-center">
                                         <v-spacer></v-spacer>
-                                        <!-- <strong style="font-size: 0.9rem;"> {{ numeral(nomineeCount).format("0.0") }}</strong> -->
                                         <v-progress-linear color="white" size="70" buffer-value="0" :value="nomineeCount" stream>
                                         </v-progress-linear>
                                         <v-spacer></v-spacer>
@@ -339,12 +333,8 @@
                 </v-row>
             </div>
 
-            <!-- <v-tabs color="white">
-                <v-tab @click="Home = true, Leaderboard = false, Live_Results = false,vote = false,nomineeList = false">Overview</v-tab>
-                <v-tab @click="Home = false, Leaderboard = false, Live_Results = true,vote = false, nomineeList = false">Live Results</v-tab>
-                <v-tab @click="fetchVotesSummry(),Home = false, Leaderboard = true, Live_Results = false,vote = false,nomineeList = false">Category</v-tab>
-                <v-tab @click="Home = false, Leaderboard = false, Live_Results = false,vote = false, nomineeList = true">Nominee List</v-tab>
-            </v-tabs>
+
+        
 
             <v-card v-show="nomineeList" elevation="0" dark color="black" class="pa-4" outlined>
                 <v-card-title class="text-h5 text--gold">All Nominees </v-card-title>
@@ -550,7 +540,7 @@
 
             <v-card v-show="vote" class="pa-4" outlined dark color="black">
 
-            </v-card> -->
+            </v-card> 
 
             <v-dialog v-model="nomineeDialog" max-width="400px">
                 <v-card>
@@ -598,7 +588,6 @@
                             <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+phoneNumber }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount).format("0,0") }}</b> ksh</p>
                         </div>
                         <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
-                        <!-- Message -->
                         <v-alert v-if="message" class="mt-4" type="success" dense outlined>
                             {{ message }}
                         </v-alert>
@@ -624,7 +613,6 @@
                             </p>
                         </div>
                         <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
-                        <!-- Message -->
 
                     </v-card-text>
                     <v-card-actions>
@@ -694,7 +682,7 @@ export default {
                     this.timerCount = 25;
                 }
             },
-            immediate: true, // This ensures the watcher is triggered upon creation
+            immediate: true,
         },
     },
     data() {
@@ -777,12 +765,11 @@ export default {
             searchCat: null,
             searchNomineeCat: null,
             htmlContent: "",
-            // Mpesa dialog states
             paymentDialog: false,
             paymentConfirmDialog: false,
             phoneNumber: "",
             phonePrefix: "254",
-            amount: null, // default vote price
+            amount: null, 
             voteCount: null,
             nomineeCount: 0,
         };
@@ -793,7 +780,7 @@ export default {
         await this.fetchNomineesList();
         await this.fetchVotesSummry();
         await this.fetchOverview();
-        setInterval(this.fetchAll(), 5000); // refresh every 5 seconds
+        setInterval(this.fetchAll(), 5000); 
     },
     methods: {
         onScroll(e) {
@@ -813,9 +800,7 @@ export default {
             return this.windowSize;
         },
         fetchAll() {
-            //  this.fetchCategories();
-            //  this.fetchNomineesList();
-            //  this.fetchVotesSummry(); 
+            
         },
         StkQuery() {
             let that = this;
@@ -823,7 +808,7 @@ export default {
             that.snackbarText_s = "Checking payment status...";
             that.step = 5;
             axios
-                .post("https://amacserver-production-ebd5.up.railway.app/payment/mpesa_stk_push/query", {
+                .post("https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push/query", {
                     checkoutRequestId: that.CheckoutRequestID,
                 })
                 .then(function (response) {
@@ -860,7 +845,7 @@ export default {
 
         async submitNominee() {
             try {
-                await axios.post("https://amacserver-production-ebd5.up.railway.app/api/nominee/addNominee", {
+                await axios.post("https://amacserver-production-48fd.up.railway.app/api/nominee/addNominee", {
                     name: this.nomineeName,
                     category_id: this.selectedCategory,
                     description: "",
@@ -882,7 +867,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-ebd5.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
                 );
                 this.categories = data;
             } catch (error) {
@@ -894,7 +879,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summaryCat/" + val
+                    "https://amacserver-production-48fd.up.railway.app/api/votes/summaryCat/" + val
                 );
                 this.categories = data;
             } catch (error) {
@@ -907,7 +892,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summary/" + this.searchCat
+                    "https://amacserver-production-48fd.up.railway.app/api/votes/summary/" + this.searchCat
                 );
 
                 this.voteSum = data;
@@ -922,7 +907,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-ebd5.up.railway.app/api/votes/summary/" + this.searchNomineeCat
+                    "https://amacserver-production-48fd.up.railway.app/api/votes/summary/" + this.searchNomineeCat
                 );
 
                 this.nomineesList = data;
@@ -937,7 +922,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/votes/summary`
+                    `https://amacserver-production-48fd.up.railway.app/api/votes/summary`
                 );
 
                 this.voteSum = data;
@@ -952,7 +937,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/votes/live-results/`
+                    `https://amacserver-production-48fd.up.railway.app/api/votes/live-results/`
                 );
 
                 this.liveStreams = data;
@@ -966,7 +951,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/votes/overview`
+                    `https://amacserver-production-48fd.up.railway.app/api/votes/overview`
                 );
 
                 this.Results = data;
@@ -980,7 +965,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/votes/overview/${val}`
+                    `https://amacserver-production-48fd.up.railway.app/api/votes/overview/${val}`
                 );
 
                 this.Results = data;
@@ -996,7 +981,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
+                    `https://amacserver-production-48fd.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
                 );
                 this.nominees = data;
                 this.nomineeCount = this.nominees.length;
@@ -1009,7 +994,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-ebd5.up.railway.app/api/nominee/list`
+                    `https://amacserver-production-48fd.up.railway.app/api/nominee/list`
                 );
                 this.nomineesList = data;
                 this.nomineeCount = this.nomineesList.length;
@@ -1038,7 +1023,7 @@ export default {
                     return;
                 }
                 axios
-                    .post("https://amacserver-production-ebd5.up.railway.app/payment/mpesa_stk_push", {
+                    .post("https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push", {
                         phone: phone,
                         amount: that.amount,
                         user_id: 2,
@@ -1086,4 +1071,4 @@ export default {
      background-size: cover;
      width: 100%;
  }
-</style>
+</style> -->

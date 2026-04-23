@@ -1,4 +1,4 @@
-<!-- Please remove this file from your project -->
+
 <template>
 <div>
     <div class="container text-center" style="margin-top: 80px;">
@@ -148,7 +148,6 @@ export default {
     border-radius: 10px;
 }
 
-/* Active animation */
 .fade-in {
     opacity: 1;
     transform: translateY(0);
@@ -162,7 +161,6 @@ export default {
     padding: 40px;
 }
 
-/* Fade In from Top */
 .fade-in-up {
     opacity: 0;
     transform: translateY(30px);
@@ -176,7 +174,6 @@ export default {
     }
 }
 
-/* Fade In from Bottom */
 .fade-in-down {
     opacity: 0;
     transform: translateY(-30px);
@@ -190,7 +187,6 @@ export default {
     }
 }
 
-/* Fade In from Left */
 .fade-in-left {
     opacity: 0;
     transform: translateX(-30px);
@@ -204,7 +200,6 @@ export default {
     }
 }
 
-/* Fade In from Right */
 .fade-in-right {
     opacity: 0;
     transform: translateX(30px);

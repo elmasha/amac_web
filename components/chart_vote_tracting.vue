@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 <div>
     <div>
         <bar-chart class="chart-container" :chart-data="chartData" :options="chartOptions" ref="barChart"></bar-chart>
@@ -44,7 +44,7 @@ export default {
             plays: 864,
             user: 10000,
             selectedDayType: "good",
-            selectedDate: "2023-08-01", // Default date
+            selectedDate: "2023-08-01",
             goodDayInteractions: 18000,
             badDayInteractions: 10000,
             userInteractions: [{
@@ -71,7 +71,7 @@ export default {
                     date: "Jun",
                     interactions: 1450
                 },
-                // Add more data points for each day in June
+             
                 {
                     date: "Jul",
                     interactions: 950
@@ -92,7 +92,7 @@ export default {
                     date: "Nov",
                     interactions: 1450
                 },
-                // Add more data points for each day in June
+               
                 {
                     date: "Dec",
                     interactions: 950
@@ -128,8 +128,7 @@ export default {
             await axios.get('https://amacserver-production-ebd5.up.railway.app/api/votes/voting-activity', {})
                 .then(function (response) {
                     if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
+                        
                         that.data = response.data;
                         console.log(that.data)
                         that.chartData.labels = that.data.map((data) => data.vote_hour+" hr");
@@ -148,9 +147,7 @@ export default {
                     that.snackbar2 = true;
                 });
 
-            // this.chartData.labels = this.userInteractions.map((item) => item.month);
-            // this.chartData.datasets[0].data = this.userInteractions.map((item) => item.total_registrations);
-
+          
         },
         changeTotal(val) {
             this.user_total = Intl.NumberFormat().format(val);
@@ -200,4 +197,4 @@ export default {
     height: 300px;
     color: #ffffff77;
 }
-</style>
+</style> -->

@@ -1,5 +1,5 @@
-<template>
-<div class="container text-center ">
+<template >
+<div class="container text-center " >
     <div class="container text-center" style="margin-top: 10px;">
         <h1 style="padding: 50px;">Aims and Objectives</h1>
 

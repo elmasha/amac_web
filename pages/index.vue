@@ -1,327 +1,301 @@
 <template>
-<v-app style="background-color: black;">
-    <v-row v-resize="onResize">
-        <v-col cols="12" md="12">
-            <div>
-                <v-app-bar dark elevation="0" class="" color="black" fixed>
-                    <v-menu offset-y>
-                        <template v-slot:activator="{ on, attrs }">
+  <v-app class="app-bg" style="background-color: black;">
 
-                            <v-app-bar-nav-icon v-show="showBurger" light v-bind="attrs" v-on="on" color="white"></v-app-bar-nav-icon>
-                        </template>
-                        <v-list>
-                            <!-- <v-list-item v-for="(item, index) in items" :key="item.title">
-                                                   <v-list-item-action @click="checkNav(item.title)">{{ item.title }}</v-list-item-action>
-                                                   <v-list-item-title></v-list-item-title>
-                                               </v-list-item> -->
+    <!-- NAVBAR -->
+    <v-app-bar app dark elevate-on-scroll class="glass-nav" height="60px">
+      <v-app-bar-nav-icon
+        v-if="showBurger"
+        @click="drawer = !drawer"
+      />
 
-                            <v-list-item> <a id="link" @click.prevent="scrollToSection('home')" style="margin: 8px;">Home</a></v-list-item>
-                            <v-list-item><a id="link" @click.prevent="scrollToSection('about')" style="margin: 8px;">About</a></v-list-item>
-                            <v-list-item><a id="link" @click.prevent="scrollToSection('aim')" style="margin: 8px;">Aim & Objectives</a></v-list-item>
-                            <v-list-item> <a id="link" @click.prevent="scrollToSection('gallery')" style="margin: 8px;">Gallery</a></v-list-item>
-                            <v-list-item> <a id="link" @click.prevent="scrollToSection('team')" style="margin: 8px;">Team</a></v-list-item>
-                            <v-list-item> <a id="link" @click.prevent="scrollToSection('contact')" style="margin: 8px;">Contact</a></v-list-item>
-                            <v-list-item> <a id="link" @click.prevent="scrollToSection1('voting')" style="margin: 8px;">Vote</a></v-list-item>
+      <div class="d-flex align-center">
+        <v-avatar size="32">
+          <v-img :src="logo"></v-img>
+        </v-avatar>
+        <span class="ml-2 font-weight-bold glow-text">Amac</span>
+      </div>
 
-                        </v-list>
-                    </v-menu>
-                    <div class="d-flex">
-                        <v-avatar color="black" size="28">
-                            <v-img :src="logo"></v-img>
-                        </v-avatar>
-                        <v-toolbar-title style="margin-left: 10px;">Amac </v-toolbar-title>
-                    </div>
+      <v-spacer></v-spacer>
 
-                    <v-spacer></v-spacer>
-                    <div v-show="!showBurger" id="nav_bar_links">
-                        <a id="link" @click.prevent="scrollToSection('home')" style="margin: 8px;">Home</a>
-                        <a id="link" @click.prevent="scrollToSection('about')" style="margin: 8px;">About</a>
-                        <a id="link" @click.prevent="scrollToSection('aim')" style="margin: 8px;">Aim & Objectives</a>
-                        <a id="link" @click.prevent="scrollToSection('gallery')" style="margin: 8px;">Gallery</a>
-                        <a id="link" @click.prevent="scrollToSection('team')" style="margin: 8px;">Team</a>
-                        <a id="link" @click.prevent="scrollToSection('contact')" style="margin: 8px;">Contact</a>
-                        <a id="link" @click.prevent="scrollToSection1('voting')" style="margin: 8px;">Vote</a>
-                    </div>
-                    <v-spacer></v-spacer>
+      <div v-if="!showBurger" class="nav-links">
+        <span @click="scrollToSection('home')">Home</span>
+        <span @click="scrollToSection('about')">About</span>
+        <span @click="scrollToSection('aim')">Aim</span>
+        <span @click="scrollToSection('gallery')">Gallery</span>
+        <span @click="scrollToSection('team')">Team</span>
+        <span @click="scrollToSection('contact')">Contact</span>
+      </div>
 
-                    <v-btn outlined color="primary" to="/nomination" rounded>
-                        <p style="color: white; margin-top: 14px;">Nominate now</p>
-                    </v-btn>
+      <v-btn class="ml-4 cta-btn"  rounded to="/nomination">
+        Nominate
+      </v-btn>
+    </v-app-bar>
 
-                    <!-- <v-btn icon @click="$fire.auth.signOut()" v-if="show_auth">
-                                           <v-icon>mdi-logout</v-icon>
-                                       </v-btn> -->
+    <!-- MOBILE -->
+    <v-navigation-drawer v-model="drawer" app dark temporary color="#00000" class="glass-nav">
+      <v-list>
+        <v-list-item @click="goSection('home')">Home</v-list-item>
+        <v-list-item @click="goSection('about')">About</v-list-item>
+        <v-list-item @click="goSection('aim')">Aim</v-list-item>
+        <v-list-item @click="goSection('gallery')">Gallery</v-list-item>
+        <v-list-item @click="goSection('team')">Team</v-list-item>
+        <v-list-item @click="goSection('contact')">Contact</v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-                </v-app-bar>
+    <!-- HERO -->
+    <section id="home" class="hero-section fade-section">
+      <div class="hero-overlay">
+        <home />
+      </div>
+    </section>
 
-            </div>
-        </v-col>
+    <!-- CONTENT -->
+    <section id="about" class="section fade-section"><about /></section>
+    <section id="aim" class="section dark fade-section" style="background-color: black;"><aim /></section>
+    <section id="gallery" class="section fade-section"><gallery /></section>
+    <section id="team" class="section dark fade-section" style="background-color: black;"><team /></section>
 
-        <div>
+    <section id="contact" class="section fade-section">
+      <partners />
+      <contact />
+    </section>
 
-            <div>
-                <section id="home">
-                    <home></home>
-                </section>
-            </div>
-            <div class="parallax">
-                <section id="about">
-                    <about></about>
-                </section>
-            </div>
-            <div class="parallax_aim">
-                <section id="aim">
-                    <aim></aim>
-                </section>
-            </div>
-            <div>
-                <section id="gallery">
+    <!-- DIALOG -->
+    <v-dialog v-model="nomineeDialog" max-width="500">
+      <v-card class="pa-4 cinematic-card">
 
-                    <gallery></gallery>
-                </section>
-            </div>
-            <div class="parallax_about">
-                <section id="team">
-
-                    <team></team>
-                </section>
-            </div>
-            <div class="parallax_contact">
-                <section id="contact">
-
-                    <contact></contact>
-                </section>
-            </div>
+        <div class="d-flex align-center mb-3">
+          <h3 class="mb-0 glow-text">Nominate Someone</h3>
+          <v-spacer />
+          <v-btn icon @click="nomineeDialog = false">
+            <v-icon color="red">mdi-close</v-icon>
+          </v-btn>
         </div>
-    </v-row>
 
-    <v-dialog v-model="nomineeDialog" max-width="400px">
-        <v-card>
-            <div class="d-flex">
-                <v-card-title class="headline">Nominate someone</v-card-title>
+        <v-select v-model="selectedCategory" :items="categories"
+          item-text="name" item-value="id" label="Category" outlined dense />
 
-                <v-spacer></v-spacer>
-                <v-btn text @click="nomineeDialog = false">
-                    <v-icon color="red">mdi-close</v-icon>
-                </v-btn>
+        <v-text-field v-model="nomineeName"
+          label="Nominee Name" outlined dense />
 
-            </div>
-            <v-card-text>
-                <v-select v-model="selectedCategory" :items="categories" item-text="name" item-value="id" label="Select Category" outlined dense></v-select>
-                <v-text-field v-model="nomineeName" label="Nominee Name" outlined dense></v-text-field>
-                <v-row>
-                    <v-col cols="12" sm="12" md="12">
-                        <v-autocomplete v-model="location" clearable filled rounded dense :loading="loading" :items="counties" :search-input.sync="search" cache-items class="mx-2" flat hide-no-data hide-details placeholder="Search county you are from?   "></v-autocomplete>
+        <v-autocomplete v-model="location"
+          :items="counties" label="County" outlined dense />
 
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                        <v-text-field v-model="church" label="Church" outlined dense></v-text-field>
+        <v-text-field v-model="church"
+          label="Church" outlined dense />
 
-                    </v-col>
-                </v-row>
+        <v-btn block class="mt-4 cta-btn" @click="submitNominee">
+          Submit Nominee
+        </v-btn>
 
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn text @click="nomineeDialog = false">Cancel</v-btn>
-                <v-btn color="primary" style="color:black;" @click="submitNominee">Submit Nominee</v-btn>
-            </v-card-actions>
-        </v-card>
+      </v-card>
     </v-dialog>
-</v-app>
-<!-- Render HTML here -->
+
+  </v-app>
 </template>
 
 <script>
 import axios from "axios";
 import logo from "@/assets/logo.png";
-import Home from "../components/Home.vue"
-import Gallery from "../components/Gallery.vue"
-import About from "../components/About.vue"
-import Aim from "../components/Aim.vue"
-import Team from "../components/Team.vue"
-import Contact from "../components/Contact.vue"
-import Countdown from "../components/Countdown.vue";
+
+import Home from "../components/Home.vue";
+import Gallery from "../components/Gallery.vue";
+import About from "../components/About.vue";
+import Aim from "../components/Aim.vue";
+import Team from "../components/Team.vue";
+import Contact from "../components/Contact.vue";
+import Partners from "../components/Partners.vue";
 
 export default {
-    components: {
-        Countdown,
-        Contact,
-        Team,
-        Gallery,
-        Aim,
-        About,
-        Home
+  components: {
+    Contact,
+    Team,
+    Gallery,
+    Aim,
+    About,
+    Home,
+    Partners
+  },
+
+  data() {
+    return {
+      drawer: false,
+      showBurger: false,
+      nomineeDialog: false,
+      logo,
+
+      categories: [],
+      nomineeName: "",
+      selectedCategory: "",
+      location: "",
+      church: "",
+      counties: []
+    };
+  },
+
+  mounted() {
+    this.onResize();
+    this.fetchCategories();
+    window.addEventListener("resize", this.onResize);
+    this.initAnimations();
+  },
+
+  methods: {
+
+    onResize() {
+      this.showBurger = window.innerWidth < 950;
     },
-    data() {
-        return {
-            loading: false,
-            items: [],
-            search: null,
-            counties: [],
-            nomineeDialog: false,
-            logo,
-            windowSize: {
-                x: window.innerHeight,
-                y: window.innerWidth,
-            },
-            htmlContent: "",
-            showBurger: false,
-            showBurger: false,
-            categories: [],
-            nomineeName: "",
-            selectedCategory: "",
-            description: "",
-            location: "",
-            church: "",
-        };
+
+    goSection(id) {
+      this.drawer = false;
+      this.scrollToSection(id);
     },
-    async mounted() {
-        // await this.fetchCategories();
-        // Load external HTML file at runtime
-        // this.fetchCategories();
-        // let response = await axios.get("https://amacserver-production-ebd5.up.railway.app/api/counties/get-counties");
-        // this.counties = response.data;
-        // console.log(this.counties);
+
+    async fetchCategories() {
+      const { data } = await axios.get(
+        "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
+      );
+      this.categories = data;
     },
-    methods: {
-        async submitNominee() {
-            try {
-                await axios.post("https://amacserver-production-ebd5.up.railway.app/api/nominee/addNominee", {
-                    name: this.nomineeName,
-                    category_id: this.selectedCategory,
-                    location: this.location,
-                    church: this.church,
-                });
-                alert("Nominee submitted successfully!");
-                this.nomineeName = "";
-                this.nomineeDesc = "";
-                this.selectedCategory = null;
-            } catch (err) {
-                console.error("Error submitting nominee:", err);
-                alert("Error submitting nominee");
-            }
-        },
-        onResize() {
-            this.windowSize = {
-                x: window.innerWidth,
-                y: window.innerHeight,
-            };
-            console.log("size", this.windowSize.x);
-            if (this.windowSize.x < 950) {
-                this.showBurger = true;
-            } else {
-                this.showBurger = false;
-            }
-            return this.windowSize;
-        },
-        async fetchCategories() {
 
-            try {
-                const {
-                    data
-                } = await axios.get(
-                    "https://amacserver-production-ebd5.up.railway.app/api/categories/getAll"
-                );
-                this.categories = data;
-            } catch (error) {
-                console.error("Error loading categories:", error);
-            }
-        },
-        scrollToSection1(id) {
-            if (id != null) {
-                this.$router.push(`/${id}`)
-            }
-        },
-        scrollToSection(id) {
-            const target = document.getElementById(id)
-            if (target.id != 'home') {
-                this.backToTop = true;
-            } else {
-                this.backToTop = false;
-            }
-
-            if (!target) return
-            const start = window.scrollY
-            const end = target.offsetTop
-            const distance = end - start
-            const duration = 800 // ms
-            let startTime = null
-
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-            }
-
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime
-                const timeElapsed = currentTime - startTime
-                const progress = Math.min(timeElapsed / duration, 1)
-                window.scrollTo(0, start + distance * easeInOutQuad(progress))
-                if (timeElapsed < duration) requestAnimationFrame(animation)
-            }
-            requestAnimationFrame(animation)
+    async submitNominee() {
+      await axios.post(
+        "https://amacserver-production-48fd.up.railway.app/api/nominee/addNominee",
+        {
+          name: this.nomineeName,
+          category_id: this.selectedCategory,
+          location: this.location,
+          church: this.church,
         }
+      );
+
+      this.nomineeDialog = false;
+      this.nomineeName = "";
+      this.selectedCategory = "";
+      this.location = "";
+      this.church = "";
     },
+
+    scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      window.scrollTo({
+        top: el.offsetTop - 60,
+        behavior: "smooth"
+      });
+    },
+
+    initAnimations() {
+      const sections = document.querySelectorAll(".fade-section");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      sections.forEach(el => observer.observe(el));
+    }
+
+  }
 };
 </script>
 
 <style>
-.parallax_aim {
-    background-image: url('~/assets/pg.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
+/* BASE */
+.app-bg {
+  background: #000000;
+  color: #e5e5e5;
 }
 
-.parallax_team {
-    background-image: url('~/assets/p2.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100vh;
+/* NAVBAR */
+.glass-nav {
+  backdrop-filter: blur(14px);
+  background: rgba(0,0,0,0.85) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.parallax_about {
-    background-image: url('~/assets/p3.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
+/* HERO */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.parallax_contact {
-    background-image: url('~/assets/p2.svg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-
+.hero-overlay {
+  width: 100%;
+  text-align: center;
+  animation: heroFade 1.5s ease;
 }
 
-.parallax {
-    background-image: url('~/assets/p2.svg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
+/* CINEMATIC FADE */
+.fade-section {
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  transition: all 1s ease;
 }
 
-#link {
-    color: #dbdbdb;
-    font-weight: 800;
-    transition: 0.3s;
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-#link:hover {
-    color: gold;
-    font-weight: 800;
+/* SECTION */
+.section {
+  padding: 100px 20px;
+}
+
+.section.dark {
+  background: #0f0f0f;
+}
+
+/* NAV */
+.nav-links span {
+  margin: 0 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-links span:hover {
+  color: gold;
+  text-shadow: 0 0 10px rgba(255,215,0,0.7);
+}
+
+/* CTA */
+.cta-btn {
+  background: linear-gradient(135deg, gold, #ffcc00) !important;
+  color: black !important;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+
+/* GLOW TEXT */
+.glow-text {
+  color: gold;
+  text-shadow: 0 0 12px rgba(255,215,0,0.6);
+}
+
+/* CARD */
+.cinematic-card {
+  background: #0f0f0f !important;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* HERO ANIMATION */
+@keyframes heroFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

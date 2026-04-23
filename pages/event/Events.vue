@@ -1,6 +1,5 @@
-<template>
+<!-- <template>
 <v-container>
-    <v-card dark>
         <v-card-title>Create Event</v-card-title>
         <v-card-text>
             <v-form>
@@ -16,16 +15,13 @@
                 <v-btn color="primary" @click="createEvent">Create Event</v-btn>
             </v-form>
         </v-card-text>
-    </v-card>
 
-    <v-card class="mt-5">
         <v-card-title>Published Events</v-card-title>
         <v-data-table :headers="headers" :items="events">
             <template v-slot:item.actions="{ item }">
                 <v-btn small color="green" @click="publishEvent(item.id)">Publish</v-btn>
             </template>
         </v-data-table>
-    </v-card>
 </v-container>
 </template>
 
@@ -91,4 +87,4 @@ export default {
         },
     },
 };
-</script>
+</script> -->

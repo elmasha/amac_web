@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 <div style="background-color:#000; height: 95vh;" elevetion="0">
     <v-app-bar color="#ffffff00" dark elevation="0">
 
@@ -26,7 +26,6 @@
                 <div class="container">
                     <v-form ref="form" v-model="valid" lazy-validation>
 
-                        <!-- <v-autocomplete v-model="select" :loading="loading" :items="items" :search-input.sync="search" cache-items @change="getEStateID(select)" class="mx-4" flat hide-no-data hide-details label="   Which estate are you from?   " solo></v-autocomplete> -->
 
                         <v-text-field v-model="auth.email" :rules="emailRules" label="E-mail" required></v-text-field>
 
@@ -157,7 +156,6 @@ export default {
         };
     },
     mounted() {
-        // this.Fetch_PostAllEstates();
     },
     watch: {
         search(val) {
@@ -227,65 +225,7 @@ export default {
                 this.loading = false
             }, 500)
         },
-        configureRecaptcha() {
-            window.recaptchaVerifier = new this.$fireModule.auth.RecaptchaVerifier(
-                "recaptcha-container", {
-                    size: "visible",
-                    callback: (response) => {
-                        console.log(response);
-                    },
-                }
-            );
-        },
-        configureRecaptcha2() {
-            window.recaptchaVerifier = new this.$fireModule.auth.RecaptchaVerifier(
-                "recaptcha-container2", {
-                    size: "visible",
-                    callback: (response) => {
-                        console.log(response);
-                    },
-                }
-            );
-        },
-        // handle otpsend
-        sendOtpForVerification() {
-            if (this.phone_no == "") {
-                this.snackbar2 = true;
-                this.snackbarText2 = "Provide phone number";
-            } else {
-                this.progress_bar = true;
-                this.configureRecaptcha();
-                const phoneNumber = "+254" + this.phone_no; //user phone number
-                this.appVerifier2 = window.recaptchaVerifier;
-                console.log("init SMS", this.appVerifier2, "\n", phoneNumber);
-                firebase.auth().languageCode = "en";
-                firebase
-                    .auth()
-                    .signInWithPhoneNumber(phoneNumber, this.appVerifier2)
-                    .then((confirmationResult) => {
-                        // SMS sent. Prompt user to type the code from the message, then sign the
-                        // user in with confirmationResult.confirm(code).
-
-                        window.confirmationResult = confirmationResult;
-                        this.confirmation_Result = confirmationResult;
-                        this.code_state = true;
-                        this.progress_bar = false;
-                        this.timerEnabled = true;
-                        console.log("Result", this.confirmation_Result, "OTP sent");
-                        this.snackbar = true;
-                        this.snackbarText = "OTP was successfully";
-                        //this.$toast.success("Otp sent successfully");
-                    })
-                    .catch((error) => {
-                        // Error; SMS not sent
-                        this.progress_bar = false;
-                        console.log("Error", error);
-                        this.snackbar2 = true;
-                        this.snackbarText2 = error;
-                    });
-            }
-        },
-
+       
         ConfirmCode() {
             console.log("Code sent to you.", this.code_no);
 
@@ -367,7 +307,6 @@ export default {
                     })
                     .then((user) => {
                         that.progress_bar = false;
-                        //we are signed in
                         that.$router.push(`/admin`);
                     });
             }
@@ -382,7 +321,6 @@ export default {
             } else {
                 const mAuth = this.$fire.auth;
                 this.progress_bar2 = true;
-                // if (this.password === this.registrationPassword) {
                 mAuth
                     .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
                     .catch((error) => {
@@ -403,4 +341,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style></style> -->
