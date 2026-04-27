@@ -132,6 +132,33 @@
       </v-card>
     </v-dialog>
 
+
+     <v-dialog v-model="paymentConfirmDialog" max-width="400px">
+                <v-card class="text-center" style="padding: 1rem;">
+                    <v-img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGxrZTVjZ254ajR0NXVnMWV4NWYxcTBheTZ1cDA5bTJiM2c5NTV6NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jtd26qRGDzgjiqcwbp/giphy.gif" contain height="150px"></v-img>
+                    <br>
+                    <h5>Voting Confirmed</h5>
+                    <v-card-text>
+                        <br>
+
+                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
+                            <p style="font-size: 0.9rem;">Thank you for voting. Your <b> {{ voteCount }} Vote (s) </b> for {{ nomineeName }} has been successfully recorded
+                            </p>
+                        </div>
+                        <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
+
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <div>
+
+                            <v-btn text @click="paymentConfirmDialog = false">Close</v-btn>
+                        </div>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
   </v-app>
 </template>
 
