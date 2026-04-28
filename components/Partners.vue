@@ -1,215 +1,149 @@
-
 <template>
-<div>
-    <div class="container text-center" style="margin-top: 80px;">
-        <h1>Previous sponsors</h1>
-        <p></p>
+  <div class="partners-section">
+
+    <!-- HEADER -->
+    <div class="text-center header">
+      <h2 class="title">Our Sponsors</h2>
+      <p class="subtitle">
+        Trusted partners who made this event possible
+      </p>
     </div>
 
-    <v-row>
-        <v-col cols="12" md="12" sm="12">
+    <!-- SCROLL WRAPPER -->
+    <div class="scroll-container">
 
-        </v-col>
+      <div class="scroll-track">
 
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
+        <!-- LOOP 1 -->
+        <div
+          v-for="(logo, i) in logos"
+          :key="'a'+i"
+          class="logo-card"
+        >
+          <v-img :src="logo.src" contain class="logo"/>
+        </div>
 
-                    <v-carousel-item width="100%" v-for="(item,i) in items" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
+        <!-- LOOP 2 (for infinite effect) -->
+        <div
+          v-for="(logo, i) in logos"
+          :key="'b'+i"
+          class="logo-card"
+        >
+          <v-img :src="logo.src" contain class="logo"/>
+        </div>
 
-                </v-carousel>
-            </div>
-        </v-col>
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
+      </div>
 
-                    <v-carousel-item width="100%" v-for="(item,i) in items2" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
+    </div>
 
-                </v-carousel>
-            </div>
-        </v-col>
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
-
-                    <v-carousel-item width="100%" v-for="(item,i) in items3" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
-
-                </v-carousel>
-            </div>
-        </v-col>
-
-    </v-row>
-
-</div>
+  </div>
 </template>
 
 <script>
 import g1 from "@/assets/clients/1.png";
-import g3 from "@/assets/clients/2.png";
-import g4 from "@/assets/clients/3.png";
+import g2 from "@/assets/clients/2.png";
+import g3 from "@/assets/clients/3.png";
 import g5 from "@/assets/clients/5.png";
 import g6 from "@/assets/clients/6.png";
 import g7 from "@/assets/clients/7.png";
 import g8 from "@/assets/clients/8.png";
-import g9 from "@/assets/clients/9.png";
-import g10 from "@/assets/clients/10.jpg";
-import g11 from "@/assets/clients/11.jpg";
-import axios from "axios";  
-import numeral from "numeral";
 
 export default {
-    name: 'NuxtTutorial',
-    props: {
-        showBurger: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    data() {
-        return {
-            cycle: true,
-            products: [],
-            numeral,
-            items: [{
-                    src: g1,
-                },
-
-                {
-                    src: g3,
-                },
-                {
-                    src: g4,
-                }, {
-                    src: g5,
-                },
-                {
-                    src: g6,
-                },
-
-            ],
-            items2: [{
-                    src: g6,
-                },
-                {
-                    src: g7,
-                }, {
-                    src: g8,
-                },
-                
-
-            ],items3: [
-                {
-                    src: g9,
-                },
-                {
-                    src: g10,
-                }, {
-                    src: g11,
-                },
-
-            ],
-            pageNotFound: '404 Not Found',
-            otherError: 'An error occurred'
-        }
-    },
-    methods: {
-        sendData(val) {
-            this.$emit("send-data", val);
-        },
-
-    },
-    mounted() {
-        /// this.Fetch_Products();
-    }
-}
+  data() {
+    return {
+      logos: [
+        { src: g1 },
+        { src: g2 },
+        { src: g3 },
+        { src: g5 },
+        { src: g6 },
+        { src: g7 },
+        { src: g8 },
+      ]
+    };
+  }
+};
 </script>
 
 <style scoped>
-.box {
-    background-color: rgb(255 255 255 / 30%);
-    backdrop-filter: blur(5px);
+
+/* SECTION */
+.partners-section {
+  background: #000;
+  padding: 80px 0;
+  overflow: hidden;
 }
 
-.fade-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-    text-align: center;
-    padding: 60px;
-    background: #f4f4f4;
-    margin: 10px;
-    border-radius: 10px;
+/* HEADER */
+.header {
+  margin-bottom: 40px;
 }
 
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
+.title {
+  color: #d4af37;
+  font-size: 1.8rem;
 }
 
-.fade-demo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
+.subtitle {
+  color: rgba(255,255,255,0.6);
 }
 
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.5s ease forwards;
+/* SCROLL */
+.scroll-container {
+  overflow: hidden;
+  width: 100%;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.scroll-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 25s linear infinite;
 }
 
-.fade-in-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    animation: fadeInDown 1.5s ease forwards;
+/* LOGO CARD */
+.logo-card {
+  width: 160px;
+  height: 100px;
+  margin: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes fadeInDown {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* LOGO */
+.logo {
+  max-width: 120px;
+  filter: grayscale(100%) brightness(0.7);
+  transition: 0.3s;
 }
 
-.fade-in-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 1.5s ease forwards;
+/* HOVER */
+.logo-card:hover .logo {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
 }
 
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* PAUSE ON HOVER */
+.scroll-container:hover .scroll-track {
+  animation-play-state: paused;
 }
 
-.fade-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    animation: fadeInRight 1.5s ease forwards;
+/* ANIMATION */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-@keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* MOBILE */
+@media (max-width: 960px) {
+  .logo-card {
+    width: 120px;
+    margin: 0 10px;
+  }
 }
+
 </style>

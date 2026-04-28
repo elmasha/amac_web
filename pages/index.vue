@@ -1,120 +1,123 @@
 <template>
-  <v-app class="app-bg" style="background-color: black;">
+  <v-app class="app-bg">
 
     <!-- NAVBAR -->
-    <v-app-bar app dark elevate-on-scroll class="glass-nav" height="60px">
+    <v-app-bar app dark elevate-on-scroll class="glass-nav">
+
       <v-app-bar-nav-icon
         v-if="showBurger"
         @click="drawer = !drawer"
       />
 
+      <!-- BRAND -->
       <div class="d-flex align-center">
-        <v-avatar size="32">
+        <v-avatar size="34">
           <v-img :src="logo"></v-img>
         </v-avatar>
-        <span class="ml-2 font-weight-bold glow-text">Amac</span>
+        <span class="brand ml-3">AMAC Awards</span>
       </div>
 
-      <v-spacer></v-spacer>
+      <!-- SPONSORS -->
+      <div v-if="!showBurger" class="sponsor-strip">
+        <span class="sponsor-label">Sponsored by</span>
 
+        <v-img src="@/assets/clients/1.png" class="sponsor-logo" />
+        <v-img src="@/assets/clients/2.png" class="sponsor-logo" />
+        <v-img src="@/assets/clients/3.png" class="sponsor-logo" />
+      </div>
+
+      <v-spacer />
+
+      <!-- NAV LINKS -->
       <div v-if="!showBurger" class="nav-links">
         <span @click="scrollToSection('home')">Home</span>
         <span @click="scrollToSection('about')">About</span>
-        <span @click="scrollToSection('aim')">Aim</span>
         <span @click="scrollToSection('gallery')">Gallery</span>
         <span @click="scrollToSection('team')">Team</span>
         <span @click="scrollToSection('contact')">Contact</span>
+        <span @click="scrollToSection('partners')">Partners</span>
+
       </div>
 
-      <v-btn class="ml-4 cta-btn"  rounded to="/nomination">
-        Nominate
+      <!-- CTA -->
+      <v-btn class="cta-btn ml-6" rounded to="/nomination">
+        Nominate Now
       </v-btn>
+
     </v-app-bar>
 
     <!-- MOBILE -->
-    <v-navigation-drawer v-model="drawer" app dark temporary color="#00000" class="glass-nav">
+    <v-navigation-drawer v-model="drawer" app dark temporary class="glass-nav">
       <v-list>
         <v-list-item @click="goSection('home')">Home</v-list-item>
         <v-list-item @click="goSection('about')">About</v-list-item>
-        <v-list-item @click="goSection('aim')">Aim</v-list-item>
         <v-list-item @click="goSection('gallery')">Gallery</v-list-item>
         <v-list-item @click="goSection('team')">Team</v-list-item>
         <v-list-item @click="goSection('contact')">Contact</v-list-item>
+        <v-list-item @click="goSection('partners')">Partners</v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <!-- HERO -->
     <section id="home" class="hero-section fade-section">
+
+      <div class="light-beam"></div>
+
+      <div class="symbol-overlay">
+        <img src="/symbol.png" />
+      </div>
+
       <div class="hero-overlay">
         <home />
       </div>
+
     </section>
 
-    <!-- CONTENT -->
-    <section id="about" class="section fade-section"><about /></section>
-    <section id="aim" class="section dark fade-section" style="background-color: black;"><aim /></section>
-    <section id="gallery" class="section fade-section"><gallery /></section>
-    <section id="team" class="section dark fade-section" style="background-color: black;"><team /></section>
+    <!-- ABOUT -->
+    <section id="about" class="section fade-section">
+      <about />
+    </section>
 
-    <section id="contact" class="section fade-section">
+    <!-- GALLERY -->
+    <section id="gallery" class="section fade-section">
+      <gallery />
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="section dark fade-section">
+      <team />
+    </section>
+
+    <!-- PARTNERS -->
+    <section id="partners" class="section fade-section">
       <partners />
+    </section>
+
+    <!-- CONTACT (FINAL SECTION) -->
+    <section id="contact" class="section final-section fade-section">
       <contact />
     </section>
-
-    <!-- DIALOG -->
-    <v-dialog v-model="nomineeDialog" max-width="500">
-      <v-card class="pa-4 cinematic-card">
-
-        <div class="d-flex align-center mb-3">
-          <h3 class="mb-0 glow-text">Nominate Someone</h3>
-          <v-spacer />
-          <v-btn icon @click="nomineeDialog = false">
-            <v-icon color="red">mdi-close</v-icon>
-          </v-btn>
-        </div>
-
-        <v-select v-model="selectedCategory" :items="categories"
-          item-text="name" item-value="id" label="Category" outlined dense />
-
-        <v-text-field v-model="nomineeName"
-          label="Nominee Name" outlined dense />
-
-        <v-autocomplete v-model="location"
-          :items="counties" label="County" outlined dense />
-
-        <v-text-field v-model="church"
-          label="Church" outlined dense />
-
-        <v-btn block class="mt-4 cta-btn" @click="submitNominee">
-          Submit Nominee
-        </v-btn>
-
-      </v-card>
-    </v-dialog>
 
   </v-app>
 </template>
 
 <script>
-import axios from "axios";
 import logo from "@/assets/logo.png";
 
-import Home from "../components/Home.vue";
-import Gallery from "../components/Gallery.vue";
-import About from "../components/About.vue";
-import Aim from "../components/Aim.vue";
-import Team from "../components/Team.vue";
-import Contact from "../components/Contact.vue";
-import Partners from "../components/Partners.vue";
+import Home from "@/components/Home.vue";
+import About from "@/components/About.vue";
+import Gallery from "@/components/Gallery.vue";
+import Team from "@/components/Team.vue";
+import Contact from "@/components/Contact.vue";
+import Partners from "@/components/Partners.vue";
 
 export default {
   components: {
-    Contact,
-    Team,
-    Gallery,
-    Aim,
-    About,
     Home,
+    About,
+    Gallery,
+    Team,
+    Contact,
     Partners
   },
 
@@ -122,21 +125,12 @@ export default {
     return {
       drawer: false,
       showBurger: false,
-      nomineeDialog: false,
-      logo,
-
-      categories: [],
-      nomineeName: "",
-      selectedCategory: "",
-      location: "",
-      church: "",
-      counties: []
+      logo
     };
   },
 
   mounted() {
     this.onResize();
-    this.fetchCategories();
     window.addEventListener("resize", this.onResize);
     this.initAnimations();
   },
@@ -144,7 +138,7 @@ export default {
   methods: {
 
     onResize() {
-      this.showBurger = window.innerWidth < 950;
+      this.showBurger = window.innerWidth < 960;
     },
 
     goSection(id) {
@@ -152,37 +146,12 @@ export default {
       this.scrollToSection(id);
     },
 
-    async fetchCategories() {
-      const { data } = await axios.get(
-        "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
-      );
-      this.categories = data;
-    },
-
-    async submitNominee() {
-      await axios.post(
-        "https://amacserver-production-48fd.up.railway.app/api/nominee/addNominee",
-        {
-          name: this.nomineeName,
-          category_id: this.selectedCategory,
-          location: this.location,
-          church: this.church,
-        }
-      );
-
-      this.nomineeDialog = false;
-      this.nomineeName = "";
-      this.selectedCategory = "";
-      this.location = "";
-      this.church = "";
-    },
-
     scrollToSection(id) {
       const el = document.getElementById(id);
       if (!el) return;
 
       window.scrollTo({
-        top: el.offsetTop - 60,
+        top: el.offsetTop - 70,
         behavior: "smooth"
       });
     },
@@ -191,7 +160,7 @@ export default {
       const sections = document.querySelectorAll(".fade-section");
 
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
             observer.unobserve(entry.target);
@@ -207,95 +176,111 @@ export default {
 </script>
 
 <style>
+
 /* BASE */
 .app-bg {
-  background: #000000;
-  color: #e5e5e5;
+  background: #000;
+  color: #fff;
 }
+
+/* ANKARA SIDES */
+.app-bg::before,
+.app-bg::after {
+  content: "";
+  position: fixed;
+  width: 60px;
+  height: 100%;
+  opacity: 0.05;
+  background-image: url("https://www.transparenttextures.com/patterns/african-pattern.png");
+}
+.app-bg::before { left: 0; }
+.app-bg::after { right: 0; }
 
 /* NAVBAR */
 .glass-nav {
-  backdrop-filter: blur(14px);
-  background: rgba(0,0,0,0.85) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px);
+  background: rgba(0,0,0,0.9) !important;
 }
 
-/* HERO */
-.hero-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+/* BRAND */
+.brand {
+  color: #d4af37;
+  font-weight: bold;
 }
 
-.hero-overlay {
-  width: 100%;
-  text-align: center;
-  animation: heroFade 1.5s ease;
-}
-
-/* CINEMATIC FADE */
-.fade-section {
-  opacity: 0;
-  transform: translateY(60px) scale(0.98);
-  transition: all 1s ease;
-}
-
-.fade-section.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* SECTION */
-.section {
-  padding: 100px 20px;
-}
-
-.section.dark {
-  background: #0f0f0f;
-}
-
-/* NAV */
+/* NAV LINKS */
 .nav-links span {
   margin: 0 14px;
   cursor: pointer;
-  transition: 0.3s;
+  color: rgba(255,255,255,0.7);
+}
+.nav-links span:hover {
+  color: #d4af37;
 }
 
-.nav-links span:hover {
-  color: gold;
-  text-shadow: 0 0 10px rgba(255,215,0,0.7);
+/* SPONSORS */
+.sponsor-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+}
+.sponsor-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+}
+.sponsor-logo {
+  width: 60px;
+  height: 30px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.6;
 }
 
 /* CTA */
 .cta-btn {
-  background: linear-gradient(135deg, gold, #ffcc00) !important;
+  background: linear-gradient(135deg, gold, #ffcc00);
   color: black !important;
-  font-weight: bold;
-  box-shadow: 0 0 15px rgba(255,215,0,0.4);
 }
 
-/* GLOW TEXT */
-.glow-text {
-  color: gold;
-  text-shadow: 0 0 12px rgba(255,215,0,0.6);
+/* HERO */
+.hero-section {
+  height: 100vh;
+  position: relative;
+}
+.light-beam {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, rgba(255,215,0,0.2), transparent);
+}
+.symbol-overlay {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  opacity: 0.05;
 }
 
-/* CARD */
-.cinematic-card {
-  background: #0f0f0f !important;
-  border: 1px solid rgba(255,255,255,0.05);
+/* SECTIONS */
+.section {
+  padding: 100px 20px;
 }
 
-/* HERO ANIMATION */
-@keyframes heroFade {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* FINAL SECTION (adds bottom spacing) */
+.final-section {
+  padding-bottom: 120px;
 }
+
+/* FADE */
+.fade-section {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1s;
+}
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>

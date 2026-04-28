@@ -1,174 +1,153 @@
 <template>
-<div class="container">
+  <section class="about-section">
 
-    <div class="container text-center" style="margin-top: 20px;">
-        <div class=" text-center" >
-                        <h1 style="padding: 50px;">What is Amac</h1>
-                    </div>
-    </div>
-    <v-row>
+    <v-container>
 
-        <v-col cols="12" md="12" sm="12">
-            <div class="container text-center">
+      <v-row align="center">
 
-                <p>The Adventist Music Annual Concert and Awards (AMAC) is a unique initiative aimed at cultivating a harmonious and spiritually uplifting atmosphere within the Seventh-day Adventist community.</p>
+        <!-- LEFT CONTENT -->
+        <v-col cols="12" md="6">
 
-                <p>Our mission is to recognize, appreciate, and nurture the musical talents within the Seventh-day Adventist Church within the field.</p>
+          <div class="about-content">
 
-                <p>Through AMAC, we aim to create a platform that unites musicians, singers, and composers in the spirit of collaboration and shared worship, fostering an environment where their God-given gifts are acknowledged, celebrated, and utilized for the glory of the Lord.</p>
-            </div>
+            <h2 class="section-title">
+              What is <span>AMAC</span>
+            </h2>
+
+            <div class="gold-line"></div>
+
+            <p class="about-text">
+              The Adventist Music Annual Concert and Awards (AMAC) is a unique initiative
+              aimed at cultivating a harmonious and spiritually uplifting atmosphere within
+              the Seventh-day Adventist community.
+            </p>
+
+            <p class="about-text">
+              Our mission is to recognize, appreciate, and nurture musical talent within
+              the church, creating a platform where gifts are celebrated and elevated.
+            </p>
+
+            <p class="about-text">
+              Through AMAC, we unite musicians, singers, and composers in the spirit of
+              worship, collaboration, and excellence — honoring God through music.
+            </p>
+
+            <v-btn class="cta-btn mt-6" rounded to="/vote">
+              Explore Awards
+            </v-btn>
+
+          </div>
+
         </v-col>
-        
-    </v-row>
 
-</div>
+        <!-- RIGHT IMAGE -->
+        <v-col cols="12" md="6">
+
+          <div class="image-wrapper">
+            <v-img :src="about" class="about-img" />
+            <div class="gold-border"></div>
+          </div>
+
+        </v-col>
+
+      </v-row>
+
+    </v-container>
+
+  </section>
 </template>
 
 <script>
 import about from "@/assets/about.jpg";
 
 export default {
-    name: 'About',
-    layout: 'empty',
-    props: {
-        error: {
-            type: Object,
-            default: null
-        }
-    },
-    data() {
-        return {
-            about,
-            pageNotFound: '404 Not Found',
-            otherError: 'An error occurred'
-        }
-    },
-    //   head () {
-    //     const title =
-    //       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    //     return {
-    //       title
-    //     }
-    //   }
-}
+  data() {
+    return {
+      about
+    };
+  }
+};
 </script>
 
 <style scoped>
-.fade-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-    text-align: center;
-    padding: 60px;
-    background: #f4f4f4;
-    margin: 10px;
-    border-radius: 10px;
+
+/* SECTION */
+.about-section {
+  background: #000;
+  padding: 120px 20px;
+  color: #fff;
+  position: relative;
 }
 
-/* Active animation */
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
+/* TITLE */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
 }
 
-.fade-demo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
+.section-title span {
+  color: #d4af37;
 }
 
-/* Fade In from Top */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.5s ease forwards;
+/* GOLD LINE */
+.gold-line {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #d4af37, #ffcc00);
+  margin: 20px 0;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* TEXT */
+.about-text {
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 15px;
+  line-height: 1.7;
 }
 
-/* Fade In from Bottom */
-.fade-in-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    animation: fadeInDown 1.5s ease forwards;
+/* BUTTON */
+.cta-btn {
+  background: linear-gradient(135deg, #d4af37, #ffcc00);
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(212,175,55,0.3);
 }
 
-@keyframes fadeInDown {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* IMAGE */
+.image-wrapper {
+  position: relative;
+  max-width: 450px;
+  margin: auto;
 }
 
-/* Fade In from Left */
-.fade-in-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 1.5s ease forwards;
+.about-img {
+  border-radius: 14px;
+  position: relative;
+  z-index: 2;
 }
 
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* GOLD BORDER EFFECT */
+.gold-border {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #d4af37;
+  border-radius: 14px;
+  z-index: 1;
+  opacity: 0.6;
 }
 
-/* Fade In from Right */
-.fade-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    animation: fadeInRight 1.5s ease forwards;
+/* MOBILE */
+@media (max-width: 960px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .image-wrapper {
+    margin-top: 40px;
+  }
 }
 
-@keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.float-container {
-    position: relative;
-    /* adjust as needed */
-    justify-content: center;
-    align-items: center;
-}
-
-.floating-image {
-    height: auto;
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Smooth floating effect */
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-15px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-.box {
-    background-color: rgb(255 255 255 / 30%);
-    backdrop-filter: blur(5px);
-}
-
-.box1 {
-    background-color: rgb(255 255 255 / 30%);
-    backdrop-filter: blur(14px);
-}
 </style>

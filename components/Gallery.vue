@@ -1,53 +1,76 @@
-
 <template>
-<div>
-    <div class="container text-center" style="margin-top: 80px;">
-        <h1>Gallery</h1>
-        <p>The inaugural edition, themed the Elegant Edition, was held on November 24th, 2024, at KICC, attracting over 2,600 attendees.</p>
+  <div class="gallery-wrapper">
+
+    <!-- HEADER -->
+    <div class="gallery-header text-center">
+      <h1 class="title">Gallery</h1>
+      <p class="subtitle">
+        The Elegant Edition — November 24th, 2024 at KICC
+      </p>
     </div>
 
-    <v-row>
-        <v-col cols="12" md="12" sm="12">
+    <!-- 3 COLUMN GRID -->
+    <v-container fluid>
+      <v-row>
 
+        <!-- COLUMN 1 -->
+        <v-col cols="12" md="4">
+          <v-carousel
+            height="500"
+            cycle
+            hide-delimiter-background
+            :show-arrows="false"
+            class="column-carousel"
+          >
+            <v-carousel-item v-for="(item,i) in items" :key="i">
+              <div class="slide">
+                <v-img :src="item.src" class="img" cover />
+                <div class="overlay"></div>
+              </div>
+            </v-carousel-item>
+          </v-carousel>
         </v-col>
 
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
-
-                    <v-carousel-item width="100%" v-for="(item,i) in items" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
-
-                </v-carousel>
-            </div>
-        </v-col>
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
-
-                    <v-carousel-item width="100%" v-for="(item,i) in items2" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
-
-                </v-carousel>
-            </div>
-        </v-col>
-        <v-col cols="12" md="4" sm="12">
-            <div class="">
-                <v-carousel height="300" width="100%" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
-
-                    <v-carousel-item width="100%" v-for="(item,i) in items3" :key="i">
-                        <v-img :src="item.src" height="200" contain></v-img>
-                    </v-carousel-item>
-
-                </v-carousel>
-            </div>
+        <!-- COLUMN 2 -->
+        <v-col cols="12" md="4">
+          <v-carousel
+            height="500"
+            cycle
+            hide-delimiter-background
+            :show-arrows="false"
+            class="column-carousel"
+          >
+            <v-carousel-item v-for="(item,i) in items2" :key="i">
+              <div class="slide">
+                <v-img :src="item.src" class="img" cover />
+                <div class="overlay"></div>
+              </div>
+            </v-carousel-item>
+          </v-carousel>
         </v-col>
 
-    </v-row>
+        <!-- COLUMN 3 -->
+        <v-col cols="12" md="4">
+          <v-carousel
+            height="500"
+            cycle
+            hide-delimiter-background
+            :show-arrows="false"
+            class="column-carousel"
+          >
+            <v-carousel-item v-for="(item,i) in items3" :key="i">
+              <div class="slide">
+                <v-img :src="item.src" class="img" cover />
+                <div class="overlay"></div>
+              </div>
+            </v-carousel-item>
+          </v-carousel>
+        </v-col>
 
-</div>
+      </v-row>
+    </v-container>
+
+  </div>
 </template>
 
 <script>
@@ -61,155 +84,83 @@ import g8 from "@/assets/gallery/app-8.jpg";
 import g9 from "@/assets/gallery/app-9.jpg";
 import g10 from "@/assets/gallery/app-10.jpg";
 import g11 from "@/assets/gallery/app-11.jpg";
-import axios from "axios";
-import numeral from "numeral";
 
 export default {
-    name: 'NuxtTutorial',
-    props: {
-        showBurger: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    data() {
-        return {
-            cycle: true,
-            products: [],
-            numeral,
-            items: [{
-                    src: g1,
-                },
-
-                {
-                    src: g3,
-                },
-                {
-                    src: g4,
-                }, {
-                    src: g5,
-                },
-                {
-                    src: g6,
-                },
-
-            ],
-            items2: [{
-                    src: g6,
-                },
-                {
-                    src: g7,
-                }, {
-                    src: g8,
-                },
-                
-
-            ],items3: [
-                {
-                    src: g9,
-                },
-                {
-                    src: g10,
-                }, {
-                    src: g11,
-                },
-
-            ],
-            pageNotFound: '404 Not Found',
-            otherError: 'An error occurred'
-        }
-    },
-    methods: {
-        sendData(val) {
-            this.$emit("send-data", val);
-        },
-
-    },
-    mounted() {
-        /// this.Fetch_Products();
-    }
-}
+  data() {
+    return {
+      items: [{ src: g1 }, { src: g3 }, { src: g4 }, { src: g5 }],
+      items2: [{ src: g6 }, { src: g7 }, { src: g8 }],
+      items3: [{ src: g9 }, { src: g10 }, { src: g11 }]
+    };
+  }
+};
 </script>
 
 <style scoped>
-.box {
-    background-color: rgb(255 255 255 / 30%);
-    backdrop-filter: blur(5px);
+
+/* WRAPPER */
+.gallery-wrapper {
+  padding-top: 0px;
 }
 
-.fade-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-    text-align: center;
-    padding: 60px;
-    background: #f4f4f4;
-    margin: 10px;
-    border-radius: 10px;
+/* HEADER */
+.gallery-header {
+  margin-bottom: 40px;
 }
 
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
+.title {
+  font-size: 2.3rem;
+  color: gold;
 }
 
-.fade-demo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
+.subtitle {
+  opacity: 0.7;
 }
 
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.5s ease forwards;
+/* CAROUSEL */
+.column-carousel {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* SLIDE */
+.slide {
+  position: relative;
+  height: 100%;
 }
 
-.fade-in-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    animation: fadeInDown 1.5s ease forwards;
+/* IMAGE */
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 5s ease;
 }
 
-@keyframes fadeInDown {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ZOOM EFFECT */
+.v-carousel-item--active .img {
+  transform: scale(1.15);
 }
 
-.fade-in-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 1.5s ease forwards;
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.2),
+    transparent
+  );
 }
 
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* MOBILE */
+@media (max-width: 960px) {
+  .column-carousel {
+    height: 350px !important;
+  }
 }
 
-.fade-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    animation: fadeInRight 1.5s ease forwards;
-}
-
-@keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 </style>

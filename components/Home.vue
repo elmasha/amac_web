@@ -1,224 +1,176 @@
 <template>
-<div style="margin-top: 0px;">
-<div class="d-flex">    
-<countdown style="font-size: small;" targetDate="2026-08-11"></countdown>
-</div>
-    <v-carousel height="700" :continuous="true" :cycle="cycle" :show-arrows="false" hide-delimiter-background delimiter-icon="mdi-minus">
-        <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src">
-            <div class=" gradient-background">
-                <v-row>
+  <div class="home-wrapper">
 
-                    <v-col cols="12" md="6">
-                        <div class="container text-start" style="margin-top: 300px;margin-left: 20px;color: white;">
-                            <h1 class="typing-title">
-                                {{ item.title+"\n" }}
-                            </h1>
-                            <div class="d-flex" style="margin-top: 50px;">
-                                <!-- <v-btn color="white" rounded to="/nomination">
-                                    <p style="color: black; margin-top: 14px;">Nominate now</p>
-                                </v-btn> -->
+    <!-- COUNTDOWN (OUTSIDE CAROUSEL) -->
+    <div class="countdown-bar">
+      <countdown targetDate="2026-08-11" />
+    </div>
 
-                            </div>
-                        </div>
-                    </v-col>
+    <!-- HERO -->
+    <v-carousel
+      height="100vh"
+      :continuous="true"
+      :cycle="cycle"
+      :show-arrows="false"
+      hide-delimiter-background
+      delimiter-icon="mdi-minus"
+    >
+      <v-carousel-item
+        v-for="(item, i) in items"
+        :key="i"
+        :src="item.src"
+      >
+        <div class="hero-overlay">
 
-                    <v-col cols="12" md="6">
+          <!-- LIGHT BEAM -->
+          <div class="light-beam"></div>
 
-                    </v-col>
-                </v-row>
+          <v-container fill-height>
+            <v-row align="center" justify="end">
 
-            </div>
-        </v-carousel-item>
+              <!-- RIGHT CONTENT -->
+              <v-col cols="12" md="6" class="text-right hero-content">
+
+                <h1 class="hero-title">
+                  {{ item.title }}
+                </h1>
+
+                <p class="hero-sub">
+                  Celebrating Excellence in Gospel & Ministry
+                </p>
+
+                <v-btn class="cta-btn mt-6" large to="/voting" rounded>
+                  Vote Now
+                </v-btn>
+
+              </v-col>
+
+            </v-row>
+          </v-container>
+
+        </div>
+      </v-carousel-item>
     </v-carousel>
 
-    
-</div>
+  </div>
 </template>
 
 <script>
 import h1 from "@/assets/h1.jpg";
 import h2 from "@/assets/h2.jpg";
 import h3 from "@/assets/h3.jpg";
-import axios from "axios";
-import numeral from "numeral";
 import Countdown from "../components/Countdown2.vue";
 
 export default {
-    name: 'NuxtTutorial',
-    components: {
-        Countdown
-    },
-    props: {
-        showBurger: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    data() {
-        return {
-            cycle: true,
-            products: [],
-            numeral,
-            items: [{
-                    src: h1,
-                    title: "Wecolme to Amac   "
-                },
-                {
-                    src: h2,
-                    title: "Enjoy the experience"
-                },
-                {
-                    src: h3,
-                    title: ""
-                },
+  components: { Countdown },
 
-            ],
-            pageNotFound: '404 Not Found',
-            otherError: 'An error occurred'
-        }
-    },
-    methods: {
-        sendData(val) {
-            this.$emit("send-data", val);
-        },
+  props: {
+    showBurger: Boolean
+  },
 
-    },
-    mounted() {
-        /// this.Fetch_Products();
-    }
-}
+  data() {
+    return {
+      cycle: true,
+      items: [
+        { src: h1, title: "Welcome to AMAC Awards" },
+        { src: h2, title: "Celebrating Gospel Excellence" },
+        { src: h3, title: "Your Vote Matters" }
+      ]
+    };
+  }
+};
 </script>
 
 <style scoped>
-.gradient-background {
-    width: 100%;
-    height: 100vh;
-   
-    background: linear-gradient(to right,
-            #0c0b03da,
-            #000000a1,
-            #00000077,
-            #0000001f,
-            transparent,
-            transparent,
-            transparent,
-            transparent);
-    background-size: 200% 100%;
-    height: 100vh;
-    animation: gradient-animation 3s linear infinite;
-    
+
+/* WRAPPER */
+.home-wrapper {
+  position: relative;
 }
 
+/* COUNTDOWN BAR */
+.countdown-bar {
+  position: absolute;
+  top: 70px;
+  right: 40px;
+  z-index: 10;
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  color: gold;
+  font-weight: bold;
+}
+
+/* HERO OVERLAY */
+.hero-overlay {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(
+    to left,
+    rgba(0,0,0,0.9),
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.2),
+    transparent
+  );
+}
+
+/* LIGHT BEAM */
+.light-beam {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, rgba(255,215,0,0.25), transparent 70%);
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* HERO TEXT */
+.hero-content {
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: gold;
+  text-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+
+.hero-sub {
+  margin-top: 10px;
+  opacity: 0.7;
+  font-size: 1.1rem;
+}
+
+/* CTA */
+.cta-btn {
+  background: linear-gradient(135deg, gold, #ffcc00) !important;
+  color: black !important;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+
+/* REMOVE OLD TYPING EFFECT */
 .typing-title {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid currentColor;
-    width: 0;
-    animation:
-        typing 3s steps(30, end) forwards,
-        blink 0.8s step-end infinite;
-    font-size: 2.4rem;
-    color: white;
-    font-weight: 1200;
+  all: unset;
 }
 
-@keyframes typing {
-    from {
-        width: 0;
-    }
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .hero-content {
+    text-align: center !important;
+  }
 
-    to {
-        width: 100%;
-    }
+  .countdown-bar {
+    right: 10px;
+    top: 80px;
+  }
 }
 
-@keyframes blink {
-    50% {
-        border-color: transparent;
-    }
-}
-
-.box {
-    background-color: rgb(255 255 255 / 30%);
-    backdrop-filter: blur(5px);
-}
-
-.fade-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-    text-align: center;
-    padding: 60px;
-    background: #f4f4f4;
-    margin: 10px;
-    border-radius: 10px;
-}
-
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.fade-demo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
-}
-
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.5s ease forwards;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fade In from Bottom */
-.fade-in-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    animation: fadeInDown 1.5s ease forwards;
-}
-
-@keyframes fadeInDown {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fade In from Left */
-.fade-in-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 1.5s ease forwards;
-}
-
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Fade In from Right */
-.fade-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    animation: fadeInRight 1.5s ease forwards;
-}
-
-@keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 </style>

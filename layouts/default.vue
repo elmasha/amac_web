@@ -1,59 +1,9 @@
 <template>
 <v-app dark style="background-color: black;">
-    <v-main>
-        <Nuxt />
+    <v-main style="background-color: black;">
+        <Nuxt style="background-color: black;"/>
     </v-main>
-    <footer bottom fixed>
-        <v-card color="#000" dark>
-            <v-row class=" text-center">
-
-                <v-col cols="12" md="12">
-                    <div class="container">
-
-                        <div class="d-flex">
-
-                            <v-spacer></v-spacer>
-                            <div>
-                                <h4 style="font-weight: 200;"> Amac</h4>
-                                <div class="text-center ">
-                                    <v-avatar color="black" size="28">
-                                        <v-img :src="logo"></v-img>
-                                    </v-avatar>
-
-                                </div>
-
-                                <div class="text-center">
-                                    <h6 style="font-weight: 200; font-size:0.8rem; margin: 2px;">Follow us on</h6>
-                                    <div class="d-flex ">
-                                         <v-spacer></v-spacer>
-                                        <a href="" style="margin: 8px">
-                                            <v-icon small>mdi-facebook</v-icon>
-                                        </a>
-                                        <a href="" style="margin: 8px">
-                                            <v-icon small>mdi-instagram</v-icon>
-                                        </a>
-                                        <a href="" style="margin: 8px">
-                                            <v-icon small>mdi-whatsapp</v-icon>
-                                        </a>
-                                         <v-spacer></v-spacer>
-                                    </div>
-                                    <div class="container text-center">
-                                        <span style="font-size: 0.6rem; color: grey"> © Copyright Amac</span>
-                                        <span style="font-size: 0.6rem; color: grey"> All Rights Reserved</span><br />
-
-                                    </div>
-                                </div>
-                            </div>
-                            <v-spacer></v-spacer>
-
-                        </div>
-
-                    </div>
-                </v-col>
-
-            </v-row>
-        </v-card>
-    </footer>
+    <Footer />
 </v-app>
 </template>
 
@@ -61,8 +11,12 @@
 import {
     uuid
 } from "vue-uuid";
+import Footer from "@/components/footer.vue";
 export default {
     name: "DefaultLayout",
+    components: {
+        Footer
+    },
     data() {
         return {
             logo: require("@/assets/logo.png"),

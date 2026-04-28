@@ -4,13 +4,13 @@
     <!-- NAV -->
     <v-app-bar app dark class="glass-nav">
       <div class="d-flex align-center">
-        <v-avatar size="30">
+        <v-avatar size="34">
           <v-img :src="logo"></v-img>
         </v-avatar>
-        <span class="ml-2 glow-text">Nominate</span>
+        <span class="ml-3 brand">AMAC Awards</span>
       </div>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-btn class="cta-btn" rounded @click="$router.push('/')">
         Back Home
@@ -18,76 +18,70 @@
     </v-app-bar>
 
     <!-- HERO -->
-    <div class="hero fade-in">
-      <h1 class="glow-text big-title">Nominate a Candidate</h1>
-      <p class="subtitle">Recognize someone deserving of this award</p>
-    </div>
+    <section class="hero">
+      <div class="hero-overlay">
+        <h1 class="title glow-text">Nominate a Candidate</h1>
+        <p class="subtitle">
+          Celebrate excellence. Recognize someone making an impact.
+        </p>
+      </div>
+    </section>
 
     <!-- FORM -->
-    <v-container class="fade-in">
+    <v-container class="form-container">
+      <v-card class="form-card">
 
-      <v-card class="cinematic-card pa-6 mx-auto" max-width="600">
+        <div class="form-header">
+          <h2 class="glow-text">Nomination Form</h2>
+          <p>Fill in the details below</p>
+        </div>
 
-        <h2 class="mb-4 text-center glow-text">Nomination Form</h2>
-
-        <!-- CATEGORY -->
         <v-select
           v-model="selectedCategory"
           :items="categories"
           item-text="name"
           item-value="id"
-          label="Select Category"
+          label="Category"
           outlined dense
-          class="mb-3"
+          class="mb-4"
         />
 
-        <!-- NAME -->
         <v-text-field
           v-model="nomineeName"
           label="Nominee Name"
           outlined dense
-          class="mb-3"
+          class="mb-4"
         />
 
-        <!-- COUNTY (FIXED) -->
         <v-autocomplete
           v-model="county_id"
           :items="counties"
           item-text="name"
           item-value="id"
-          label="Select County"
-          outlined dense
-          class="mb-3"
-        />
-
-        <!-- LOCATION -->
-        <v-text-field
-          v-model="location"
-          label="Location (Estate / Town)"
-          outlined dense
-          class="mb-3"
-        />
-
-        <!-- CHURCH -->
-        <v-text-field
-          v-model="church"
-          label="Church"
+          label="County"
           outlined dense
           class="mb-4"
         />
 
-        <!-- BUTTON -->
-        <v-btn
-          block
-          large
-          class="cta-btn"
-          @click="CheckNominee"
-        >
+        <v-text-field
+          v-model="location"
+          label="Location"
+          outlined dense
+          class="mb-4"
+        />
+
+        <v-text-field
+          v-model="church"
+          label="Church"
+          outlined dense
+          class="mb-5"
+        />
+
+        <v-btn block large class="cta-btn" @click="CheckNominee">
           Submit Nomination
         </v-btn>
 
       </v-card>
-
     </v-container>
 
     <!-- SUCCESS -->
@@ -119,7 +113,7 @@ export default {
 
       nomineeName: "",
       selectedCategory: null,
-      county_id: null,   // ✅ FIXED
+      county_id: null,
       location: "",
       church: "",
 
@@ -171,7 +165,6 @@ export default {
         }
 
       } catch (err) {
-        console.error(err);
         this.snackbarError = true;
         this.snackbarTextError = "Error checking nominee";
       }
@@ -186,13 +179,12 @@ export default {
             category_id: this.selectedCategory,
             location: this.location,
             church: this.church,
-            county_id: this.county_id   // ✅ FIXED
+            county_id: this.county_id
           }
         );
 
         this.successDialog = true;
 
-        // RESET FORM
         this.nomineeName = "";
         this.selectedCategory = null;
         this.county_id = null;
@@ -200,8 +192,6 @@ export default {
         this.church = "";
 
       } catch (err) {
-        console.error(err);
-
         this.snackbarError = true;
         this.snackbarTextError =
           err.response?.data?.error || "Failed to submit nominee";
@@ -213,34 +203,77 @@ export default {
 </script>
 
 <style>
+
+/* ============================= */
+/* 🎨 CUSTOM AMAC ANKARA PATTERN */
+/* ============================= */
+:root {
+  --ankara-pattern: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4af37' fill-opacity='0.15'%3E%3Cpath d='M40 0 L45 30 L80 40 L45 50 L40 80 L35 50 L0 40 L35 30 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* BASE */
 .app-bg {
   background: #000;
-  color: #e5e5e5;
+  color: #fff;
+  position: relative;
+}
+
+/* SIDE ANKARA */
+.app-bg::before,
+.app-bg::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  background-image: var(--ankara-pattern);
+  opacity: 0.08;
+}
+
+.app-bg::before { left: 0; }
+.app-bg::after { right: 0; }
+
+/* NAV */
+.glass-nav {
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.9) !important;
+}
+
+/* BRAND */
+.brand {
+  color: gold;
+  font-weight: bold;
 }
 
 /* HERO */
 .hero {
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 120px 20px 40px;
+
+  background:
+    radial-gradient(circle at top, rgba(255,215,0,0.2), transparent),
+    var(--ankara-pattern);
 }
 
-.big-title {
-  font-size: 2.5rem;
+/* FORM */
+.form-container {
+  margin-top: -80px;
 }
 
-.subtitle {
-  opacity: 0.7;
-}
+.form-card {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 16px;
 
-/* NAV */
-.glass-nav {
-  background: rgba(0,0,0,0.9) !important;
-}
+  background:
+    linear-gradient(#0f0f0f, #0f0f0f) padding-box,
+    var(--ankara-pattern) border-box;
 
-/* CARD */
-.cinematic-card {
-  background: #0f0f0f !important;
-  border-radius: 12px;
+  border: 1px solid rgba(212,175,55,0.3);
 }
 
 /* CTA */
@@ -250,26 +283,23 @@ export default {
   font-weight: bold;
 }
 
-/* GLOW */
+/* TEXT */
 .glow-text {
   color: gold;
-  text-shadow: 0 0 12px rgba(255,215,0,0.6);
+  text-shadow: 0 0 10px rgba(255,215,0,0.6);
 }
 
-/* ANIMATION */
-.fade-in {
-  animation: fadeUp 1s ease;
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.subtitle {
+  opacity: 0.7;
 }
+
+.cinematic-card {
+  background: #0f0f0f;
+}
+
 </style>
-
