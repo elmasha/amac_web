@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
 <div>
     <div>
         <bar-chart class="chart-container" :chart-data="chartData" :options="chartOptions" ref="barChart"></bar-chart>
@@ -125,7 +125,7 @@ export default {
     methods: {
         async prepareChartData() {
             let that = this;
-            await axios.get('https://amacserver-production-ebd5.up.railway.app/api/votes/voting-activity', {})
+            await axios.get('https://amacserver-production-48fd.up.railway.app/api/votes/voting-activity', {})
                 .then(function (response) {
                     if (response.status == 200) {
                         
@@ -197,4 +197,4 @@ export default {
     height: 300px;
     color: #ffffff77;
 }
-</style> -->
+</style>

@@ -4,91 +4,166 @@
     <!-- NAV -->
     <v-app-bar app dark class="glass-nav">
       <div class="d-flex align-center">
-        <v-avatar size="34">
+        <v-avatar size="34" class="brand-avatar">
           <v-img :src="logo"></v-img>
         </v-avatar>
-        <span class="ml-3 brand">AMAC Awards</span>
+
+        <div class="ml-3">
+          <div class="brand">AMAC Awards</div>
+          <small class="brand-sub">Nomination Portal</small>
+        </div>
       </div>
 
       <v-spacer />
 
-      <v-btn class="cta-btn" rounded @click="$router.push('/')">
+      <v-btn class="cta-btn nav-btn" rounded @click="$router.push('/')">
         Back Home
       </v-btn>
     </v-app-bar>
 
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero-overlay">
-        <h1 class="title glow-text">Nominate a Candidate</h1>
-        <p class="subtitle">
+    <section class="nomination-hero">
+      <div class="hero-content">
+        <span class="hero-pill">AMAC Awards Season 2</span>
+
+        <h1 class="hero-title">
+          Nominate a Candidate
+        </h1>
+
+        <p class="hero-subtitle">
           Celebrate excellence. Recognize someone making an impact.
         </p>
       </div>
     </section>
 
-    <!-- FORM -->
-    <v-container class="form-container">
-      <v-card class="form-card">
+    <!-- MAIN -->
+    <v-container class="main-container">
+      <v-row align="start">
 
-        <div class="form-header">
-          <h2 class="glow-text">Nomination Form</h2>
-          <p>Fill in the details below</p>
-        </div>
+        <!-- FORM -->
+        <v-col cols="12" md="7" lg="7">
+          <v-card class="form-card">
 
-        <v-select
-          v-model="selectedCategory"
-          :items="categories"
-          item-text="name"
-          item-value="id"
-          label="Category"
-          outlined dense
-          class="mb-4"
-        />
+            <div class="form-header">
+              <span class="section-kicker">Nomination Form</span>
+              <h2 class="glow-text">Submit Nominee Details</h2>
+              <p>Fill in the nominee details below.</p>
+            </div>
 
-        <v-text-field
-          v-model="nomineeName"
-          label="Nominee Name"
-          outlined dense
-          class="mb-4"
-        />
+            <v-select
+              v-model="selectedCategory"
+              :items="categories"
+              item-text="name"
+              item-value="id"
+              label="Category"
+              outlined
+              dense
+              dark
+              class="mb-3"
+            />
 
-        <v-autocomplete
-          v-model="county_id"
-          :items="counties"
-          item-text="name"
-          item-value="id"
-          label="County"
-          outlined dense
-          class="mb-4"
-        />
+            <v-text-field
+              v-model="nomineeName"
+              label="Nominee Name"
+              outlined
+              dense
+              dark
+              class="mb-3"
+            />
 
-        <v-text-field
-          v-model="location"
-          label="Location"
-          outlined dense
-          class="mb-4"
-        />
+            <v-autocomplete
+              v-model="county_id"
+              :items="counties"
+              item-text="name"
+              item-value="id"
+              label="County"
+              outlined
+              dense
+              dark
+              class="mb-3"
+            />
 
-        <v-text-field
-          v-model="church"
-          label="Church"
-          outlined dense
-          class="mb-5"
-        />
+            <v-text-field
+              v-model="location"
+              label="Location"
+              outlined
+              dense
+              dark
+              class="mb-3"
+            />
 
-        <v-btn block large class="cta-btn" @click="CheckNominee">
-          Submit Nomination
-        </v-btn>
+            <v-text-field
+              v-model="church"
+              label="Church"
+              outlined
+              dense
+              dark
+              class="mb-4"
+            />
 
-      </v-card>
+            <v-btn
+              block
+              large
+              class="cta-btn"
+              :loading="submitting"
+              @click="CheckNominee"
+            >
+              Submit Nomination
+            </v-btn>
+
+          </v-card>
+        </v-col>
+
+        <!-- GUIDE -->
+        <v-col cols="12" md="5" lg="5">
+          <v-card class="guide-card">
+
+            <span class="section-kicker">Guide</span>
+            <h2 class="glow-text guide-title">Before You Submit</h2>
+
+            <div class="guide-list">
+              <div class="guide-step">
+                <span>01</span>
+                <p>Select the correct award category.</p>
+              </div>
+
+              <div class="guide-step">
+                <span>02</span>
+                <p>Enter the nominee’s official name.</p>
+              </div>
+
+              <div class="guide-step">
+                <span>03</span>
+                <p>Select county and add location.</p>
+              </div>
+
+              <div class="guide-step">
+                <span>04</span>
+                <p>Add church or group name where applicable.</p>
+              </div>
+            </div>
+
+            <div class="notice-box">
+              <strong>Note:</strong><br />
+              Duplicate nominees will not be submitted again.
+            </div>
+
+          </v-card>
+        </v-col>
+
+      </v-row>
     </v-container>
 
     <!-- SUCCESS -->
     <v-dialog v-model="successDialog" max-width="400">
       <v-card class="cinematic-card text-center pa-6">
-        <h2 class="glow-text">Success 🎉</h2>
-        <p>Nominee submitted successfully</p>
+        <div class="success-icon">✓</div>
+        <h2 class="glow-text">Success</h2>
+        <p>Nominee submitted successfully.</p>
+
+        <v-btn class="cta-btn mt-3" @click="successDialog = false">
+          Done
+        </v-btn>
       </v-card>
     </v-dialog>
 
@@ -120,7 +195,9 @@ export default {
       successDialog: false,
 
       snackbarError: false,
-      snackbarTextError: ""
+      snackbarTextError: "",
+
+      submitting: false
     };
   },
 
@@ -130,7 +207,6 @@ export default {
   },
 
   methods: {
-
     async fetchCategories() {
       const { data } = await axios.get(
         "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
@@ -152,6 +228,8 @@ export default {
         return;
       }
 
+      this.submitting = true;
+
       try {
         const { data } = await axios.get(
           `https://amacserver-production-48fd.up.railway.app/api/nominee/check?name=${this.nomineeName}&church=${this.church}&location=${this.location}&county_id=${this.county_id}`
@@ -161,13 +239,15 @@ export default {
           this.snackbarError = true;
           this.snackbarTextError = "Nominee already exists";
         } else {
-          this.submitNominee();
+          await this.submitNominee();
         }
 
       } catch (err) {
         this.snackbarError = true;
         this.snackbarTextError = "Error checking nominee";
       }
+
+      this.submitting = false;
     },
 
     async submitNominee() {
@@ -197,109 +277,338 @@ export default {
           err.response?.data?.error || "Failed to submit nominee";
       }
     }
-
   }
 };
 </script>
 
 <style>
-
-/* ============================= */
-/* 🎨 CUSTOM AMAC ANKARA PATTERN */
-/* ============================= */
 :root {
-  --ankara-pattern: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4af37' fill-opacity='0.15'%3E%3Cpath d='M40 0 L45 30 L80 40 L45 50 L40 80 L35 50 L0 40 L35 30 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --gold: #ffd700;
 }
 
 /* BASE */
 .app-bg {
   background: #000;
   color: #fff;
-  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-
-/* SIDE ANKARA */
-.app-bg::before,
-.app-bg::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  width: 60px;
-  height: 100%;
-  background-image: var(--ankara-pattern);
-  opacity: 0.08;
-}
-
-.app-bg::before { left: 0; }
-.app-bg::after { right: 0; }
 
 /* NAV */
 .glass-nav {
-  backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.9) !important;
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
 }
 
-/* BRAND */
+.brand-avatar {
+  border: 1px solid rgba(255, 215, 0, 0.35);
+}
+
 .brand {
   color: gold;
-  font-weight: bold;
+  font-weight: 900;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.brand-sub {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.68rem;
+}
+
+.nav-btn {
+  padding-left: 18px !important;
+  padding-right: 18px !important;
 }
 
 /* HERO */
-.hero {
-  height: 40vh;
+.nomination-hero {
+  min-height: 240px;
+  padding: 100px 20px 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 
   background:
-    radial-gradient(circle at top, rgba(255,215,0,0.2), transparent),
-    var(--ankara-pattern);
+    radial-gradient(circle at center, rgba(255, 215, 0, 0.2), transparent 43%),
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.96)),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 215, 0, 0.13) 0px,
+      rgba(255, 215, 0, 0.13) 2px,
+      transparent 2px,
+      transparent 34px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 215, 0, 0.07) 0px,
+      rgba(255, 215, 0, 0.07) 2px,
+      transparent 2px,
+      transparent 42px
+    ),
+    #000;
 }
 
-/* FORM */
-.form-container {
-  margin-top: -80px;
+.hero-content {
+  max-width: 720px;
 }
 
-.form-card {
-  max-width: 600px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 16px;
-
-  background:
-    linear-gradient(#0f0f0f, #0f0f0f) padding-box,
-    var(--ankara-pattern) border-box;
-
-  border: 1px solid rgba(212,175,55,0.3);
+.hero-pill {
+  display: inline-block;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  background: rgba(255, 215, 0, 0.08);
+  color: gold;
+  font-size: 0.78rem;
+  margin-bottom: 14px;
 }
 
-/* CTA */
+.hero-title {
+  color: gold;
+  font-size: clamp(2rem, 5vw, 3.7rem);
+  font-weight: 900;
+  text-shadow: 0 0 22px rgba(255, 215, 0, 0.46);
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  margin: 0;
+  opacity: 0.78;
+  font-size: 1rem;
+}
+
+/* MAIN */
+.main-container {
+  margin-top: 32px;
+  padding-bottom: 80px;
+}
+
+/* CARDS */
+.form-card,
+.guide-card,
+.cinematic-card {
+  background: rgba(17, 17, 17, 0.94) !important;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 18px !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.form-card,
+.guide-card {
+  padding: 28px;
+}
+
+.form-header {
+  margin-bottom: 22px;
+}
+
+.form-header h2 {
+  margin-bottom: 6px;
+  font-size: 1.55rem;
+}
+
+.form-header p {
+  opacity: 0.65;
+  margin: 0;
+}
+
+.section-kicker {
+  display: block;
+  color: gold;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 5px;
+}
+
+/* GUIDE */
+.guide-title {
+  font-size: 1.45rem;
+  margin-bottom: 18px;
+}
+
+.guide-list {
+  margin-top: 8px;
+}
+
+.guide-step {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.guide-step span {
+  color: gold;
+  font-weight: 900;
+  min-width: 28px;
+}
+
+.guide-step p {
+  margin: 0;
+  opacity: 0.78;
+}
+
+.notice-box {
+  margin-top: 20px;
+  background: rgba(255, 215, 0, 0.08);
+  border-left: 4px solid gold;
+  padding: 16px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* SUCCESS */
+.success-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, gold, #ffcc00);
+  color: #000;
+  font-size: 2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+/* BUTTON */
 .cta-btn {
   background: linear-gradient(135deg, gold, #ffcc00) !important;
   color: black !important;
-  font-weight: bold;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.32);
 }
 
 /* TEXT */
 .glow-text {
   color: gold;
-  text-shadow: 0 0 10px rgba(255,215,0,0.6);
+  text-shadow: 0 0 14px rgba(255, 215, 0, 0.52);
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 800;
+/* TABLET */
+@media (max-width: 960px) {
+  .main-container {
+    max-width: 760px;
+  }
+
+  .guide-card {
+    margin-top: 10px;
+  }
 }
 
-.subtitle {
-  opacity: 0.7;
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .brand {
+    font-size: 0.82rem;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .nomination-hero {
+    min-height: 175px;
+    padding: 82px 16px 26px;
+  }
+
+  .hero-pill {
+    font-size: 0.68rem;
+    padding: 5px 11px;
+    margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-size: 1.95rem;
+    line-height: 1.08;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.84rem;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .main-container {
+    margin-top: 18px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 55px;
+  }
+
+  .form-card,
+  .guide-card {
+    padding: 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .form-header {
+    margin-bottom: 16px;
+  }
+
+  .form-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .form-header p {
+    font-size: 0.85rem;
+  }
+
+  .section-kicker {
+    font-size: 0.68rem;
+  }
+
+  .guide-card {
+    margin-top: 4px;
+  }
+
+  .guide-title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .guide-step {
+    padding: 9px 0;
+    gap: 10px;
+  }
+
+  .guide-step p {
+    font-size: 0.84rem;
+  }
+
+  .notice-box {
+    padding: 12px;
+    font-size: 0.84rem;
+  }
 }
 
-.cinematic-card {
-  background: #0f0f0f;
-}
+/* SMALL MOBILE */
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
 
+  .nomination-hero {
+    min-height: 165px;
+  }
+
+  .form-card,
+  .guide-card {
+    padding: 16px !important;
+  }
+}
 </style>

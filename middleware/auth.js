@@ -18,9 +18,9 @@ export default function ({ app, route, redirect }) {
 //   ]
 
   // Not logged in & trying to access protected routes
-  if (protectedRoutes.includes(route.path) && !user) {
-    return redirect('/login')
-  }
+  // if (protectedRoutes.includes(route.path) && !user) {
+  //   return redirect('/login')
+  // }
 
 
 
