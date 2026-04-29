@@ -32,9 +32,9 @@
               worship, collaboration, and excellence — honoring God through music.
             </p>
 
-            <v-btn class="cta-btn mt-6" rounded to="/vote">
+            <!-- <v-btn class="cta-btn mt-6" rounded to="/vote">
               Explore Awards
-            </v-btn>
+            </v-btn> -->
 
           </div>
 
@@ -116,7 +116,7 @@ export default {
 /* IMAGE */
 .image-wrapper {
   position: relative;
-  max-width: 450px;
+  max-width: 500px;
   margin: auto;
 }
 

@@ -410,64 +410,68 @@ export default {
                 this.showResult("Error", "Failed to start payment. Please try again.", false);
             }
         },
+        stkQuery() {
+            let that = this;
+            axios
+                .post("https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push/query", {
+                    CheckoutRequestID: that.CheckoutRequestID
+                })
+                .then(function (response) {
+                    console.log("StkPush Query", response.data);
+                    that.timerCount = 25;
+                    that.timerEnabled = false;
 
-        async stkQuery() {
-            this.timerEnabled = false;
-            try {
-                const res = await axios.post(
-                    "https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push/query", {
-                        CheckoutRequestID: this.CheckoutRequestID
+                    if (response.status == 200) {
+
+                        const data = response.data;
+
+                        console.log("QUERY RESPONSE:", data);
+
+                        that.paymentDialog = false;
+
+                        if (data.ResultCode == 0 || data.ResultCode === "0") {
+                            that.showResult("Success 🎉", "Vote recorded successfully.", false);
+                            that.timerEnabled = false;
+                            return;
+                        }
+
+                        if (data.ResultCode == 1032 || data.ResultCode === "1032") {
+                            that.showResult("Cancelled", "Payment cancelled by user.", false);
+                            that.timerEnabled = false;
+                            return;
+                        }
+
+                        if (data.ResultCode == 2001 || data.ResultCode === "2001") {
+                            that.showResult("Invalid PIN", "Wrong M-Pesa PIN entered.", false);
+                            that.timerEnabled = false;
+                            return;
+                        }
+                        if (data.ResultCode == 1 || data.ResultCode === "1") {
+                            that.showResult("Insufficient Balance", "The balance is insufficient for the transaction..", false);
+                            that.timerEnabled = false;
+                            return;
+                        }
+
+                        that.showResult(
+                            "Processing...",
+                            data.ResultDesc || "Your payment is being confirmed. Please wait.",
+                            true
+                        );
+
                     }
-                );
+                })
+                .catch(function (error) {
+                    console.error("QUERY ERROR:", error);
 
-                const data = res.data;
-
-                console.log("QUERY RESPONSE:", data);
-
-                this.paymentDialog = false;
-
-                if (data.ResultCode == 0 || data.ResultCode === "0") {
-                    this.showResult("Success 🎉", "Vote recorded successfully.", false);
-                    this.timerEnabled = false;
-                    return;
-                }
-
-                if (data.ResultCode == 1032 || data.ResultCode === "1032") {
-                    this.showResult("Cancelled", "Payment cancelled by user.", false);
-                    this.timerEnabled = false;
-                    return;
-                }
-
-                if (data.ResultCode == 2001 || data.ResultCode === "2001") {
-                    this.showResult("Invalid PIN", "Wrong M-Pesa PIN entered.", false);
-                    this.timerEnabled = false;
-                    return;
-                }
-                if (data.ResultCode == 1 || data.ResultCode === "1") {
-                    this.showResult("Insufficient Balance", "The balance is insufficient for the transaction..", false);
-                    this.timerEnabled = false;
-                    return;
-                }
-
-                this.showResult(
-                    "Processing...",
-                    data.ResultDesc || "Your payment is being confirmed. Please wait.",
-                    true
-                );
-
-            } catch (err) {
-                console.error("QUERY ERROR:", err);
-
-                this.paymentDialog = false;
-                this.timerEnabled = false;
-                this.showResult(
-                    "Processing...",
-                    "Your payment is being confirmed. Please wait for the system to update.",
-                    true
-                );
-            }
+                    that.paymentDialog = false;
+                    that.timerEnabled = false;
+                    that.showResult(
+                        "Processing...",
+                        "Your payment is being confirmed. Please wait for the system to update.",
+                        true
+                    );
+                });
         },
-
         showResult(title, msg, processing) {
             this.resultDialog = true;
             this.resultTitle = title;
@@ -478,9 +482,7 @@ export default {
         retryPayment() {
             this.resultDialog = false;
             this.paymentDialog = true;
-
             this.clearTimer();
-
             this.queryLocked = false;
             this.loading = false;
         }
@@ -501,6 +503,7 @@ export default {
                     }, 1000);
                 } else if (value == 0) {
                     this.stkQuery();
+                    this.timerEnabled = false;
                     this.timerCount = 25;
 
                 }

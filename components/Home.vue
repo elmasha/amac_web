@@ -39,9 +39,9 @@
                   Celebrating Excellence in Gospel & Ministry
                 </p>
 
-                <v-btn class="cta-btn mt-6" large to="/voting" rounded>
+                <!-- <v-btn class="cta-btn mt-6" large to="/voting" rounded>
                   Vote Now
-                </v-btn>
+                </v-btn> -->
 
               </v-col>
 
