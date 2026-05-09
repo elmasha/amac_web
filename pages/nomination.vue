@@ -209,14 +209,14 @@ export default {
   methods: {
     async fetchCategories() {
       const { data } = await axios.get(
-        "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
+        "https://amacserver-production-7a96.up.railway.app/api/categories/getAll"
       );
       this.categories = data;
     },
 
     async fetchCounties() {
       const { data } = await axios.get(
-        "https://amacserver-production-48fd.up.railway.app/api/counties/get-counties"
+        "https://amacserver-production-7a96.up.railway.app/api/counties/get-counties"
       );
       this.counties = data;
     },
@@ -232,7 +232,7 @@ export default {
 
       try {
         const { data } = await axios.get(
-          `https://amacserver-production-48fd.up.railway.app/api/nominee/check?name=${this.nomineeName}&church=${this.church}&location=${this.location}&county_id=${this.county_id}`
+          `https://amacserver-production-7a96.up.railway.app/api/nominee/check?name=${this.nomineeName}&church=${this.church}&location=${this.location}&county_id=${this.county_id}`
         );
 
         if (data.exists) {
@@ -253,7 +253,7 @@ export default {
     async submitNominee() {
       try {
         await axios.post(
-          "https://amacserver-production-48fd.up.railway.app/api/nominee/addNominee",
+          "https://amacserver-production-7a96.up.railway.app/api/nominee/addNominee",
           {
             name: this.nomineeName,
             category_id: this.selectedCategory,

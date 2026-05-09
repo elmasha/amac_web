@@ -122,7 +122,7 @@
                     </div>
 
                     <v-btn block class="cta-btn mt-4" @click="paymentDialog = true">
-                        Proceed to Pay
+                        VOTE
                     </v-btn>
                 </v-card>
 
@@ -181,7 +181,7 @@
             <v-text-field v-model="phoneNumber" prefix="254" label="M-Pesa Number" outlined dark :disabled="loading || timerEnabled" />
 
             <v-btn block class="cta-btn" :disabled="loading || timerEnabled" @click="processPayment">
-                Pay Now
+                Vote Now
             </v-btn>
 
             <div v-if="timerEnabled" class="payment-wait">
@@ -287,7 +287,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
+                    "https://amacserver-production-7a96.up.railway.app/api/categories/getAll"
                 );
 
                 this.categories = data;
@@ -304,7 +304,7 @@ export default {
                 const {
                     data
                 } = await axios.get(
-                    `https://amacserver-production-48fd.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
+                    `https://amacserver-production-7a96.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
                 );
 
                 this.nominees = data;
@@ -377,7 +377,7 @@ export default {
 
             try {
                 const res = await axios.post(
-                    "https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push", {
+                    "https://amacserver-production-7a96.up.railway.app/payment/mpesa_stk_push", {
                         phone: "254" + this.phoneNumber,
                         amount: this.amount,
                         vote_count: this.voteCount,
@@ -413,7 +413,7 @@ export default {
         stkQuery() {
             let that = this;
             axios
-                .post("https://amacserver-production-48fd.up.railway.app/payment/mpesa_stk_push/query", {
+                .post("https://amacserver-production-7a96.up.railway.app/payment/mpesa_stk_push/query", {
                     CheckoutRequestID: that.CheckoutRequestID
                 })
                 .then(function (response) {
@@ -454,7 +454,7 @@ export default {
 
                         that.showResult(
                             "Processing...",
-                            data.ResultDesc || "Your payment is being confirmed. Please wait.",
+                            data.ResultDesc,
                             true
                         );
 

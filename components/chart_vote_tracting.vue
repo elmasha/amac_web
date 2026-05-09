@@ -125,7 +125,7 @@ export default {
     methods: {
         async prepareChartData() {
             let that = this;
-            await axios.get('https://amacserver-production-48fd.up.railway.app/api/votes/voting-activity', {})
+            await axios.get('https://amacserver-production-7a96.up.railway.app/api/votes/voting-activity', {})
                 .then(function (response) {
                     if (response.status == 200) {
                         

@@ -196,7 +196,7 @@
               </h2>
 
               <p class="category-meta">
-                Total votes: {{ Number(cat.total_votes || 0) }}
+                
                 <span v-if="cat.leader_name"> • Leader: {{ cat.leader_name }}</span>
               </p>
             </div>
@@ -240,7 +240,7 @@
                 </div>
 
                 <div class="percentage-row">
-                  <span>{{ Number(nom.votes || nom.total_votes || 0) }} Votes</span>
+                  <!-- <span>{{ Number(nom.votes || nom.total_votes || 0) }} Votes</span> -->
                   <strong>{{ formatPercent(nom.percentage) }}%</strong>
                 </div>
 
@@ -379,7 +379,7 @@ export default {
     async fetchCategories() {
       try {
         const { data } = await axios.get(
-          "https://amacserver-production-48fd.up.railway.app/api/categories/getAll"
+          "https://amacserver-production-7a96.up.railway.app/api/categories/getAll"
         );
 
         this.categories = Array.isArray(data) ? data : [];
@@ -394,7 +394,7 @@ export default {
         this.loadingResults = true;
 
         const { data } = await axios.get(
-          "https://amacserver-production-48fd.up.railway.app/api/votes/overview"
+          "https://amacserver-production-7a96.up.railway.app/api/votes/overview"
         );
 
         const results = this.normalizePayload(data);
@@ -427,7 +427,7 @@ export default {
         this.loadingResults = true;
 
         const { data } = await axios.get(
-          `https://amacserver-production-48fd.up.railway.app/api/votes/overview/${this.searchCatResult}`
+          `https://amacserver-production-7a96.up.railway.app/api/votes/overview/${this.searchCatResult}`
         );
 
         const results = this.normalizePayload(data);
