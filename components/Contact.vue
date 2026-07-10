@@ -49,7 +49,7 @@
       </v-row>
 
       <!-- OPTIONAL CONTACT FORM -->
-      <v-row justify="center" class="mt-10">
+      <v-row justify="center" class="mt-10" v-show="false">
 
         <v-col cols="12" md="6">
           <v-card class="form-card pa-6">

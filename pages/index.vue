@@ -19,7 +19,7 @@
 
       <!-- SPONSORS -->
       <div v-if="!showBurger" class="sponsor-strip">
-        <span class="sponsor-label">Sponsored by</span>
+        <span class="sponsor-label"><countdown targetDate="2026-08-11" /></span>
 
         <v-img src="@/assets/clients/1.png" class="sponsor-logo" />
         <v-img src="@/assets/clients/2.png" class="sponsor-logo" />
@@ -110,6 +110,7 @@ import Gallery from "@/components/Gallery.vue";
 import Team from "@/components/Team.vue";
 import Contact from "@/components/Contact.vue";
 import Partners from "@/components/Partners.vue";
+import Countdown from "@/components/Countdown2.vue";
 
 export default {
   components: {
@@ -118,7 +119,8 @@ export default {
     Gallery,
     Team,
     Contact,
-    Partners
+    Partners,
+    Countdown
   },
 
   data() {

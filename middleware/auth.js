@@ -1,35 +1,25 @@
 export default function ({ app, route, redirect }) {
+  // Wait for Firebase auth to initialize
   const user = app.$fire?.auth?.currentUser
 
+  // Define protected routes (admin area)
   const protectedRoutes = [
+    '/admin',
     '/admin',
   ]
 
- 
+  // Check if current route is protected
+  const isProtected = protectedRoutes.some(path => 
+    route.path === path || route.path.startsWith(path + '/')
+  )
 
-//   const authRoutes = [
-//     '/employer',
-//     '/auth/account'
-//   ]
+  // Not logged in & trying to access protected route → redirect to login
+  if (isProtected && !user) {
+    return redirect('/auth/login')
+  }
 
-//   const authRoutes1 = [
-//     '/bureau',
-//     '/auth/account'
-//   ]
-
-  // Not logged in & trying to access protected routes
-  // if (protectedRoutes.includes(route.path) && !user) {
-  //   return redirect('/login')
-  // }
-
-
-
-  // Logged in & trying to access auth pages
-//   if (authRoutes.includes(route.path) && user) {
-//     return redirect('/register/employer')
-//   }
-//   // Logged in & trying to access auth pages
-//   if (authRoutes1.includes(route.path) && user) {
-//     return redirect('/register/bureau')
-//   }
+  // Logged in & trying to access login page → redirect to admin
+  if (user && route.path === '/auth/login') {
+    return redirect('/admin')
+  }
 }
