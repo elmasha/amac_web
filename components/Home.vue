@@ -42,6 +42,9 @@
                 <v-btn class="cta-btn mt-6" large to="/voting" rounded>
                   Vote Now
                 </v-btn>
+                <v-btn color="#ffcc00" class="mt-6 ml-3" large to="/live-results" rounded outlined>
+                  Live Results
+                </v-btn>
 
               </v-col>
 

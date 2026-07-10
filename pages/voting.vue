@@ -185,7 +185,7 @@
 
               <v-btn block class="cta-btn mt-5" height="48" @click="openPayment">
                 <v-icon left>mdi-cellphone-check</v-icon>
-                Proceed to Payment
+                Proceed to Vote
               </v-btn>
             </v-card>
           </v-slide-y-transition>
@@ -285,7 +285,7 @@
 
           <v-btn block class="cta-btn" height="48" :loading="loading" :disabled="loading || !phoneNumber" @click="processPayment">
             <v-icon left>mdi-send</v-icon>
-            Send STK Push
+            Vote
           </v-btn>
         </div>
 
