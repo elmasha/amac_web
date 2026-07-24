@@ -508,7 +508,7 @@ export default {
 
     async fetchCategories() {
       try {
-        const { data } = await axios.get("https://amacserver-production-8cab.up.railway.app/api/categories/getAll");
+        const { data } = await axios.get("https://amacserver-production-29a2.up.railway.app/api/categories/getAll");
         this.categories = Array.isArray(data) ? data : [];
       } catch (error) {
         console.error("fetchCategories error:", error);
@@ -520,7 +520,7 @@ export default {
     async fetchOverview(silent = false) {
       if (!silent) this.loadingResults = true;
       try {
-        const { data } = await axios.get("https://amacserver-production-8cab.up.railway.app/api/votes/overview");
+        const { data } = await axios.get("https://amacserver-production-29a2.up.railway.app/api/votes/overview");
         const results = this.normalizePayload(data);
         this.allResults = results;
         this.Results = results;
@@ -548,7 +548,7 @@ export default {
       this.loadingResults = true;
       try {
         const { data } = await axios.get(
-          `https://amacserver-production-8cab.up.railway.app/api/votes/overview/${this.searchCatResult}`
+          `https://amacserver-production-29a2.up.railway.app/api/votes/overview/${this.searchCatResult}`
         );
         const results = this.normalizePayload(data);
         this.Results = results;

@@ -479,7 +479,7 @@ export default {
     async fetchCategories() {
       this.loadingCategories = true;
       try {
-        const { data } = await axios.get("https://amacserver-production-8cab.up.railway.app/api/categories/getAll");
+        const { data } = await axios.get("https://amacserver-production-29a2.up.railway.app/api/categories/getAll");
         this.categories = data;
       } catch (err) {
         console.error("fetchCategories error:", err);
@@ -501,7 +501,7 @@ export default {
       this.loadingNominees = true;
       try {
         const { data } = await axios.get(
-          `https://amacserver-production-8cab.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
+          `https://amacserver-production-29a2.up.railway.app/api/nominee/nominees/${this.selectedCategory}`
         );
         this.nominees = data;
       } catch (err) {
@@ -565,7 +565,7 @@ export default {
       this.queryLocked = false;
 
       try {
-        const res = await axios.post("https://amacserver-production-8cab.up.railway.app/payment/mpesa_stk_push", {
+        const res = await axios.post("https://amacserver-production-29a2.up.railway.app/payment/mpesa_stk_push", {
           phone: "254" + this.phoneNumber,
           amount: this.amount,
           vote_count: this.voteCount,
@@ -610,7 +610,7 @@ export default {
     async stkQuery() {
       try {
         const { data } = await axios.post(
-          "https://amacserver-production-8cab.up.railway.app/payment/mpesa_stk_push/query",
+          "https://amacserver-production-29a2.up.railway.app/payment/mpesa_stk_push/query",
           { CheckoutRequestID: this.CheckoutRequestID }
         );
 
